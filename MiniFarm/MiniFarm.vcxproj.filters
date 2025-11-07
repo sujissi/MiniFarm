@@ -43,7 +43,7 @@
     <ClCompile Include="Source\Shader.cpp">
       <Filter>소스 파일\Rendering</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Input.cpp">
+    <ClCompile Include="Source\InputManager.cpp">
       <Filter>소스 파일\Core</Filter>
     </ClCompile>
     <ClCompile Include="Source\Main.cpp">
@@ -78,7 +78,7 @@
     <ClInclude Include="Source\Logger.h">
       <Filter>소스 파일\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Input.h">
+    <ClInclude Include="Source\InputManager.h">
       <Filter>소스 파일\Core</Filter>
     </ClInclude>
   </ItemGroup>

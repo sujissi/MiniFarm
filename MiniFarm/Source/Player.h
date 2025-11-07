@@ -1,7 +1,7 @@
 #pragma once
 #include "GameObject.h"
 #include "SceneManager.h"
-#include "Input.h"
+#include "InputManager.h"
 
 class Player : public GameObject
 {
@@ -18,10 +18,10 @@ public:
     {
         auto& cam = SceneManager::GetCamera();
 
-        if (Input::IsKeyDown('w')) cam.MoveForward(0.05f);
-        if (Input::IsKeyDown('s')) cam.MoveForward(-0.05f);
-        if (Input::IsKeyDown('a')) cam.RotateYaw(-1.5f);
-        if (Input::IsKeyDown('d')) cam.RotateYaw(1.5f);
+        if (InputManager::IsKeyDown('w')) cam.MoveForward(0.05f);
+        if (InputManager::IsKeyDown('s')) cam.MoveForward(-0.05f);
+        if (InputManager::IsKeyDown('a')) cam.RotateYaw(-1.5f);
+        if (InputManager::IsKeyDown('d')) cam.RotateYaw(1.5f);
     }
     
 };

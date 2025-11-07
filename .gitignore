@@ -15,7 +15,6 @@ obj/
 *.exe
 *.dll
 *.lib
-*.obj
 *.pdb
 *.ilk
 

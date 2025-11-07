@@ -1,6 +1,6 @@
 #pragma once
 
-class Input {
+class InputManager {
 public:
     static void Init();
     static void KeyDown(unsigned char key, int x, int y);

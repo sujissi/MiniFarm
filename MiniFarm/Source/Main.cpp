@@ -1,6 +1,7 @@
 #include "PCH.h"
 #include "Shader.h"
 #include "SceneManager.h"
+#include "InputManager.h"
 #include "Player.h"
 
 void main(int argc, char** argv) {
@@ -16,14 +17,14 @@ void main(int argc, char** argv) {
 
     Shader::Init("Shaders/vertex.glsl", "Shaders/fragment.glsl");
     SceneManager::Init();
-    Input::Init();
+    InputManager::Init();
 
     SceneManager::AddObject(std::make_shared<Player>());
 
     glutDisplayFunc(SceneManager::Draw);
     glutReshapeFunc(SceneManager::Reshape);
-    glutKeyboardFunc(Input::KeyDown);
-    glutKeyboardUpFunc(Input::KeyUp);
+    glutKeyboardFunc(InputManager::KeyDown);
+    glutKeyboardUpFunc(InputManager::KeyUp);
     glutTimerFunc(FRAME_TIME_MS, SceneManager::Update, 0);
 
     glutMainLoop();
