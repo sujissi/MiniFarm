@@ -1,0 +1,25 @@
+# Visual Studio
+.vs/
+*.user
+*.suo
+
+# Build 출력물
+Debug/
+Release/
+x64/
+build/
+bin/
+obj/
+
+# 바이너리 / 중간 파일
+*.exe
+*.dll
+*.lib
+*.obj
+*.pdb
+*.ilk
+
+# 시스템 파일
+Thumbs.db
+*.DS_Store
+desktop.ini
