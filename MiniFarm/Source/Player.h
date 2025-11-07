@@ -14,7 +14,7 @@ public:
         m_scale = { 1.f, 1.f, 1.f };
     }
 
-    void Update(float dt) override
+    void Update(int time) override
     {
         auto& cam = SceneManager::GetCamera();
 

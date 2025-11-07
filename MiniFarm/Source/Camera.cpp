@@ -15,6 +15,7 @@ void Camera::Init()
 
 void Camera::MoveForward(float amount)
 {
+    LOG("");
     glm::vec3 dir = glm::normalize(at - eye);
     eye += dir * amount;
     at += dir * amount;
@@ -22,6 +23,7 @@ void Camera::MoveForward(float amount)
 
 void Camera::MoveRight(float amount)
 {
+    LOG("");
     glm::vec3 dir = glm::normalize(at - eye);
     glm::vec3 right = glm::normalize(glm::cross(dir, up));
     eye += right * amount;
@@ -30,6 +32,7 @@ void Camera::MoveRight(float amount)
 
 void Camera::RotateYaw(float deg)
 {
+    LOG("");
     float rad = glm::radians(deg);
     glm::vec3 dir = at - eye;
     float nx = dir.x * cos(rad) - dir.z * sin(rad);

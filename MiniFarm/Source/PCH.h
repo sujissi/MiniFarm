@@ -12,11 +12,14 @@
 #include <fstream>
 #include <sstream>
 #include <chrono>
-#include <unordered_map>
+#include <array>
 #include <memory>
 
 #include "Utils.h"
 #include "Logger.h"
 
-inline GLint WINDOW_W = 600;
-inline GLint WINDOW_H = 600;
+constexpr GLint WINDOW_W = 600;
+constexpr GLint WINDOW_H = 600;
+
+constexpr int FPS = 60;
+constexpr int FRAME_TIME_MS = 1000 / FPS;

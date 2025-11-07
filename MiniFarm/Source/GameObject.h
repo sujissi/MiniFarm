@@ -10,6 +10,6 @@ public:
     glm::vec3 m_scale;
 public:
     virtual ~GameObject() = default;
-    virtual void Update(float dt) {}
+    virtual void Update(int time) {}
     virtual void Draw();
 };

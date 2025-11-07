@@ -8,8 +8,9 @@ public:
     static void Init();
     static void AddObject(std::shared_ptr<GameObject> obj);
 
-    static void Update(float dt);
+    static void Update(int time);
     static void Draw();
+    static void Reshape(int w, int h);
 
     static Camera& GetCamera() { return s_camera; }
 private:

@@ -1,44 +1,27 @@
 #include "PCH.h"
 #include "Input.h"
 
-std::unordered_map<unsigned char, bool> Input::s_keys;
-bool Input::s_mouseDown = false;
+std::array<bool, 256> Input::s_keys;
 
 void Input::Init()
 {
-    s_keys.clear();
-    s_mouseDown = false;
+    s_keys.fill(false);
+    LOG_D("Input Initialized");
 }
 
-void Input::KeyDown(unsigned char key)
+void Input::KeyDown(unsigned char key, int x, int y)
 {
     s_keys[key] = true;
+    LOG_D("KeyDown: %c (%d)", key, key);
 }
 
-void Input::KeyUp(unsigned char key)
+void Input::KeyUp(unsigned char key, int x, int y)
 {
     s_keys[key] = false;
+    LOG_D("KeyUp: %c (%d)", key, key);
 }
 
 bool Input::IsKeyDown(unsigned char key)
 {
-    auto it = s_keys.find(key);
-    return (it != s_keys.end() && it->second);
-}
-
-void Input::MouseDown(int button, int x, int y)
-{
-    if (button == GLUT_LEFT_BUTTON)
-        s_mouseDown = true;
-}
-
-void Input::MouseUp(int button, int x, int y)
-{
-    if (button == GLUT_LEFT_BUTTON)
-        s_mouseDown = false;
-}
-
-bool Input::IsMouseDown()
-{
-    return s_mouseDown;
+    return s_keys[key];
 }

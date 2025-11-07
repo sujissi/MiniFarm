@@ -1,21 +1,12 @@
 #pragma once
 
-class Input
-{
+class Input {
 public:
     static void Init();
-
-    static void KeyDown(unsigned char key);
-    static void KeyUp(unsigned char key);
-
+    static void KeyDown(unsigned char key, int x, int y);
+    static void KeyUp(unsigned char key, int x, int y);
     static bool IsKeyDown(unsigned char key);
 
-    static void MouseDown(int button, int x, int y);
-    static void MouseUp(int button, int x, int y);
-
-    static bool IsMouseDown();
-
 private:
-    static std::unordered_map<unsigned char, bool> s_keys;
-    static bool s_mouseDown;
+    static std::array<bool, 256> s_keys;
 };
