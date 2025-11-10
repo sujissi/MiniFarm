@@ -55,6 +55,9 @@
     <ClCompile Include="Source\DataTableManager.cpp">
       <Filter>소스 파일\Systems</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Crop.cpp">
+      <Filter>소스 파일\Game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Model.h">
@@ -89,6 +92,9 @@
     </ClInclude>
     <ClInclude Include="Source\DataTableManager.h">
       <Filter>소스 파일\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Crop.h">
+      <Filter>소스 파일\Game</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

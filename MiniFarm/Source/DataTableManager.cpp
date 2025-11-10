@@ -2,60 +2,41 @@
 #include "DataTableManager.h"
 
 std::unordered_map<int, CropData> DataTableManager::s_crops;
-std::unordered_map<int, CropModelData> DataTableManager::s_cropModels;
 
 void DataTableManager::Init()
 {
     LoadCrops("Data/crops.csv");
-    LoadCropModels("Data/crop_models.csv");
 }
 
 void DataTableManager::LoadCrops(const std::string& path)
 {
-    LOG("%s", path.c_str());
     std::ifstream file(path);
-    std::string line; bool header = true;
+    std::string line;
+
+    std::getline(file, line);
+
     while (std::getline(file, line))
     {
-        if (header) { header = false; continue; }
-        std::stringstream ss(line); std::string cell;
+        if (line.empty()) continue;
 
-        CropData d;
-        std::getline(ss, cell, ','); d.id = static_cast<ECropID>(std::stoi(cell));
-        std::getline(ss, cell, ','); d.name = cell;
-        std::getline(ss, cell, ','); d.growTime = stof(cell);
-        std::getline(ss, cell, ','); d.seedPrice = stoi(cell);
-        std::getline(ss, cell, ','); d.sellPrice = stoi(cell);
-        std::getline(ss, cell, ','); d.waterNeed = stoi(cell);
+        std::stringstream ss(line);
+        CropData data;
+        std::string token;
 
-        s_crops[(int)d.id] = d;
-    }
-}
+        std::getline(ss, token, ','); data.id = static_cast<ECropID>(std::stoi(token));
+        std::getline(ss, data.name, ',');
+        std::getline(ss, token, ','); data.seedPrice = std::stoi(token);
+        std::getline(ss, token, ','); data.sellPrice = std::stoi(token);
 
-void DataTableManager::LoadCropModels(const std::string& path)
-{
-    LOG("%s", path.c_str());
-    std::ifstream file(path);
-    std::string line; bool header = true;
-    while (std::getline(file, line))
-    {
-        if (header) { header = false; continue; }
-        std::stringstream ss(line); std::string cell;
+        for (int i = 0; i < 4; i++)
+        {
+            std::getline(ss, data.levels[i].model, ',');
+            std::getline(ss, token, ','); data.levels[i].waterRequired = std::stof(token);
+            std::getline(ss, token, ','); data.levels[i].timeRequired = std::stof(token);
+        }
 
-        ECropID id;
-        CropModelData m;
-
-        std::getline(ss, cell, ',');
-        id = static_cast<ECropID>(std::stoi(cell));
-
-        std::getline(ss, cell, ','); m.model0 = cell;
-        std::getline(ss, cell, ','); m.model1 = cell;
-        std::getline(ss, cell, ','); m.model2 = cell;
-        std::getline(ss, cell, ','); m.model3 = cell;
-
-        s_cropModels[(int)id] = m;
+        s_crops[(int)data.id] = data;
     }
 }
 
 const CropData* DataTableManager::GetCrop(ECropID  id) { return &s_crops[(int)id]; }
-const CropModelData* DataTableManager::GetCropModel(ECropID  id) { return &s_cropModels[(int)id]; }
