@@ -6,7 +6,6 @@ Model::Model(const std::string& path)
 {
     LOG("%s", path.c_str());
     LoadOBJ(path);
-    SetupBuffers();
     LOG("Model loaded. Vertex Count = %d", (int)m_vertices.size());
 }
 
@@ -53,6 +52,7 @@ void Model::LoadOBJ(const std::string& path)
             m_vertices.push_back({ tempPos[c - 1], m_color });
         }
     }
+    SetupBuffers();
 }
 
 void Model::SetupBuffers()

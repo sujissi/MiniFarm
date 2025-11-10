@@ -12,7 +12,7 @@ Crop::Crop(ECropID id)
     m_time = 0.f;
     m_water = 0.f;
 
-    m_model = std::make_shared<Model>(data->levels[0].model);
+    m_model = std::make_shared<Model>(data->levels[0].model);// TDDO: empty ground obj
     m_scale = { 1,1,1 };
 }
 
@@ -32,8 +32,8 @@ void Crop::Update(int dt)
         return;
 
     m_time += dt * 0.001f;
-
-    if (m_time >= info.timeRequired && m_level < 3)
+    bool bLevelUp = (m_time >= info.timeRequired) && (m_level < 3);
+    if (bLevelUp)
     {
         m_time = 0.f;
         m_level++;
