@@ -34,9 +34,9 @@ void DataTableManager::LoadCrops(const std::string& path)
 			std::getline(file, line);
 			std::stringstream ss2(line);
 
-			std::getline(ss, data.levels[i].model, ',');
-			std::getline(ss, token, ','); data.levels[i].waterRequired = std::stof(token);
-			std::getline(ss, token, ','); data.levels[i].timeRequired = std::stof(token);
+			std::getline(ss2, data.levels[i].model, ',');
+			std::getline(ss2, token, ','); data.levels[i].waterRequired = std::stof(token);
+			std::getline(ss2, token, ','); data.levels[i].timeRequired = std::stof(token);
 		}
 
 		s_crops[(int)data.id] = data;
