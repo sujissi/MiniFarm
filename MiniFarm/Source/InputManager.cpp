@@ -5,8 +5,8 @@ std::array<bool, 256> InputManager::s_keys;
 
 void InputManager::Init()
 {
+    LOG("Input Init");
     s_keys.fill(false);
-    LOG_D("Input Initialized");
 }
 
 void InputManager::KeyDown(unsigned char key, int x, int y)

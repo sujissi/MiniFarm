@@ -20,6 +20,9 @@
     <Filter Include="소스 파일\Utils">
       <UniqueIdentifier>{79531096-343f-4386-8749-9a051dfcdcbe}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Systems">
+      <UniqueIdentifier>{bda7a908-e5f0-4976-af25-50c4a55f2ed1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Model.cpp">
@@ -48,6 +51,9 @@
     </ClCompile>
     <ClCompile Include="Source\Main.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\DataTableManager.cpp">
+      <Filter>소스 파일\Systems</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -80,6 +86,9 @@
     </ClInclude>
     <ClInclude Include="Source\InputManager.h">
       <Filter>소스 파일\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\DataTableManager.h">
+      <Filter>소스 파일\Systems</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

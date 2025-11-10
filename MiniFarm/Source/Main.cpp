@@ -2,6 +2,7 @@
 #include "Shader.h"
 #include "SceneManager.h"
 #include "InputManager.h"
+#include "DataTableManager.h"
 #include "Player.h"
 
 void main(int argc, char** argv) {
@@ -18,6 +19,7 @@ void main(int argc, char** argv) {
     Shader::Init("Shaders/vertex.glsl", "Shaders/fragment.glsl");
     SceneManager::Init();
     InputManager::Init();
+    DataTableManager::Init();
 
     SceneManager::AddObject(std::make_shared<Player>());
 

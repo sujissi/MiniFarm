@@ -14,6 +14,7 @@
 #include <chrono>
 #include <array>
 #include <memory>
+#include <unordered_map>
 
 #include "Utils.h"
 #include "Logger.h"
