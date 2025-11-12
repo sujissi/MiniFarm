@@ -8,26 +8,28 @@ Camera::Camera()
 
 void Camera::Init()
 {
-    eye = { 0.0f, 1.5f, 5.0f };
+    eye = { 0.0f, 3.0f, 10.0f };
     at = { 0.0f, 0.0f, 0.0f };
     up = { 0.0f, 1.0f, 0.0f };
 }
 
 void Camera::MoveForward(float amount)
 {
-    LOG("");
-    glm::vec3 dir = glm::normalize(at - eye);
-    eye += dir * amount;
-    at += dir * amount;
+    //LOG("");
+    //glm::vec3 dir = glm::normalize(at - eye);
+    //eye += dir * amount;
+    //at += dir * amount;
+	eye.z += amount;
 }
 
 void Camera::MoveRight(float amount)
 {
-    LOG("");
-    glm::vec3 dir = glm::normalize(at - eye);
+    //LOG("");
+    /*glm::vec3 dir = glm::normalize(at - eye);
     glm::vec3 right = glm::normalize(glm::cross(dir, up));
     eye += right * amount;
-    at += right * amount;
+    at += right * amount;*/
+	eye.x += amount;
 }
 
 void Camera::RotateYaw(float deg)
