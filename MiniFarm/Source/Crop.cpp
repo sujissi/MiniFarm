@@ -3,6 +3,7 @@
 #include "DataTableManager.h"
 #include "Model.h"
 
+// 작물 생성자 (작물 ID)
 Crop::Crop(ECropID id)
     : m_id(id)
 {
@@ -16,7 +17,7 @@ Crop::Crop(ECropID id)
     m_scale = { 1,1,1 };
 }
 
-
+// 작물 업데이트 함수
 void Crop::Update(int dt)
 {
     if (!m_model)
@@ -43,7 +44,7 @@ void Crop::Update(int dt)
     m_water -= dt * 0.001f;
     if (m_water < 0.f) m_water = 0.f;
 }
-
+// 물 추가 함수
 void Crop::AddWater(float amount)
 {
     m_water += amount;
