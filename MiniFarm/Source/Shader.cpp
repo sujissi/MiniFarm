@@ -1,9 +1,8 @@
 #include "PCH.h"
 #include "Shader.h"
-// 쉐이더 프로그램 ID
+
 GLuint Shader::s_programID = 0;
 
-// 쉐이더 초기화 함수
 void Shader::Init(const char* vertexPath, const char* fragmentPath)
 {
 	LOG("Shader Init");
@@ -34,7 +33,6 @@ void Shader::Init(const char* vertexPath, const char* fragmentPath)
 	}
 }
 
-// 쉐이더 컴파일 함수
 GLuint Shader::CompileShader(const std::string& source, GLenum type)
 {
 	GLuint shader = glCreateShader(type);
@@ -57,18 +55,18 @@ GLuint Shader::CompileShader(const std::string& source, GLenum type)
 
 	return shader;
 }
-// 모델 행렬 설정 함수
+
 void Shader::SetModel(const glm::mat4& m_model, const char* name)
 {
-	glUniformMatrix4fv(glGetUniformLocation(s_programID, name), 1, GL_FALSE, glm::value_ptr(m_model));
+	glUniformMatrix4fv(glGetUniformLocation(s_programID, name), 1, GL_FALSE, &m_model[0][0]);
 }
-// 뷰 행렬 설정 함수
+
 void Shader::SetView(const glm::mat4& view, const char* name)
 {
-	glUniformMatrix4fv(glGetUniformLocation(s_programID, name), 1, GL_FALSE, glm::value_ptr(view));
+	glUniformMatrix4fv(glGetUniformLocation(s_programID, name), 1, GL_FALSE, &view[0][0]);
 }
-// 투영 행렬 설정 함수
+
 void Shader::SetProj(const glm::mat4& proj, const char* name)
 {
-	glUniformMatrix4fv(glGetUniformLocation(s_programID, name), 1, GL_FALSE, glm::value_ptr(proj));
+	glUniformMatrix4fv(glGetUniformLocation(s_programID, name), 1, GL_FALSE, &proj[0][0]);
 }

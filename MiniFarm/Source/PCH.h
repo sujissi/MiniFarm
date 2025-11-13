@@ -6,15 +6,15 @@
 #include <glm/ext.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
-#include <iostream>			// 문자열 출력 라이브러리
-#include <vector> 			// 벡터 라이브러리
-#include <random>			// 랜덤 라이브러리
-#include <fstream>			// 파일 입출력 라이브러리
-#include <sstream>			// 문자열 스트림 라이브러리
-#include <chrono>			// 시간 라이브러리
-#include <array>			// 배열 라이브러리
-#include <memory>			// 스마트 포인터 라이브러리
-#include <unordered_map>	// 해시맵 라이브러리
+#include <iostream>
+#include <vector>
+#include <random>
+#include <fstream>
+#include <sstream>
+#include <chrono>
+#include <array>
+#include <memory>
+#include <unordered_map>
 
 #include "Utils.h"
 #include "Logger.h"

@@ -2,20 +2,19 @@
 #include "Model.h"
 #include "Shader.h"
 
-// 모델 생성자 (파일 경로)
 Model::Model(const std::string& path)
 {
     LOG("%s", path.c_str());
-	LoadOBJ(path); // OBJ 파일 경로 로드
+    LoadOBJ(path);
     LOG("Model loaded. Vertex Count = %d", (int)m_vertices.size());
 }
-// 모델 소멸자
+
 Model::~Model()
 {
     glDeleteBuffers(1, &m_vbo);
     glDeleteVertexArrays(1, &m_vao);
 }
-// OBJ 파일 로드 함수
+
 void Model::LoadOBJ(const std::string& path)
 {
     std::ifstream file(path);
@@ -55,7 +54,7 @@ void Model::LoadOBJ(const std::string& path)
     }
     SetupBuffers();
 }
-// 모델 버퍼 설정 함수
+
 void Model::SetupBuffers()
 {
     glGenVertexArrays(1, &m_vao);
@@ -78,7 +77,7 @@ void Model::SetupBuffers()
 
     glBindVertexArray(0);
 }
-// 모델 그리기 함수
+
 void Model::Draw()
 {
     glBindVertexArray(m_vao);
