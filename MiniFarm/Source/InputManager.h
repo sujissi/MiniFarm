@@ -3,9 +3,12 @@
 class InputManager {
 public:
     static void Init();
+    static void Update();
+
     static void KeyDown(unsigned char key, int x, int y);
     static void KeyUp(unsigned char key, int x, int y);
     static bool IsKeyDown(unsigned char key);
+    static bool IsKeyPressed(unsigned char key);
 
     static void MouseButton(int button, int state, int x, int y);
     static void MouseMove(int x, int y);
@@ -18,6 +21,7 @@ public:
 
 private:
     static std::array<bool, 256> s_keys;
+    static std::array<bool, 256> s_prevKeys;
 
     static int s_deltaX;
     static int s_deltaY;

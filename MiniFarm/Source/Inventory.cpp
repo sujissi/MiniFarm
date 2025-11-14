@@ -1,6 +1,13 @@
 #include "PCH.h"
 #include "Inventory.h"
 
+Inventory::Inventory()
+{
+	//for test
+	AddItem((ItemID)ECropID::Carrot, 5);
+	m_money = 1000;
+}
+
 void Inventory::AddItem(ItemID id, int count)
 {
 	m_items[id] += count;

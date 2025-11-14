@@ -2,6 +2,7 @@
 #include "InputManager.h"
 
 std::array<bool, 256> InputManager::s_keys;
+std::array<bool, 256> InputManager::s_prevKeys;
 
 int  InputManager::s_deltaX = 0;
 int  InputManager::s_deltaY = 0;
@@ -23,13 +24,18 @@ void InputManager::Init()
 	glutWarpPointer(s_centerX, s_centerY);
 }
 
+void InputManager::Update()
+{
+	s_prevKeys = s_keys;
+}
+
 void InputManager::KeyDown(unsigned char key, int x, int y)
 {
 	s_keys[key] = true;
 
 	switch (key)
 	{
-		case 't': SetUIMode(false); break; //temp
+		case 't': SetUIMode(false); break; //temp UI 모드일 때 끄는 키
 		case 'q': exit(0);
 	}
 }
@@ -44,6 +50,14 @@ bool InputManager::IsKeyDown(unsigned char key)
 	return s_keys[key];
 }
 
+bool InputManager::IsKeyPressed(unsigned char key)
+{
+	return (s_keys[key] && !s_prevKeys[key]);
+}
+
+// UI 모드 토글 및 클릭 처리
+//	-> 추후 UIManager 추가 시 수정 필요
+//	ex) 상호작용 키 눌렀을 때만 클릭 처리 기능 활성
 void InputManager::MouseButton(int button, int state, int x, int y)
 {
 	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)

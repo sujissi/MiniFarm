@@ -4,6 +4,8 @@
 class Inventory
 {
 public:
+    Inventory();
+
     void AddItem(ItemID id, int count = 1);
     bool UseItem(ItemID id, int count = 1);
     bool HasItem(ItemID id) const;

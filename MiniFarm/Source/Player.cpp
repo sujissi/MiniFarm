@@ -19,6 +19,8 @@ void Player::Update(int time)
 
     HandleRotate();
     HandleMove();
+
+    InputManager::Update();
 }
 
 void Player::HandleRotate()
@@ -59,9 +61,9 @@ void Player::HandleMove()
 
 void Player::HandleInteractTest()
 {
-    if (InputManager::IsKeyDown('1')) BuySeed((ItemID)EToolID::SeedCarrot, 1);
-    if (InputManager::IsKeyDown('2')) SellCrop((ItemID)ECropID::Carrot, 1);
-    if (InputManager::IsKeyDown('3')) UseTool((ItemID)EToolID::Hoe);
+    if (InputManager::IsKeyPressed('1')) BuySeed((ItemID)EToolID::SeedCarrot, 1);
+    if (InputManager::IsKeyPressed('2')) SellCrop((ItemID)ECropID::Carrot, 1);
+    if (InputManager::IsKeyPressed('3')) UseTool((ItemID)EToolID::Hoe);
 }
 
 void Player::UseTool(ItemID toolID)
@@ -81,6 +83,8 @@ void Player::UseTool(ItemID toolID)
     case EToolID::SeedCabbage:
 		break;
     }
+
+    LOG_D("도구 사용");
 }
 
 void Player::BuySeed(ItemID seedID, int count)
