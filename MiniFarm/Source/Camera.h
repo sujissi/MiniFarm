@@ -5,15 +5,23 @@ public:
     Camera();
 
     void Init();
-    void MoveForward(float amount);
-    void MoveRight(float amount);
-    void RotateYaw(float deg);
 
     glm::mat4 GetView() const;
     glm::mat4 GetProj(float aspect) const;
+
+    glm::vec3 GetForward() const;
+    // 카메라 회전
+    void AddYaw(float delta);
+    void AddPitch(float delta);
+
+    void FollowTarget(const glm::vec3& targetPos);
 
 public:
     glm::vec3 eye;
     glm::vec3 at;
     glm::vec3 up;
+
+    float yaw;         // 좌우 회전
+    float pitch;       // 위/아래 회전
+    float distance;    // at(플레이어) 로부터 거리
 };
