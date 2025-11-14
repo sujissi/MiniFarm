@@ -10,6 +10,10 @@ Player::Player()
 	m_rot = { 0.f, 0.f, 0.f };
 	m_scale = { 1.f, 1.f, 1.f };
     m_speed = 0.1f;
+
+    m_inventory.AddItem(EItemID::Hoe, 1);
+    m_inventory.AddItem(EItemID::WateringCan, 1);
+    m_inventory.AddItem(EItemID::Sickle, 1);
 }
 
 void Player::Update(int time)

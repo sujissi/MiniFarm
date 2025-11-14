@@ -20,10 +20,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Crop.cpp" />
-    <ClCompile Include="Source\DataTableManager.cpp" />
+    <ClCompile Include="Source\DataTable.cpp" />
     <ClCompile Include="Source\InputManager.cpp" />
     <ClCompile Include="Source\Camera.cpp" />
     <ClCompile Include="Source\GameObject.cpp" />
+    <ClCompile Include="Source\Inventory.cpp" />
     <ClCompile Include="Source\Main.cpp" />
     <ClCompile Include="Source\Model.cpp" />
     <ClCompile Include="Source\PCH.cpp">
@@ -38,10 +39,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Crop.h" />
-    <ClInclude Include="Source\DataTableManager.h" />
+    <ClInclude Include="Source\DataTable.h" />
     <ClInclude Include="Source\InputManager.h" />
     <ClInclude Include="Source\Camera.h" />
     <ClInclude Include="Source\GameObject.h" />
+    <ClInclude Include="Source\Inventory.h" />
     <ClInclude Include="Source\Logger.h" />
     <ClInclude Include="Source\Model.h" />
     <ClInclude Include="Source\PCH.h" />

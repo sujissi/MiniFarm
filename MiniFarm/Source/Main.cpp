@@ -2,7 +2,7 @@
 #include "Shader.h"
 #include "SceneManager.h"
 #include "InputManager.h"
-#include "DataTableManager.h"
+#include "DataTable.h"
 #include "Player.h"
 
 void main(int argc, char** argv) {
@@ -19,7 +19,7 @@ void main(int argc, char** argv) {
 	Shader::Init("Shaders/vertex.glsl", "Shaders/fragment.glsl");
 	SceneManager::Init();
 	InputManager::Init();
-	DataTableManager::Init();
+	DataTable::Init();
 
 	glutKeyboardFunc(InputManager::KeyDown);
 	glutKeyboardUpFunc(InputManager::KeyUp);

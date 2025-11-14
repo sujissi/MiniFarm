@@ -24,7 +24,7 @@ struct CropData
 };
 
 
-class DataTableManager
+class DataTable
 {
 public:
     static void Init();

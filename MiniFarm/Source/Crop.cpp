@@ -1,12 +1,12 @@
 #include "PCH.h"
 #include "Crop.h"
-#include "DataTableManager.h"
+#include "DataTable.h"
 #include "Model.h"
 
 Crop::Crop(ECropID id)
     : m_id(id)
 {
-    const auto* data = DataTableManager::GetCrop(id);
+    const auto* data = DataTable::GetCrop(id);
 
     m_level = 0;
     m_time = 0.f;
@@ -25,7 +25,7 @@ void Crop::Update(int dt)
         return;
     }
 
-    const auto* data = DataTableManager::GetCrop(m_id);
+    const auto* data = DataTable::GetCrop(m_id);
     const auto& info = data->levels[m_level];
 
     if (m_water < info.waterRequired)

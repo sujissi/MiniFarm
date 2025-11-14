@@ -1,14 +1,14 @@
 #include "PCH.h"
-#include "DataTableManager.h"
+#include "DataTable.h"
 
-std::unordered_map<int, CropData> DataTableManager::s_crops;
+std::unordered_map<int, CropData> DataTable::s_crops;
 
-void DataTableManager::Init()
+void DataTable::Init()
 {
 	LoadCrops("Data/crops.csv");
 }
 
-void DataTableManager::LoadCrops(const std::string& path)
+void DataTable::LoadCrops(const std::string& path)
 {
 	std::ifstream file(path);
 	std::string line;
@@ -43,4 +43,4 @@ void DataTableManager::LoadCrops(const std::string& path)
 	}
 }
 
-const CropData* DataTableManager::GetCrop(ECropID  id) { return &s_crops[(int)id]; }
+const CropData* DataTable::GetCrop(ECropID  id) { return &s_crops[(int)id]; }
