@@ -18,21 +18,29 @@ Player::Player()
 
 void Player::Update(int time)
 {
+    HandleMouseInput();
+    HandleKeyInput();
+}
+
+void Player::HandleMouseInput()
+{
     auto& cam = SceneManager::GetCamera();
 
     float rotSpeed = 0.2f;
-    float dx = static_cast<float>(InputManager::GetDeltaX());
-    float dy = static_cast<float>(InputManager::GetDeltaY());
+    cam.AddYaw(InputManager::GetDeltaX() * rotSpeed);
+    cam.AddPitch(-InputManager::GetDeltaY() * rotSpeed);
 
-    cam.AddYaw(dx * rotSpeed);
-    cam.AddPitch(-dy * rotSpeed);
+    m_rot.y = cam.GetFlatYaw();
 
-    glm::vec3 camForward = cam.GetForward();
+    InputManager::ResetDelta();
+}
 
-    glm::vec3 forward = glm::normalize(glm::vec3(camForward.x, 0.0f, camForward.z));
-    glm::vec3 right = glm::normalize(glm::cross(forward, glm::vec3(0, 1, 0)));
-    float yawRad = std::atan2(forward.x, forward.z);
-    m_rot.y = glm::degrees(yawRad);
+void Player::HandleKeyInput()
+{
+    auto& cam = SceneManager::GetCamera();
+
+    glm::vec3 forward = cam.GetForwardFlat();
+    glm::vec3 right = cam.GetRightFlat();
 
     glm::vec3 move(0);
 
@@ -45,6 +53,4 @@ void Player::Update(int time)
         m_pos += glm::normalize(move) * m_speed;
 
     cam.FollowTarget(m_pos);
-
-    InputManager::ResetDelta();
 }

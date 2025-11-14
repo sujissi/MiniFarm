@@ -9,6 +9,9 @@ public:
     virtual void Update(int time);
 
 private:
+	void HandleMouseInput();
+	void HandleKeyInput();
+private:
     float m_speed;
 	Inventory m_inventory;
 };

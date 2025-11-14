@@ -10,6 +10,10 @@ public:
     glm::mat4 GetProj(float aspect) const;
 
     glm::vec3 GetForward() const;
+    glm::vec3 GetForwardFlat() const;
+    glm::vec3 GetRightFlat() const;
+    float GetFlatYaw() const;
+
     // 카메라 회전
     void AddYaw(float delta);
     void AddPitch(float delta);

@@ -22,6 +22,24 @@ glm::vec3 Camera::GetForward() const
 	return glm::normalize(at - eye);
 }
 
+glm::vec3 Camera::GetForwardFlat() const
+{
+	glm::vec3 f = GetForward();
+	f.y = 0.f;
+	return glm::normalize(f);
+}
+
+glm::vec3 Camera::GetRightFlat() const
+{
+	return glm::normalize(glm::cross(GetForwardFlat(), glm::vec3(0, 1, 0)));
+}
+
+float Camera::GetFlatYaw() const
+{
+	glm::vec3 f = GetForwardFlat();
+	return glm::degrees(std::atan2(f.x, f.z));
+}
+
 void Camera::AddYaw(float delta)
 {
 	yaw += delta;
