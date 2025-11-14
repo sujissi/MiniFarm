@@ -9,9 +9,13 @@ public:
 
     static void MouseButton(int button, int state, int x, int y);
     static void MouseMove(int x, int y);
-    static int GetDeltaX();
-    static int GetDeltaY();
+    static int GetDeltaX(){ return s_deltaX; }
+    static int GetDeltaY(){ return s_deltaY; }
     static void ResetDelta();
+
+    static void SetUIMode(bool enable);
+    static bool IsUIMode() { return s_uiMode; }
+
 private:
     static std::array<bool, 256> s_keys;
 
@@ -21,5 +25,6 @@ private:
     static int  s_centerX;
     static int  s_centerY;
     static bool s_warping;
-    static bool s_rightDown;
+
+    static bool s_uiMode;
 };

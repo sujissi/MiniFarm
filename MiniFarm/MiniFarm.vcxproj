@@ -38,6 +38,7 @@
     <ClCompile Include="Source\Shader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Types.h" />
     <ClInclude Include="Source\Crop.h" />
     <ClInclude Include="Source\DataTable.h" />
     <ClInclude Include="Source\InputManager.h" />

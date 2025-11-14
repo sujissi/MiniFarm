@@ -2,6 +2,7 @@
 #include "Player.h"
 #include "SceneManager.h"
 #include "InputManager.h"
+#include "DataTable.h"
 
 Player::Player()
 {
@@ -10,20 +11,21 @@ Player::Player()
 	m_rot = { 0.f, 0.f, 0.f };
 	m_scale = { 1.f, 1.f, 1.f };
     m_speed = 0.1f;
-
-    m_inventory.AddItem(EItemID::Hoe, 1);
-    m_inventory.AddItem(EItemID::WateringCan, 1);
-    m_inventory.AddItem(EItemID::Sickle, 1);
 }
 
 void Player::Update(int time)
 {
-    HandleMouseInput();
-    HandleKeyInput();
+    HandleInteractTest();
+
+    HandleRotate();
+    HandleMove();
 }
 
-void Player::HandleMouseInput()
+void Player::HandleRotate()
 {
+    if (InputManager::IsUIMode())
+        return;
+
     auto& cam = SceneManager::GetCamera();
 
     float rotSpeed = 0.2f;
@@ -35,7 +37,7 @@ void Player::HandleMouseInput()
     InputManager::ResetDelta();
 }
 
-void Player::HandleKeyInput()
+void Player::HandleMove()
 {
     auto& cam = SceneManager::GetCamera();
 
@@ -53,4 +55,85 @@ void Player::HandleKeyInput()
         m_pos += glm::normalize(move) * m_speed;
 
     cam.FollowTarget(m_pos);
+}
+
+void Player::HandleInteractTest()
+{
+    if (InputManager::IsKeyDown('1')) BuySeed((ItemID)EToolID::SeedCarrot, 1);
+    if (InputManager::IsKeyDown('2')) SellCrop((ItemID)ECropID::Carrot, 1);
+    if (InputManager::IsKeyDown('3')) UseTool((ItemID)EToolID::Hoe);
+}
+
+void Player::UseTool(ItemID toolID)
+{
+	auto tool = static_cast<EToolID>(toolID);
+
+    //TODO: 각 애니메이션 다르게?
+    switch (tool)
+    {
+	case EToolID::Hoe:
+        break;
+	case EToolID::WateringCan:
+		break;
+	case EToolID::Sickle:
+		break;
+    case EToolID::SeedCarrot:
+    case EToolID::SeedCabbage:
+		break;
+    }
+}
+
+void Player::BuySeed(ItemID seedID, int count)
+{
+    auto seed = static_cast<EToolID>(seedID);
+    const CropData* data = nullptr;
+    switch (seed)
+    {
+    case EToolID::SeedCarrot:
+        data = DataTable::GetCrop(ECropID::Carrot);
+        break;
+    case EToolID::SeedCabbage:
+        data = DataTable::GetCrop(ECropID::Cabbage);
+        break;
+    default:
+        return;
+    }
+    int totalPrice = data->seedPrice * count;
+    if (m_inventory.SpendMoney(totalPrice))
+    {
+        m_inventory.AddItem(seedID, count);
+        LOG_D("%s를 %d개 구매 (-%d원) ", data->name.c_str(), count, totalPrice);
+	}
+    else
+    {
+        LOG_D("금액 부족");
+    }
+}
+
+void Player::SellCrop(ItemID cropID, int count)
+{
+    auto crop = static_cast<ECropID>(cropID);
+    const CropData* data = nullptr;
+    switch (crop)
+    {
+    case ECropID::Carrot:
+        data = DataTable::GetCrop(ECropID::Carrot);
+        break;
+    case ECropID::Cabbage:
+        data = DataTable::GetCrop(ECropID::Cabbage);
+        break;
+    default:
+        return;
+    }
+
+    if(m_inventory.UseItem(cropID, count))
+    {
+        int totalPrice = data->sellPrice * count;
+        m_inventory.AddMoney(totalPrice);
+        LOG_D("%s를 %d개 판매 (+%d원) ", data->name.c_str(), count, totalPrice);
+    }
+    else
+    {
+        LOG_D("판매할 %s 없음", data->name.c_str());
+    }
 }
