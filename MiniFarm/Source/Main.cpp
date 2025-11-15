@@ -3,7 +3,6 @@
 #include "SceneManager.h"
 #include "InputManager.h"
 #include "DataTable.h"
-#include "Player.h"
 
 void main(int argc, char** argv) {
 
