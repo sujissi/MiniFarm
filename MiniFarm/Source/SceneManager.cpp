@@ -2,6 +2,7 @@
 #include "SceneManager.h"
 #include "Shader.h"
 #include "Player.h"
+#include "House.h"
 
 std::vector<std::shared_ptr<GameObject>> SceneManager::s_objects;
 Camera SceneManager::s_camera;
@@ -12,6 +13,7 @@ void SceneManager::Init()
     s_camera.Init();
     
     AddObject(std::make_shared<Player>());
+    AddObject(std::make_shared<House>());
 }
 
 void SceneManager::AddObject(std::shared_ptr<GameObject> obj)

@@ -36,8 +36,10 @@
     <ClCompile Include="Source\Player.cpp" />
     <ClCompile Include="Source\SceneManager.cpp" />
     <ClCompile Include="Source\Shader.cpp" />
+    <ClCompile Include="Source\House.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\House.h" />
     <ClInclude Include="Source\Types.h" />
     <ClInclude Include="Source\Crop.h" />
     <ClInclude Include="Source\DataTable.h" />
