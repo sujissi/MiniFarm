@@ -61,7 +61,7 @@
     <ClCompile Include="Source\Inventory.cpp">
       <Filter>소스 파일\Systems</Filter>
     </ClCompile>
-    <ClCompile Include="Source\House.cpp">
+    <ClCompile Include="Source\Terrarian.cpp">
       <Filter>소스 파일\Game</Filter>
     </ClCompile>
   </ItemGroup>
@@ -106,7 +106,7 @@
       <Filter>소스 파일\Systems</Filter>
     </ClInclude>
     <ClInclude Include="Source\Types.h" />
-    <ClInclude Include="Source\House.h">
+    <ClInclude Include="Source\Terrarian.h">
       <Filter>소스 파일\Game</Filter>
     </ClInclude>
   </ItemGroup>

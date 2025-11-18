@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Terrarian.cpp" />
     <ClCompile Include="Source\Crop.cpp" />
     <ClCompile Include="Source\DataTable.cpp" />
     <ClCompile Include="Source\InputManager.cpp" />
@@ -36,10 +37,9 @@
     <ClCompile Include="Source\Player.cpp" />
     <ClCompile Include="Source\SceneManager.cpp" />
     <ClCompile Include="Source\Shader.cpp" />
-    <ClCompile Include="Source\House.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\House.h" />
+    <ClInclude Include="Source\Terrarian.h" />
     <ClInclude Include="Source\Types.h" />
     <ClInclude Include="Source\Crop.h" />
     <ClInclude Include="Source\DataTable.h" />
