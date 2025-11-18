@@ -5,13 +5,6 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 
-Model::Model(const std::string& path)
-{
-	LOG("%s", path.c_str());
-	LoadOBJ(path);
-	LOG("Model loaded. Vertex Count = %d", (int)m_vertices.size());
-}
-
 Model::Model(const std::string& path, const std::string& texturePath)
 {
 	LOG("%s", path.c_str());
