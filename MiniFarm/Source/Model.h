@@ -7,11 +7,13 @@ class Model
 public:
 	Model() = default;
 	Model(const std::string& path);
+	Model(const std::string& path, const std::string& texturePath);
 	~Model();
 
 	void Draw();
 private:
 	void LoadOBJ(const std::string& path);
+	GLuint LoadIMG(const std::string& path);
 	void SetupBuffers();
 private:
 	struct Vertex {
@@ -23,4 +25,5 @@ private:
  
 	std::vector<Vertex> m_vertices;
 	GLuint m_vao = 0, m_vbo = 0;
+	GLuint m_textureID = 0;
 };

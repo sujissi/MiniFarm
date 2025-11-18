@@ -39,6 +39,7 @@
     <ClCompile Include="Source\Shader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\stb_image.h" />
     <ClInclude Include="Source\Terrarian.h" />
     <ClInclude Include="Source\Types.h" />
     <ClInclude Include="Source\Crop.h" />

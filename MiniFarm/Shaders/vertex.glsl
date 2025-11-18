@@ -10,9 +10,11 @@ uniform mat4 uView;
 uniform mat4 uProj;  
 
 out vec3 vColor;
+out vec2 vTextCoord;
 
 void main()
 {
     gl_Position = uProj * uView * uModel * vec4(aPos, 1.0);
     vColor = aColor;
+    vTextCoord = aTextCoord;
 }

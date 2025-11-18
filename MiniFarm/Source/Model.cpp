@@ -1,6 +1,9 @@
 #include "PCH.h"
 #include "Model.h"
 #include "Shader.h"
+// STB 이미지 로더 포함
+#define STB_IMAGE_IMPLEMENTATION
+#include "stb_image.h"
 
 Model::Model(const std::string& path)
 {
@@ -9,17 +12,29 @@ Model::Model(const std::string& path)
 	LOG("Model loaded. Vertex Count = %d", (int)m_vertices.size());
 }
 
+Model::Model(const std::string& path, const std::string& texturePath)
+{
+	LOG("%s", path.c_str());
+	LoadOBJ(path);
+	m_textureID = LoadIMG(texturePath);	
+	LOG("Model loaded. Vertex Count = %d", (int)m_vertices.size());
+}
+
 Model::~Model()
 {
 	glDeleteBuffers(1, &m_vbo);
 	glDeleteVertexArrays(1, &m_vao);
+	
+	if (m_textureID != 0) {
+		glDeleteTextures(1, &m_textureID);
+	}
 }
 
 void Model::LoadOBJ(const std::string& path)
 {
 	std::ifstream file(path);
 	if (!file.is_open()) {
-		LOG_E("Failed to load OBJ : % s", path.c_str());
+		LOG_E("Failed to load OBJ : %s", path.c_str());
 		return;
 	}
 
@@ -118,6 +133,58 @@ void Model::LoadOBJ(const std::string& path)
 	SetupBuffers();
 }
 
+GLuint Model::LoadIMG(const std::string& path)
+{
+	GLuint texture;
+	glGenTextures(1, &texture);
+	glBindTexture(GL_TEXTURE_2D, texture);
+
+	// 텍스처 파라미터 설정
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	// 이미지 로드
+	int width, height, nrChannels;
+	stbi_set_flip_vertically_on_load(true); // OpenGL은 Y축이 뒤집어져 있음
+	unsigned char* data = stbi_load(path.c_str(), &width, &height, &nrChannels, 0);
+
+	if (data) {
+		GLenum format;
+		switch (nrChannels) {
+			case 1:
+				format = GL_RED;
+				break;
+			case 3:
+				format = GL_RGB;
+				break;
+			case 4:
+				format = GL_RGBA;
+				break;
+			default:
+				LOG_E("Unsupported texture format with %d channels", nrChannels);
+				stbi_image_free(data);
+				glDeleteTextures(1, &texture);
+				return 0;
+		}
+
+		glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
+		glGenerateMipmap(GL_TEXTURE_2D);
+
+		LOG("Texture loaded successfully: %s (%dx%d, channels: %d)", path.c_str(), width, height, nrChannels);
+	}
+	else {
+		LOG_E("Failed to load texture: %s", path.c_str());
+		glDeleteTextures(1, &texture);
+		texture = 0;
+	}
+
+	stbi_image_free(data);
+	glBindTexture(GL_TEXTURE_2D, 0); // 텍스처 바인딩 해제
+	return texture;
+}
+
 void Model::SetupBuffers()
 {
 	glGenVertexArrays(1, &m_vao);
@@ -149,7 +216,12 @@ void Model::SetupBuffers()
 
 void Model::Draw()
 {
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, m_textureID);
+	
 	glBindVertexArray(m_vao);
 	glDrawArrays(GL_TRIANGLES, 0, m_vertices.size());
 	glBindVertexArray(0);
+	
+	glBindTexture(GL_TEXTURE_2D, 0);
 }

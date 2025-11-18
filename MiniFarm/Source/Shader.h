@@ -9,6 +9,7 @@ public:
 	static void SetModel(const glm::mat4& m_model, const char* name = "uModel");
 	static void SetView(const glm::mat4& view, const char* name = "uView");
 	static void SetProj(const glm::mat4& proj, const char* name = "uProj");
+	static void SetTexture(GLint textureUnit, const char* name = "texture");
 
 private:
 	static GLuint s_programID;

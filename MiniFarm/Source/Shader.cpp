@@ -70,3 +70,8 @@ void Shader::SetProj(const glm::mat4& proj, const char* name)
 {
 	glUniformMatrix4fv(glGetUniformLocation(s_programID, name), 1, GL_FALSE, &proj[0][0]);
 }
+
+void Shader::SetTexture(GLint textureUnit, const char* name)
+{
+	glUniform1i(glGetUniformLocation(s_programID, name), textureUnit);
+}
