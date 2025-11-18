@@ -2,7 +2,7 @@
 #include "SceneManager.h"
 #include "Shader.h"
 #include "Player.h"
-#include "House.h"
+#include "Terrarian.h"
 
 std::vector<std::shared_ptr<GameObject>> SceneManager::s_objects;
 Camera SceneManager::s_camera;
@@ -13,7 +13,11 @@ void SceneManager::Init()
     s_camera.Init();
     
     AddObject(std::make_shared<Player>());
-    AddObject(std::make_shared<House>());
+    AddObject(std::make_shared<House>(glm::vec3(-10.0f, 0.0f, -10.f)));
+    AddObject(std::make_shared<House>(glm::vec3(0.0f, 0.0f, -10.f)));
+    AddObject(std::make_shared<House>(glm::vec3(10.0f, 0.0f, -10.f)));
+    AddObject(std::make_shared<Fance>(glm::vec3(-10.0f, 0.0f, 10.f)));
+    AddObject(std::make_shared<Fance>(glm::vec3(10.0f, 0.0f, 10.f)));
 }
 
 void SceneManager::AddObject(std::shared_ptr<GameObject> obj)
