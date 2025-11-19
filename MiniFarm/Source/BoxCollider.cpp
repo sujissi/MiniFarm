@@ -1,6 +1,7 @@
 #include "PCH.h"
 #include "BoxCollider.h"
 #include "Shader.h"
+#include "DebugDrawer.h"
 
 BoxCollider::BoxCollider(const glm::vec3& min, const glm::vec3& max)
     : m_localMin(min), m_localMax(max)
@@ -32,32 +33,5 @@ bool BoxCollider::IntersectSegment(const glm::vec3& start, const glm::vec3& end,
 
 void BoxCollider::DrawDebug()
 {
-    Shader::BeginDebugDraw({ 1.0f, 0.0f, 0.0f });
-
-    glBegin(GL_LINE_LOOP);
-    glVertex3f(m_worldMin.x, m_worldMin.y, m_worldMin.z);
-    glVertex3f(m_worldMax.x, m_worldMin.y, m_worldMin.z);
-    glVertex3f(m_worldMax.x, m_worldMin.y, m_worldMax.z);
-    glVertex3f(m_worldMin.x, m_worldMin.y, m_worldMax.z);
-    glEnd();
-
-    glBegin(GL_LINE_LOOP);
-    glVertex3f(m_worldMin.x, m_worldMax.y, m_worldMin.z);
-    glVertex3f(m_worldMax.x, m_worldMax.y, m_worldMin.z);
-    glVertex3f(m_worldMax.x, m_worldMax.y, m_worldMax.z);
-    glVertex3f(m_worldMin.x, m_worldMax.y, m_worldMax.z);
-    glEnd();
-
-    glBegin(GL_LINES);
-    glVertex3f(m_worldMin.x, m_worldMin.y, m_worldMin.z);
-    glVertex3f(m_worldMin.x, m_worldMax.y, m_worldMin.z);
-    glVertex3f(m_worldMax.x, m_worldMin.y, m_worldMin.z);
-    glVertex3f(m_worldMax.x, m_worldMax.y, m_worldMin.z);
-    glVertex3f(m_worldMax.x, m_worldMin.y, m_worldMax.z);
-    glVertex3f(m_worldMax.x, m_worldMax.y, m_worldMax.z);
-    glVertex3f(m_worldMin.x, m_worldMin.y, m_worldMax.z);
-    glVertex3f(m_worldMin.x, m_worldMax.y, m_worldMax.z);
-    glEnd();
-
-    Shader::EndDebugDraw();
+    DebugDrawer::DrawBox(m_worldMin, m_worldMax, glm::vec3(1, 0, 0));
 }
