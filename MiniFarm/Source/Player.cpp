@@ -6,11 +6,11 @@
 
 Player::Player()
 {
-	m_model = std::make_shared<Model>("Models/player.obj", "Models/player.png");
+	m_model = std::make_shared<Model>("Models/player");
 	m_pos = { 0.f, 0.f, 0.f };
 	m_rot = { 0.f, 0.f, 0.f };
 	m_scale = { 1.f, 1.f, 1.f };
-    m_speed = 0.1f;
+    m_speed = 0.2f;
 }
 
 void Player::Update(int time)

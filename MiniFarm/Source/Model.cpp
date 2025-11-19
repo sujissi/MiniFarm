@@ -5,6 +5,12 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 
+Model::Model(const std::string& name)
+	:Model(name + ".obj", name + ".png")
+{
+	LOG("Model loaded. Vertex Count = %d", (int)m_vertices.size());
+}
+
 Model::Model(const std::string& path, const std::string& texturePath)
 {
 	LOG("%s", path.c_str());
@@ -81,18 +87,12 @@ void Model::LoadOBJ(const std::string& path)
 				face_indices.push_back(indices);
 			}
 
-			glm::vec3 m_color{
-				float(rand() % 100) / 100.0f,
-				float(rand() % 100) / 100.0f,
-				float(rand() % 100) / 100.0f
-			};
 
 			// 면이 삼각형인 경우
 			if (face_indices.size() == 3) {
 				for (const auto& indies : face_indices) {
 					Vertex vertex{};
 					vertex.m_pos = tempPos[indies[0]];
-					vertex.m_color = m_color;
 					vertex.m_normal = tempNorm.size() > indies[2] ? tempNorm[indies[2]] : glm::vec3(0.0f, 1.0f, 0.0f);
 					vertex.m_uv = tempTex.size() > indies[1] ? tempTex[indies[1]] : glm::vec2(0.0f, 0.0f);
 					m_vertices.push_back(vertex);
@@ -104,7 +104,6 @@ void Model::LoadOBJ(const std::string& path)
 				for (int i : {0, 1, 2}) {
 					Vertex vertex{};
 					vertex.m_pos = tempPos[face_indices[i][0]];
-					vertex.m_color = m_color;
 					vertex.m_normal = tempNorm.size() > face_indices[i][2] ? tempNorm[face_indices[i][2]] : glm::vec3(0.0f, 1.0f, 0.0f);
 					vertex.m_uv = tempTex.size() > face_indices[i][1] ? tempTex[face_indices[i][1]] : glm::vec2(0.0f, 0.0f);
 					m_vertices.push_back(vertex);
@@ -113,7 +112,6 @@ void Model::LoadOBJ(const std::string& path)
 				for (int i : {0, 2, 3}) {
 					Vertex vertex{};
 					vertex.m_pos = tempPos[face_indices[i][0]];
-					vertex.m_color = m_color;
 					vertex.m_normal = tempNorm.size() > face_indices[i][2] ? tempNorm[face_indices[i][2]] : glm::vec3(0.0f, 1.0f, 0.0f);
 					vertex.m_uv = tempTex.size() > face_indices[i][1] ? tempTex[face_indices[i][1]] : glm::vec2(0.0f, 0.0f);
 					m_vertices.push_back(vertex);

@@ -6,6 +6,7 @@ class Model
 {
 public:
 	Model() = default;
+	Model(const std::string& name);
 	Model(const std::string& path, const std::string& texturePath);
 	~Model();
 

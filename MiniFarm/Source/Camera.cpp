@@ -8,13 +8,14 @@ Camera::Camera()
 
 void Camera::Init()
 {
-	eye = { 0.0f, 6.0f, 10.0f };
-	at = { 0.0f, 0.0f, 0.0f };
-	up = { 0.0f, 1.0f, 0.0f };
-
 	yaw = 0.f;
 	pitch = 20.f;
 	distance = 10.f;
+
+	eye = { 0.0f, 3.0f, -distance };
+	at = { 0.0f, 0.0f, 0.0f };
+	up = { 0.0f, 1.0f, 0.0f };
+
 }
 
 glm::vec3 Camera::GetForward() const
@@ -48,12 +49,12 @@ void Camera::AddYaw(float delta)
 void Camera::AddPitch(float delta)
 {
 	pitch += delta;
-	pitch = glm::clamp(pitch, 20.0f, 30.0f);
+	pitch = glm::clamp(pitch, 10.f, 30.f);
 }
 
 void Camera::FollowTarget(const glm::vec3& targetPos)
 {
-    at = targetPos;
+	at = targetPos + glm::vec3(0.f, 1.5f, 0.f);
 
     float yawRad = glm::radians(yaw);
     float pitchRad = glm::radians(pitch);
@@ -74,5 +75,5 @@ glm::mat4 Camera::GetView() const
 
 glm::mat4 Camera::GetProj(float aspect) const
 {
-	return glm::perspective(glm::radians(45.0f), aspect, 0.1f, 100.f);
+	return glm::perspective(glm::radians(45.0f), aspect, 0.1f, 200.f);
 }
