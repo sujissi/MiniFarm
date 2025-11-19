@@ -19,52 +19,52 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source\PickingSystem.cpp" />
-    <ClCompile Include="Source\CollisionSystem.cpp" />
-    <ClCompile Include="Source\DebugDrawer.cpp" />
-    <ClCompile Include="Source\BoxCollider.cpp" />
-    <ClCompile Include="Source\Terrarian.cpp" />
-    <ClCompile Include="Source\Crop.cpp" />
-    <ClCompile Include="Source\DataTable.cpp" />
-    <ClCompile Include="Source\InputManager.cpp" />
-    <ClCompile Include="Source\Camera.cpp" />
-    <ClCompile Include="Source\GameObject.cpp" />
-    <ClCompile Include="Source\Inventory.cpp" />
+    <ClCompile Include="Source\Systems\PickingSystem.cpp" />
+    <ClCompile Include="Source\Systems\CollisionSystem.cpp" />
+    <ClCompile Include="Source\Systems\DebugDrawer.cpp" />
+    <ClCompile Include="Source\Systems\BoxCollider.cpp" />
+    <ClCompile Include="Source\Game\Terrarian.cpp" />
+    <ClCompile Include="Source\Game\Crop.cpp" />
+    <ClCompile Include="Source\Systems\DataTable.cpp" />
+    <ClCompile Include="Source\Core\InputManager.cpp" />
+    <ClCompile Include="Source\Render\Camera.cpp" />
+    <ClCompile Include="Source\Game\GameObject.cpp" />
+    <ClCompile Include="Source\Systems\Inventory.cpp" />
     <ClCompile Include="Source\Main.cpp" />
-    <ClCompile Include="Source\Model.cpp" />
-    <ClCompile Include="Source\PCH.cpp">
+    <ClCompile Include="Source\Render\Model.cpp" />
+    <ClCompile Include="Source\PCH\PCH.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="Source\Player.cpp" />
-    <ClCompile Include="Source\SceneManager.cpp" />
-    <ClCompile Include="Source\Shader.cpp" />
+    <ClCompile Include="Source\Game\Player.cpp" />
+    <ClCompile Include="Source\Core\SceneManager.cpp" />
+    <ClCompile Include="Source\Render\Shader.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\FileUtils.h" />
-    <ClInclude Include="Source\PickingSystem.h" />
-    <ClInclude Include="Source\CollisionSystem.h" />
-    <ClInclude Include="Source\DebugDrawer.h" />
-    <ClInclude Include="Source\BoxCollider.h" />
-    <ClInclude Include="Source\Collider.h" />
-    <ClInclude Include="Source\stb_image.h" />
-    <ClInclude Include="Source\Terrarian.h" />
-    <ClInclude Include="Source\GameTypes.h" />
-    <ClInclude Include="Source\Crop.h" />
-    <ClInclude Include="Source\DataTable.h" />
-    <ClInclude Include="Source\InputManager.h" />
-    <ClInclude Include="Source\Camera.h" />
-    <ClInclude Include="Source\GameObject.h" />
-    <ClInclude Include="Source\Inventory.h" />
-    <ClInclude Include="Source\Logger.h" />
-    <ClInclude Include="Source\Model.h" />
-    <ClInclude Include="Source\PCH.h" />
-    <ClInclude Include="Source\Player.h" />
-    <ClInclude Include="Source\SceneManager.h" />
-    <ClInclude Include="Source\Shader.h" />
-    <ClInclude Include="Source\MathUtils.h" />
+    <ClInclude Include="Source\Utils\FileUtils.h" />
+    <ClInclude Include="Source\Systems\PickingSystem.h" />
+    <ClInclude Include="Source\Systems\CollisionSystem.h" />
+    <ClInclude Include="Source\Systems\DebugDrawer.h" />
+    <ClInclude Include="Source\Systems\BoxCollider.h" />
+    <ClInclude Include="Source\Systems\Collider.h" />
+    <ClInclude Include="Source\Lib\stb_image.h" />
+    <ClInclude Include="Source\Game\Terrarian.h" />
+    <ClInclude Include="Source\Game\GameTypes.h" />
+    <ClInclude Include="Source\Game\Crop.h" />
+    <ClInclude Include="Source\Systems\DataTable.h" />
+    <ClInclude Include="Source\Core\InputManager.h" />
+    <ClInclude Include="Source\Render\Camera.h" />
+    <ClInclude Include="Source\Game\GameObject.h" />
+    <ClInclude Include="Source\Systems\Inventory.h" />
+    <ClInclude Include="Source\Utils\Logger.h" />
+    <ClInclude Include="Source\Render\Model.h" />
+    <ClInclude Include="Source\PCH\PCH.h" />
+    <ClInclude Include="Source\Game\Player.h" />
+    <ClInclude Include="Source\Core\SceneManager.h" />
+    <ClInclude Include="Source\Render\Shader.h" />
+    <ClInclude Include="Source\Utils\MathUtils.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
@@ -127,7 +127,7 @@
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>PCH.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(ProjectDir)\Source;$(ProjectDir)\Shaders;$(ProjectDir)\Assets;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\Source\Core;$(ProjectDir)\Source\Game;$(ProjectDir)\Source\Render;$(ProjectDir)\Source\Systems;$(ProjectDir)\Source\PCH;$(ProjectDir)\Source\Utils;$(ProjectDir)\Source\Lib;$(ProjectDir)\Shaders;$(ProjectDir)\Assets;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -146,7 +146,7 @@
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>PCH.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(ProjectDir)\Source;$(ProjectDir)\Shaders;$(ProjectDir)\Assets;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\Source\Core;$(ProjectDir)\Source\Game;$(ProjectDir)\Source\Render;$(ProjectDir)\Source\Systems;$(ProjectDir)\Source\PCH;$(ProjectDir)\Source\Utils;$(ProjectDir)\Source\Lib;$(ProjectDir)\Shaders;$(ProjectDir)\Assets;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -163,7 +163,7 @@
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>PCH.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(ProjectDir)\Source;$(ProjectDir)\Shaders;$(ProjectDir)\Assets;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\Source\Core;$(ProjectDir)\Source\Game;$(ProjectDir)\Source\Render;$(ProjectDir)\Source\Systems;$(ProjectDir)\Source\PCH;$(ProjectDir)\Source\Utils;$(ProjectDir)\Source\Lib;$(ProjectDir)\Shaders;$(ProjectDir)\Assets;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -182,7 +182,7 @@
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>PCH.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(ProjectDir)\Source;$(ProjectDir)\Shaders;$(ProjectDir)\Assets;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\Source\Core;$(ProjectDir)\Source\Game;$(ProjectDir)\Source\Render;$(ProjectDir)\Source\Systems;$(ProjectDir)\Source\PCH;$(ProjectDir)\Source\Utils;$(ProjectDir)\Source\Lib;$(ProjectDir)\Shaders;$(ProjectDir)\Assets;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
