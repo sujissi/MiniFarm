@@ -1,5 +1,5 @@
 #pragma once
-#include "Types.h"
+#include "GameTypes.h"
 
 class DataTable
 {

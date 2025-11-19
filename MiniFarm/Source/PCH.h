@@ -17,7 +17,8 @@
 #include <memory>
 #include <unordered_map>
 
-#include "Utils.h"
+#include "FileUtils.h"
+#include "MathUtils.h"
 #include "Logger.h"
 
 constexpr GLint WINDOW_W = 600;

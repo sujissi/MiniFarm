@@ -1,7 +1,6 @@
 #pragma once
 #include "GameObject.h"
 #include "Inventory.h"
-#include "Types.h"
 
 class Player : public GameObject
 {
