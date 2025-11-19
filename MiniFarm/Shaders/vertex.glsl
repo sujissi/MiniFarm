@@ -9,12 +9,20 @@ uniform mat4 uModel;
 uniform mat4 uView;  
 uniform mat4 uProj;  
 
+uniform int uDebugMode;
+uniform vec3 uDebugColor;
+
 out vec3 vColor;
 out vec2 vTextCoord;
 
 void main()
 {
     gl_Position = uProj * uView * uModel * vec4(aPos, 1.0);
-    vColor = aColor;
+    
+    if (uDebugMode == 1)
+        vColor = uDebugColor;
+    else
+        vColor = aColor;
+
     vTextCoord = aTextCoord;
 }

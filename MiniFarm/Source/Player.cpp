@@ -3,6 +3,7 @@
 #include "SceneManager.h"
 #include "InputManager.h"
 #include "DataTable.h"
+#include "BoxCollider.h"
 
 Player::Player()
 {
@@ -11,6 +12,11 @@ Player::Player()
 	m_rot = { 0.f, 0.f, 0.f };
 	m_scale = { 1.f, 1.f, 1.f };
     m_speed = 0.2f;
+
+    m_collider = std::make_shared<BoxCollider>(
+        glm::vec3(-0.5f, 0.0f, -0.5f),
+        glm::vec3(0.5f, 2.0f, 0.5f)
+    );
 }
 
 void Player::Update(int time)
@@ -20,6 +26,7 @@ void Player::Update(int time)
     HandleRotate();
     HandleMove();
 
+	GameObject::Update(time);
     InputManager::Update();
 }
 

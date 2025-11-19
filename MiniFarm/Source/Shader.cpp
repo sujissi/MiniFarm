@@ -75,3 +75,16 @@ void Shader::SetTexture(GLint textureUnit, const char* name)
 {
 	glUniform1i(glGetUniformLocation(s_programID, name), textureUnit);
 }
+
+void Shader::BeginDebugDraw(const glm::vec3& color)
+{
+	Use();
+
+	glUniform1i(glGetUniformLocation(s_programID, "uDebugMode"), 1);
+	glUniform3f(glGetUniformLocation(s_programID, "uDebugColor"), color.x, color.y, color.z);
+}
+
+void Shader::EndDebugDraw()
+{
+	glUniform1i(glGetUniformLocation(s_programID, "uDebugMode"), 0);
+}

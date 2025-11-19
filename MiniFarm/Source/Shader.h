@@ -10,7 +10,8 @@ public:
 	static void SetView(const glm::mat4& view, const char* name = "uView");
 	static void SetProj(const glm::mat4& proj, const char* name = "uProj");
 	static void SetTexture(GLint textureUnit, const char* name = "texture");
-
+	static void BeginDebugDraw(const glm::vec3& color);
+	static void EndDebugDraw();
 private:
 	static GLuint s_programID;
 	static GLuint CompileShader(const std::string& source, GLenum type);
