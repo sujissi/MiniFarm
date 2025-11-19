@@ -12,6 +12,11 @@ public:
 	bool Intersects(const Collider* other) const;
 	bool IntersectSegment(const glm::vec3& start, const glm::vec3& end,
 		glm::vec3& hitPoint, float* outT) const override;
+
+	bool Raycast(const glm::vec3& origin,
+		const glm::vec3& dir,
+		float& outT,
+		glm::vec3& outHit) const override;
 public:
 	glm::vec3 m_localMin;
 	glm::vec3 m_localMax;

@@ -104,6 +104,33 @@ bool BoxCollider::IntersectSegment(const glm::vec3& start, const glm::vec3& end,
 	return true;
 }
 
+bool BoxCollider::Raycast(const glm::vec3& origin, const glm::vec3& dir, float& outT, glm::vec3& outHit) const
+{
+	float tMin = 0.0f;
+	float tMax = 10000.0f; // 충분히 큰 값
+
+	glm::vec3 invDir = 1.0f / dir;
+
+	for (int i = 0; i < 3; i++)
+	{
+		float t1 = (m_worldMin[i] - origin[i]) * invDir[i];
+		float t2 = (m_worldMax[i] - origin[i]) * invDir[i];
+
+		float tNear = glm::min(t1, t2);
+		float tFar = glm::max(t1, t2);
+
+		tMin = glm::max(tMin, tNear);
+		tMax = glm::min(tMax, tFar);
+
+		if (tMax < tMin)
+			return false;
+	}
+
+	outT = tMin;
+	outHit = origin + dir * tMin;
+	return true;
+}
+
 void BoxCollider::DrawDebug()
 {
 	DebugDrawer::DrawBox(m_worldMin, m_worldMax, glm::vec3(1, 0, 0));

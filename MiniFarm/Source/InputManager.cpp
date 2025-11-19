@@ -1,5 +1,6 @@
 #include "PCH.h"
 #include "InputManager.h"
+#include "SceneManager.h"
 
 std::array<bool, 256> InputManager::s_keys;
 std::array<bool, 256> InputManager::s_prevKeys;
@@ -35,8 +36,8 @@ void InputManager::KeyDown(unsigned char key, int x, int y)
 
 	switch (key)
 	{
-		case 't': SetUIMode(false); break; //temp UI 모드일 때 끄는 키
-		case 'q': exit(0);
+	case 't': SetUIMode(false); break; //temp UI 모드일 때 끄는 키
+	case 'q': exit(0);
 	}
 }
 
@@ -64,6 +65,7 @@ void InputManager::MouseButton(int button, int state, int x, int y)
 	{
 		if (s_uiMode)
 		{
+			SceneManager::OnMouseClick(x, y);
 			// TODO:
 			// UIManager::OnClick(x, y);
 			return;

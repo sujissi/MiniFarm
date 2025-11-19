@@ -18,7 +18,8 @@ Player::Player()
         glm::vec3(0.5f, 2.0f, 0.5f)
     );
 
-    m_moved = true;
+    m_alive = true;
+    m_name = "player";
 }
 
 void Player::Update(int time)

@@ -9,6 +9,6 @@ public:
 
 class House : public GameObject
 {
-	public:
+public:
 	House(const glm::vec3& position);
 };

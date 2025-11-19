@@ -7,6 +7,7 @@
 
 std::vector<std::shared_ptr<GameObject>> SceneManager::s_objects;
 Camera SceneManager::s_camera;
+GameObject* SceneManager::s_selected = nullptr;
 
 void SceneManager::Init()
 {
@@ -123,22 +124,106 @@ glm::vec3 SceneManager::TryMove(GameObject* obj, const glm::vec3& desiredPos)
     return newPos;
 }
 
+static Ray ScreenPointToRay(int x, int y)
+{
+    float nx = (2.0f * x) / WINDOW_W - 1.0f;
+    float ny = 1.0f - (2.0f * y) / WINDOW_H;
+
+    glm::vec4 startClip(nx, ny, -1, 1);
+    glm::vec4 endClip(nx, ny, 1, 1);
+
+    float aspect = (float)WINDOW_W / (float)WINDOW_H;
+    glm::mat4 view = SceneManager::GetCamera().GetView();
+    glm::mat4 proj = SceneManager::GetCamera().GetProj(aspect);
+
+    glm::mat4 invVP = glm::inverse(proj * view);
+
+    glm::vec4 startWorld = invVP * startClip;
+    glm::vec4 endWorld = invVP * endClip;
+
+    startWorld /= startWorld.w;
+    endWorld /= endWorld.w;
+
+    Ray ray;
+    ray.origin = glm::vec3(startWorld);
+    ray.dir = glm::normalize(glm::vec3(endWorld - startWorld));
+    return ray;
+}
+
+static bool RayGround(const Ray& ray, glm::vec3& hit)
+{
+    glm::vec3 planeNormal(0, 1, 0);
+    float denom = glm::dot(ray.dir, planeNormal);
+
+    if (fabs(denom) < 1e-6f)
+        return false;
+
+    float t = -ray.origin.y / denom;
+    if (t < 0) return false;
+
+    hit = ray.origin + ray.dir * t;
+    return true;
+}
+
+void SceneManager::OnMouseClick(int x, int y)
+{
+    Ray ray = ScreenPointToRay(x, y);
+
+    auto clickedObj = PickObject(ray);
+
+    if (clickedObj && dynamic_cast<Player*>(clickedObj))
+        return;
+
+    if (clickedObj)
+    {
+        s_selected = clickedObj;
+        LOG_D("Selected %s", clickedObj->m_name.c_str());
+        return;
+    }
+
+    s_selected = nullptr;
+    LOG_D("Selection cleared");
+}
+
+GameObject* SceneManager::PickObject(const Ray& ray)
+{
+    GameObject* picked = nullptr;
+    float nearestT = FLT_MAX;
+
+    for (auto& obj : s_objects)
+    {
+        if (!obj->m_collider) continue;
+
+        float t;
+        glm::vec3 hit;
+
+        if (obj->m_collider->Raycast(ray.origin, ray.dir, t, hit))
+        {
+            if (t < nearestT)
+            {
+                nearestT = t;
+                picked = obj.get();
+            }
+        }
+    }
+
+    return picked;
+}
+
 void SceneManager::CollisionCheck()
 {
-    for (int i = 0; i < s_objects.size(); i++)
+    for (auto& obj : s_objects)
     {
-        for (int j = i + 1; j < s_objects.size(); j++)
+        if (!obj->m_collider) continue;
+
+        for (auto& other : s_objects)
         {
-            auto a = s_objects[i];
-            auto b = s_objects[j];
+            if (other.get() == obj.get()) continue;
+            if (!other->m_collider) continue;
 
-            if (!a->m_collider || !b->m_collider)
-                continue;
-
-            if (a->m_collider->Intersects(b->m_collider.get()))
+            if (obj->m_collider->Intersects(other->m_collider.get()))
             {
-                a->OnCollision(b.get());
-                b->OnCollision(a.get());
+                obj->OnCollision(other.get());
             }
         }
     }

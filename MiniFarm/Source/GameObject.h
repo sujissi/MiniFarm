@@ -8,7 +8,9 @@ public:
     glm::vec3 m_pos;
     glm::vec3 m_rot;
     glm::vec3 m_scale;
-    bool m_moved = false;
+
+    bool m_alive = false;
+	std::string m_name = ""; // for debug
 	std::shared_ptr<class Collider> m_collider;
 public:
     virtual ~GameObject() = default;

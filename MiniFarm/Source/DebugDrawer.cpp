@@ -39,7 +39,6 @@ void DebugDrawer::DrawArrow(const glm::vec3& pos, const glm::vec3& dir,
 	glBegin(GL_LINES);
 	glVertex3f(end.x, end.y, end.z); glVertex3f(left.x, left.y, left.z);
 	glVertex3f(end.x, end.y, end.z); glVertex3f(right.x, right.y, right.z);
-	glVertex3f(end.x, end.y, end.z); glVertex3f(top.x, top.y, top.z);
 	glEnd();
 
 	Shader::EndDebugDraw();
