@@ -44,6 +44,8 @@ float Camera::GetFlatYaw() const
 void Camera::AddYaw(float delta)
 {
 	yaw += delta;
+	yaw = glm::mod(yaw, 360.0f);
+	if (yaw < 0.f) yaw += 360.0f;
 }
 
 void Camera::AddPitch(float delta)

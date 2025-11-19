@@ -3,7 +3,7 @@
 #include "Shader.h"
 #include "Player.h"
 #include "Terrarian.h"
-#include "Collider.h"
+#include "PickingSystem.h"
 
 std::vector<std::shared_ptr<GameObject>> SceneManager::s_objects;
 Camera SceneManager::s_camera;
@@ -82,94 +82,11 @@ void SceneManager::Draw()
 void SceneManager::Reshape(int w, int h)
 {
     glViewport(0, 0, w, h);
-
-}
-
-glm::vec3 SceneManager::TryMove(GameObject* obj, const glm::vec3& desiredPos)
-{
-    if (!obj->m_collider)
-        return desiredPos;
-
-    glm::vec3 oldPos = obj->m_pos;
-    glm::vec3 newPos = desiredPos;
-
-    obj->m_pos = glm::vec3(desiredPos.x, oldPos.y, oldPos.z);
-    obj->m_collider->UpdatePos(obj->m_pos);
-
-    for (auto& other : s_objects)
-    {
-        if (other.get() == obj || !other->m_collider) continue;
-        if (obj->m_collider->Intersects(other->m_collider.get()))
-        {
-            newPos.x = oldPos.x;
-            break;
-        }
-    }
-
-    obj->m_pos = glm::vec3(newPos.x, oldPos.y, desiredPos.z);
-    obj->m_collider->UpdatePos(obj->m_pos);
-
-    for (auto& other : s_objects)
-    {
-        if (other.get() == obj || !other->m_collider) continue;
-        if (obj->m_collider->Intersects(other->m_collider.get()))
-        {
-            newPos.z = oldPos.z;
-            break;
-        }
-    }
-
-    obj->m_pos = oldPos;
-
-    return newPos;
-}
-
-static Ray ScreenPointToRay(int x, int y)
-{
-    float nx = (2.0f * x) / WINDOW_W - 1.0f;
-    float ny = 1.0f - (2.0f * y) / WINDOW_H;
-
-    glm::vec4 startClip(nx, ny, -1, 1);
-    glm::vec4 endClip(nx, ny, 1, 1);
-
-    float aspect = (float)WINDOW_W / (float)WINDOW_H;
-    glm::mat4 view = SceneManager::GetCamera().GetView();
-    glm::mat4 proj = SceneManager::GetCamera().GetProj(aspect);
-
-    glm::mat4 invVP = glm::inverse(proj * view);
-
-    glm::vec4 startWorld = invVP * startClip;
-    glm::vec4 endWorld = invVP * endClip;
-
-    startWorld /= startWorld.w;
-    endWorld /= endWorld.w;
-
-    Ray ray;
-    ray.origin = glm::vec3(startWorld);
-    ray.dir = glm::normalize(glm::vec3(endWorld - startWorld));
-    return ray;
-}
-
-static bool RayGround(const Ray& ray, glm::vec3& hit)
-{
-    glm::vec3 planeNormal(0, 1, 0);
-    float denom = glm::dot(ray.dir, planeNormal);
-
-    if (fabs(denom) < 1e-6f)
-        return false;
-
-    float t = -ray.origin.y / denom;
-    if (t < 0) return false;
-
-    hit = ray.origin + ray.dir * t;
-    return true;
 }
 
 void SceneManager::OnMouseClick(int x, int y)
 {
-    Ray ray = ScreenPointToRay(x, y);
-
-    auto clickedObj = PickObject(ray);
+    auto clickedObj = PickingSystem::PickObject(x, y);
 
     if (clickedObj && dynamic_cast<Player*>(clickedObj))
         return;
@@ -183,48 +100,4 @@ void SceneManager::OnMouseClick(int x, int y)
 
     s_selected = nullptr;
     LOG_D("Selection cleared");
-}
-
-GameObject* SceneManager::PickObject(const Ray& ray)
-{
-    GameObject* picked = nullptr;
-    float nearestT = FLT_MAX;
-
-    for (auto& obj : s_objects)
-    {
-        if (!obj->m_collider) continue;
-
-        float t;
-        glm::vec3 hit;
-
-        if (obj->m_collider->Raycast(ray.origin, ray.dir, t, hit))
-        {
-            if (t < nearestT)
-            {
-                nearestT = t;
-                picked = obj.get();
-            }
-        }
-    }
-
-    return picked;
-}
-
-void SceneManager::CollisionCheck()
-{
-    for (auto& obj : s_objects)
-    {
-        if (!obj->m_collider) continue;
-
-        for (auto& other : s_objects)
-        {
-            if (other.get() == obj.get()) continue;
-            if (!other->m_collider) continue;
-
-            if (obj->m_collider->Intersects(other->m_collider.get()))
-            {
-                obj->OnCollision(other.get());
-            }
-        }
-    }
 }

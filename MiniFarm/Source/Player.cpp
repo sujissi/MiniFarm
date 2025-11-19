@@ -4,6 +4,7 @@
 #include "InputManager.h"
 #include "DataTable.h"
 #include "BoxCollider.h"
+#include "CollisionSystem.h"
 
 Player::Player()
 {
@@ -66,7 +67,7 @@ void Player::HandleMove()
     if (glm::length(move) > 0)
     {
         glm::vec3 desired = m_pos + glm::normalize(move) * m_speed;
-        m_pos = SceneManager::TryMove(this, desired);
+        m_pos = CollisionSystem::TryMove(this, desired);
     }
     cam.FollowTarget(m_pos);
 }
