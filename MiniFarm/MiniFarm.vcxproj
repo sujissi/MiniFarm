@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\BoxCollider.cpp" />
     <ClCompile Include="Source\Terrarian.cpp" />
     <ClCompile Include="Source\Crop.cpp" />
     <ClCompile Include="Source\DataTable.cpp" />
@@ -39,6 +40,8 @@
     <ClCompile Include="Source\Shader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\BoxCollider.h" />
+    <ClInclude Include="Source\Collider.h" />
     <ClInclude Include="Source\stb_image.h" />
     <ClInclude Include="Source\Terrarian.h" />
     <ClInclude Include="Source\Types.h" />
