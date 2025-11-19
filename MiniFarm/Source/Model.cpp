@@ -122,6 +122,7 @@ void Model::LoadOBJ(const std::string& path)
 		}
 	}
 	SetupBuffers();
+	InitBounds();
 }
 
 GLuint Model::LoadIMG(const std::string& path)
@@ -203,6 +204,28 @@ void Model::SetupBuffers()
 	glEnableVertexAttribArray(3);
 
 	glBindVertexArray(0);
+}
+
+void Model::InitBounds()
+{
+	// AABB °è»ê
+	if (!m_vertices.empty())
+	{
+		m_minBounds = m_vertices[0].m_pos;
+		m_maxBounds = m_vertices[0].m_pos;
+
+		for (auto& v : m_vertices)
+		{
+			m_minBounds.x = std::min(m_minBounds.x, v.m_pos.x);
+			m_minBounds.y = std::min(m_minBounds.y, v.m_pos.y);
+			m_minBounds.z = std::min(m_minBounds.z, v.m_pos.z);
+
+			m_maxBounds.x = std::max(m_maxBounds.x, v.m_pos.x);
+			m_maxBounds.y = std::max(m_maxBounds.y, v.m_pos.y);
+			m_maxBounds.z = std::max(m_maxBounds.z, v.m_pos.z);
+		}
+	}
+
 }
 
 void Model::Draw()

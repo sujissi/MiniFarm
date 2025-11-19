@@ -15,6 +15,12 @@ private:
 	void LoadOBJ(const std::string& path);
 	GLuint LoadIMG(const std::string& path);
 	void SetupBuffers();
+
+	void InitBounds();
+public:
+	glm::vec3 GetMinBounds() const { return m_minBounds; }
+	glm::vec3 GetMaxBounds() const { return m_maxBounds; }
+
 private:
 	struct Vertex {
 		glm::vec3 m_pos;
@@ -26,4 +32,7 @@ private:
 	std::vector<Vertex> m_vertices;
 	GLuint m_vao = 0, m_vbo = 0;
 	GLuint m_textureID = 0;
+
+	glm::vec3 m_minBounds {0};
+	glm::vec3 m_maxBounds {0};
 };

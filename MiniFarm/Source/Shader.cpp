@@ -79,7 +79,7 @@ void Shader::SetTexture(GLint textureUnit, const char* name)
 void Shader::BeginDebugDraw(const glm::vec3& color)
 {
 	Use();
-
+	SetModel(glm::mat4(1.0f));
 	glUniform1i(glGetUniformLocation(s_programID, "uDebugMode"), 1);
 	glUniform3f(glGetUniformLocation(s_programID, "uDebugColor"), color.x, color.y, color.z);
 }

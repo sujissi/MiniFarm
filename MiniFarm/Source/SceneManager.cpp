@@ -18,6 +18,11 @@ void SceneManager::Init()
     AddObject(std::make_shared<House>(glm::vec3(10.0f, 0.0f, -10.f)));
     AddObject(std::make_shared<Fance>(glm::vec3(-10.0f, 0.0f, 10.f)));
     AddObject(std::make_shared<Fance>(glm::vec3(10.0f, 0.0f, 10.f)));
+
+    for (auto& obj : s_objects)
+    {
+        obj->Init();
+    }
 }
 
 void SceneManager::AddObject(std::shared_ptr<GameObject> obj)
@@ -64,7 +69,10 @@ void SceneManager::Draw()
     DrawGround();
 
     for (auto& obj : s_objects)
+    {
+		obj->DebugDraw();
         obj->Draw();
+    }
 
     glutSwapBuffers();
 }

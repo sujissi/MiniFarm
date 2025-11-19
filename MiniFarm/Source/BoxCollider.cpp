@@ -10,16 +10,46 @@ BoxCollider::BoxCollider(const glm::vec3& min, const glm::vec3& max)
     m_worldMax = max;
 }
 
-void BoxCollider::UpdateTransform(const glm::vec3& pos, const glm::vec3& scale, const glm::vec3& rot)
+void BoxCollider::UpdateTransform(const glm::vec3& pos,
+    const glm::vec3& scale,
+    const glm::vec3& rot)
 {
-    glm::vec3 half = (m_localMax - m_localMin) * 0.5f * scale;
-    glm::vec3 center = (m_localMax + m_localMin) * 0.5f;
+    glm::vec3 localCenter = (m_localMax + m_localMin) * 0.5f;
+    glm::vec3 localHalf = (m_localMax - m_localMin) * 0.5f * scale;
 
-    glm::vec3 worldCenter = center * scale + pos;
+    glm::mat4 R = glm::yawPitchRoll(
+        glm::radians(rot.y),
+        glm::radians(rot.x),
+        glm::radians(rot.z)
+    );
 
-    m_worldMin = worldCenter - half;
-    m_worldMax = worldCenter + half;
+    glm::mat3 rotMat = glm::mat3(R);
+
+    glm::vec3 corners[8] = {
+        localCenter + glm::vec3(-localHalf.x, -localHalf.y, -localHalf.z),
+        localCenter + glm::vec3(localHalf.x, -localHalf.y, -localHalf.z),
+        localCenter + glm::vec3(localHalf.x, -localHalf.y,  localHalf.z),
+        localCenter + glm::vec3(-localHalf.x, -localHalf.y,  localHalf.z),
+        localCenter + glm::vec3(-localHalf.x,  localHalf.y, -localHalf.z),
+        localCenter + glm::vec3(localHalf.x,  localHalf.y, -localHalf.z),
+        localCenter + glm::vec3(localHalf.x,  localHalf.y,  localHalf.z),
+        localCenter + glm::vec3(-localHalf.x,  localHalf.y,  localHalf.z),
+    };
+
+    glm::vec3 wMin(99999.f), wMax(-99999.f);
+
+    for (int i = 0; i < 8; i++)
+    {
+        glm::vec3 w = rotMat * corners[i] + pos;
+
+        wMin = glm::min(wMin, w);
+        wMax = glm::max(wMax, w);
+    }
+
+    m_worldMin = wMin;
+    m_worldMax = wMax;
 }
+
 
 bool BoxCollider::IntersectSegment(const glm::vec3& start, const glm::vec3& end, glm::vec3& hitPoint, float* outT) const
 {

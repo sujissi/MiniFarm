@@ -17,6 +17,8 @@ Player::Player()
         glm::vec3(-0.5f, 0.0f, -0.5f),
         glm::vec3(0.5f, 2.0f, 0.5f)
     );
+
+    m_moved = true;
 }
 
 void Player::Update(int time)
