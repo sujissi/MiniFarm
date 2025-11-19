@@ -40,32 +40,3 @@ inline glm::mat4 PivotScale(float s, const glm::vec3& pivot)
 		* glm::scale(glm::mat4(1), glm::vec3(s))
 		* glm::translate(glm::mat4(1), -pivot);
 }
-
-inline bool IntersectSegmentAABB(const glm::vec3& start, const glm::vec3& end,
-    const glm::vec3& aabbMin, const glm::vec3& aabbMax, float& outT, glm::vec3& outPoint)
-{
-    glm::vec3 dir = end - start;
-    glm::vec3 invDir = 1.0f / dir;
-
-    float tMin = 0.0f;
-    float tMax = 1.0f;  // segment range is 0~1
-
-    for (int i = 0; i < 3; i++)
-    {
-        float t1 = (aabbMin[i] - start[i]) * invDir[i];
-        float t2 = (aabbMax[i] - start[i]) * invDir[i];
-
-        float tNear = glm::min(t1, t2);
-        float tFar = glm::max(t1, t2);
-
-        tMin = glm::max(tMin, tNear);
-        tMax = glm::min(tMax, tFar);
-
-        if (tMax < tMin)
-            return false; // no collision
-    }
-
-    outT = tMin;
-    outPoint = start + dir * tMin;
-    return true;
-}

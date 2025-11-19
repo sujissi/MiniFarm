@@ -17,5 +17,6 @@ public:
     virtual void Update(int time);
     virtual void Draw();
     virtual void DebugDraw();
-
+	
+    virtual void OnCollision(GameObject* other) {}
 };

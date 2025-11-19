@@ -14,7 +14,7 @@ void GameObject::Init()
         glm::vec3 max = m_model->GetMaxBounds();
 
         m_collider = std::make_shared<BoxCollider>(min, max);
-        m_collider->UpdateTransform(m_pos, m_scale, m_rot);
+        m_collider->InitTransform(m_pos, m_scale, m_rot);
 
         LOG("Collider created");
     }
@@ -23,9 +23,7 @@ void GameObject::Init()
 void GameObject::Update(int time)
 {
     if (!m_moved) return;
-
-    if(m_collider)
-		m_collider->UpdateTransform(m_pos, m_scale, m_rot);
+	m_collider->UpdatePos(m_pos);
 }
 
 void GameObject::Draw()

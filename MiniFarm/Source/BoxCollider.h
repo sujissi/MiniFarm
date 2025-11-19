@@ -6,10 +6,12 @@ class BoxCollider : public Collider
 public:
 	BoxCollider(const glm::vec3& min, const glm::vec3& max);
 
-	void UpdateTransform(const glm::vec3& pos, const glm::vec3& scale, const glm::vec3& rot) override;
+	virtual void DrawDebug() override;
+	void InitTransform(const glm::vec3& pos, const glm::vec3& scale, const glm::vec3& rot) override;
+	void UpdatePos(const glm::vec3& pos) override;
+	bool Intersects(const Collider* other) const;
 	bool IntersectSegment(const glm::vec3& start, const glm::vec3& end,
 		glm::vec3& hitPoint, float* outT) const override;
-	virtual void DrawDebug() override;
 public:
 	glm::vec3 m_localMin;
 	glm::vec3 m_localMax;

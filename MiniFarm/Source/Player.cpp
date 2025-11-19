@@ -63,8 +63,10 @@ void Player::HandleMove()
     if (InputManager::IsKeyDown('d')) move += right;
 
     if (glm::length(move) > 0)
-        m_pos += glm::normalize(move) * m_speed;
-
+    {
+        glm::vec3 desired = m_pos + glm::normalize(move) * m_speed;
+        m_pos = SceneManager::TryMove(this, desired);
+    }
     cam.FollowTarget(m_pos);
 }
 

@@ -12,6 +12,9 @@ public:
     static void Draw();
     static void Reshape(int w, int h);
 
+    static glm::vec3 TryMove(GameObject* obj, const glm::vec3& desiredPos);
+
+    static void CollisionCheck();
     static Camera& GetCamera() { return s_camera; }
 private:
     static std::vector<std::shared_ptr<GameObject>> s_objects;
