@@ -6,7 +6,7 @@ in vec2 vTextCoord;
 uniform int uDebugMode;
 out vec4 FragColor;
 
-uniform sampler2D texture;
+uniform sampler2D atexture;
 
 void main()
 {
@@ -16,6 +16,6 @@ void main()
     }
     else
     {
-        FragColor = texture(texture, vTextCoord);
+        FragColor = texture(atexture, vTextCoord);
     }
 }

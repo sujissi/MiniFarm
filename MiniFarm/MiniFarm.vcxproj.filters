@@ -25,89 +25,80 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source\Model.cpp">
-      <Filter>소스 파일\Rendering</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Camera.cpp">
-      <Filter>소스 파일\Rendering</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\GameObject.cpp">
-      <Filter>소스 파일\Game</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\SceneManager.cpp">
-      <Filter>소스 파일\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\PCH.cpp">
-      <Filter>소스 파일\PCH</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Shader.cpp">
-      <Filter>소스 파일\Rendering</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Main.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Source\DataTable.cpp">
-      <Filter>소스 파일\Systems</Filter>
+    <ClCompile Include="Source\Systems\PickingSystem.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Crop.cpp">
-      <Filter>소스 파일\Game</Filter>
+    <ClCompile Include="Source\Systems\CollisionSystem.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Source\InputManager.cpp">
-      <Filter>소스 파일\Core</Filter>
+    <ClCompile Include="Source\Systems\DebugDrawer.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Player.cpp">
-      <Filter>소스 파일\Game</Filter>
+    <ClCompile Include="Source\Systems\BoxCollider.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Inventory.cpp">
-      <Filter>소스 파일\Systems</Filter>
+    <ClCompile Include="Source\Game\Terrarian.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Terrarian.cpp">
-      <Filter>소스 파일\Game</Filter>
+    <ClCompile Include="Source\Game\Crop.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Systems\DataTable.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Core\InputManager.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Render\Camera.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\GameObject.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Systems\Inventory.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Render\Model.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\PCH\PCH.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Player.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Core\SceneManager.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Render\Shader.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\Model.h">
-      <Filter>소스 파일\Rendering</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Camera.h">
-      <Filter>소스 파일\Rendering</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\GameObject.h">
-      <Filter>소스 파일\Game</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\SceneManager.h">
-      <Filter>소스 파일\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\PCH.h">
-      <Filter>소스 파일\PCH</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Shader.h">
-      <Filter>소스 파일\Rendering</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Utils.h">
-      <Filter>소스 파일\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Logger.h">
-      <Filter>소스 파일\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\DataTable.h">
-      <Filter>소스 파일\Systems</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Crop.h">
-      <Filter>소스 파일\Game</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\InputManager.h">
-      <Filter>소스 파일\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Player.h">
-      <Filter>소스 파일\Game</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Inventory.h">
-      <Filter>소스 파일\Systems</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Types.h" />
-    <ClInclude Include="Source\Terrarian.h">
-      <Filter>소스 파일\Game</Filter>
-    </ClInclude>
+    <ClInclude Include="Source\Utils\FileUtils.h" />
+    <ClInclude Include="Source\Systems\PickingSystem.h" />
+    <ClInclude Include="Source\Systems\CollisionSystem.h" />
+    <ClInclude Include="Source\Systems\DebugDrawer.h" />
+    <ClInclude Include="Source\Systems\BoxCollider.h" />
+    <ClInclude Include="Source\Systems\Collider.h" />
+    <ClInclude Include="Source\Lib\stb_image.h" />
+    <ClInclude Include="Source\Game\Terrarian.h" />
+    <ClInclude Include="Source\Game\GameTypes.h" />
+    <ClInclude Include="Source\Game\Crop.h" />
+    <ClInclude Include="Source\Systems\DataTable.h" />
+    <ClInclude Include="Source\Core\InputManager.h" />
+    <ClInclude Include="Source\Render\Camera.h" />
+    <ClInclude Include="Source\Game\GameObject.h" />
+    <ClInclude Include="Source\Systems\Inventory.h" />
+    <ClInclude Include="Source\Utils\Logger.h" />
+    <ClInclude Include="Source\Render\Model.h" />
+    <ClInclude Include="Source\PCH\PCH.h" />
+    <ClInclude Include="Source\Game\Player.h" />
+    <ClInclude Include="Source\Core\SceneManager.h" />
+    <ClInclude Include="Source\Render\Shader.h" />
+    <ClInclude Include="Source\Utils\MathUtils.h" />
   </ItemGroup>
 </Project>
