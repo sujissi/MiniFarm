@@ -23,7 +23,7 @@
     <ClCompile Include="Source\Systems\CollisionSystem.cpp" />
     <ClCompile Include="Source\Systems\DebugDrawer.cpp" />
     <ClCompile Include="Source\Systems\BoxCollider.cpp" />
-    <ClCompile Include="Source\Game\Terrarian.cpp" />
+    <ClCompile Include="Source\Game\Landform.cpp" />
     <ClCompile Include="Source\Game\Crop.cpp" />
     <ClCompile Include="Source\Systems\DataTable.cpp" />
     <ClCompile Include="Source\Core\InputManager.cpp" />
@@ -50,7 +50,7 @@
     <ClInclude Include="Source\Systems\BoxCollider.h" />
     <ClInclude Include="Source\Systems\Collider.h" />
     <ClInclude Include="Source\Lib\stb_image.h" />
-    <ClInclude Include="Source\Game\Terrarian.h" />
+    <ClInclude Include="Source\Game\Landform.h" />
     <ClInclude Include="Source\Game\GameTypes.h" />
     <ClInclude Include="Source\Game\Crop.h" />
     <ClInclude Include="Source\Systems\DataTable.h" />

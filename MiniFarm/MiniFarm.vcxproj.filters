@@ -40,7 +40,7 @@
     <ClCompile Include="Source\Systems\BoxCollider.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Game\Terrarian.cpp">
+    <ClCompile Include="Source\Game\Landform.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Source\Game\Crop.cpp">
@@ -85,7 +85,7 @@
     <ClInclude Include="Source\Systems\BoxCollider.h" />
     <ClInclude Include="Source\Systems\Collider.h" />
     <ClInclude Include="Source\Lib\stb_image.h" />
-    <ClInclude Include="Source\Game\Terrarian.h" />
+    <ClInclude Include="Source\Game\Landform.h" />
     <ClInclude Include="Source\Game\GameTypes.h" />
     <ClInclude Include="Source\Game\Crop.h" />
     <ClInclude Include="Source\Systems\DataTable.h" />

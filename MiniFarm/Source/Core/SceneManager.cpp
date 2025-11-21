@@ -2,7 +2,7 @@
 #include "SceneManager.h"
 #include "Shader.h"
 #include "Player.h"
-#include "Terrarian.h"
+#include "Landform.h"
 #include "PickingSystem.h"
 
 std::vector<std::shared_ptr<GameObject>> SceneManager::s_objects;
@@ -15,11 +15,13 @@ void SceneManager::Init()
     s_camera.Init();
     
     AddObject(std::make_shared<Player>());
-    AddObject(std::make_shared<House>(glm::vec3(-10.0f, 0.0f, -10.f)));
-    AddObject(std::make_shared<House>(glm::vec3(0.0f, 0.0f, -10.f)));
-    AddObject(std::make_shared<House>(glm::vec3(10.0f, 0.0f, -10.f)));
-    AddObject(std::make_shared<Fance>(glm::vec3(-10.0f, 0.0f, 10.f)));
-    AddObject(std::make_shared<Fance>(glm::vec3(10.0f, 0.0f, 10.f)));
+    AddObject(std::make_shared<House>(glm::vec3(-10.f, 0.f, -10.f)));
+    AddObject(std::make_shared<House>(glm::vec3(0.f, 0.f, -10.f)));
+    AddObject(std::make_shared<Fance>(glm::vec3(-10.f, 0.f, 10.f)));
+    AddObject(std::make_shared<Fance>(glm::vec3(10.f, 0.f, 10.f)));
+	AddObject(std::make_shared<Ground>(glm::vec3(0.f, -2.2f, 0.f)));
+	AddObject(std::make_shared<Tree>(glm::vec3(0.f, -2.2f, 0.f)));
+	AddObject(std::make_shared<Boat>(glm::vec3(0.f, -2.2f, 0.f)));
 
     for (auto& obj : s_objects)
     {
