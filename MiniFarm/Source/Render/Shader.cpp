@@ -88,3 +88,18 @@ void Shader::EndDebugDraw()
 {
 	glUniform1i(glGetUniformLocation(s_programID, "uDebugMode"), 0);
 }
+
+void Shader::SetLightPos(const glm::vec3& pos, const char* name)
+{
+	glUniform3f(glGetUniformLocation(s_programID, name), pos.x, pos.y, pos.z);
+}
+
+void Shader::SetLightColor(const glm::vec3& color, const char* name)
+{
+	glUniform3f(glGetUniformLocation(s_programID, name), color.x, color.y, color.z);
+}
+
+void Shader::SetViewPos(const glm::vec3& pos, const char* name)
+{
+	glUniform3f(glGetUniformLocation(s_programID, name), pos.x, pos.y, pos.z);
+}

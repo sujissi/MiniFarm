@@ -14,15 +14,19 @@ uniform vec3 uDebugColor;
 
 out vec3 vColor;
 out vec2 vTextCoord;
+out vec3 vNormal;
+out vec3 vPos;
 
 void main()
 {
     gl_Position = uProj * uView * uModel * vec4(aPos, 1.0);
     
+    vTextCoord = aTextCoord;
+    vNormal = mat3(transpose(inverse(uModel))) * aNormal;
+    vPos = vec3(uModel * vec4(aPos, 1.0));
+
     if (uDebugMode == 1)
         vColor = uDebugColor;
     else
         vColor = aColor;
-
-    vTextCoord = aTextCoord;
 }

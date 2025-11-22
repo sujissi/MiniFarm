@@ -2,7 +2,7 @@
 #include "SceneManager.h"
 #include "Shader.h"
 #include "Player.h"
-#include "Terrarian.h"
+#include "Landform.h"
 #include "PickingSystem.h"
 
 std::vector<std::shared_ptr<GameObject>> SceneManager::s_objects;
@@ -15,11 +15,8 @@ void SceneManager::Init()
     s_camera.Init();
     
     AddObject(std::make_shared<Player>());
-    AddObject(std::make_shared<House>(glm::vec3(-10.0f, 0.0f, -10.f)));
-    AddObject(std::make_shared<House>(glm::vec3(0.0f, 0.0f, -10.f)));
-    AddObject(std::make_shared<House>(glm::vec3(10.0f, 0.0f, -10.f)));
-    AddObject(std::make_shared<Fance>(glm::vec3(-10.0f, 0.0f, 10.f)));
-    AddObject(std::make_shared<Fance>(glm::vec3(10.0f, 0.0f, 10.f)));
+    AddObject(std::make_shared<House>(glm::vec3(-10.f, 0.f, -10.f)));
+	AddObject(std::make_shared<Ground>(glm::vec3(0.f, -2.f, 0.f)));
 
     for (auto& obj : s_objects)
     {
@@ -67,12 +64,16 @@ void SceneManager::Draw()
     Shader::SetView(s_camera.GetView());
     Shader::SetProj(s_camera.GetProj((float)WINDOW_W / WINDOW_H));
     
+    Shader::SetLightPos(glm::vec3(10.f, 15.f, 10.f));
+    Shader::SetLightColor(glm::vec3(1.0f, 1.0f, 1.0f));
+    Shader::SetViewPos(s_camera.eye);
+
     Shader::SetModel(glm::mat4(1.0f));
     DrawGround();
 
     for (auto& obj : s_objects)
     {
-		obj->DebugDraw();
+        obj->DebugDraw();
         obj->Draw();
     }
 
