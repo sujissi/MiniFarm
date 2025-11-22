@@ -43,6 +43,8 @@
     <ClCompile Include="Source\Render\Shader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Game\IInteractable.h" />
+    <ClInclude Include="Source\Game\InteractableObject.h" />
     <ClInclude Include="Source\Utils\FileUtils.h" />
     <ClInclude Include="Source\Systems\PickingSystem.h" />
     <ClInclude Include="Source\Systems\CollisionSystem.h" />

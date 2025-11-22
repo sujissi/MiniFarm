@@ -1,8 +1,8 @@
 #pragma once
-#include "GameObject.h"
+#include "InteractableObject.h"
 
 enum class ECropID;
-class Crop : public GameObject
+class Crop : public InteractableObject
 {
 private:
     ECropID m_id;
@@ -15,4 +15,6 @@ public:
 
     void Update(int dt) override;
     void AddWater(float amount);
+
+    virtual void Interact(Player* player) override;
 };
