@@ -64,12 +64,16 @@ void SceneManager::Draw()
     Shader::SetView(s_camera.GetView());
     Shader::SetProj(s_camera.GetProj((float)WINDOW_W / WINDOW_H));
     
+    Shader::SetLightPos(glm::vec3(10.f, 15.f, 10.f));
+    Shader::SetLightColor(glm::vec3(1.0f, 1.0f, 1.0f));
+    Shader::SetViewPos(s_camera.eye);
+
     Shader::SetModel(glm::mat4(1.0f));
     DrawGround();
 
     for (auto& obj : s_objects)
     {
-		obj->DebugDraw();
+        obj->DebugDraw();
         obj->Draw();
     }
 

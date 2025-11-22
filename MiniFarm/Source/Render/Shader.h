@@ -10,6 +10,11 @@ public:
 	static void SetView(const glm::mat4& view, const char* name = "uView");
 	static void SetProj(const glm::mat4& proj, const char* name = "uProj");
 	static void SetTexture(GLint textureUnit, const char* name = "atexture");
+
+	static void SetLightPos(const glm::vec3& pos, const char* name = "uLightPos");
+	static void SetLightColor(const glm::vec3& color, const char* name = "uLightColor");
+	static void SetViewPos(const glm::vec3& pos, const char* name = "uViewPos");
+	
 	static void BeginDebugDraw(const glm::vec3& color);
 	static void EndDebugDraw();
 private:
