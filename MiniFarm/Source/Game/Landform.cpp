@@ -10,6 +10,15 @@ Fance::Fance(const glm::vec3& position)
     m_name = "fence";
 }
 
+Fance_Curved::Fance_Curved(const glm::vec3& position)
+{
+    m_model = std::make_shared<Model>("Models/fance_curved.obj", "Models/Farm_texture.png");
+    m_pos = position;
+    m_rot = { 0.f, 180.f, 0.f };
+    m_scale = { 1.f, 1.f, 1.f };
+    m_name = "fence";
+}
+
 House::House(const glm::vec3& position)
 {
     m_model = std::make_shared<Model>("Models/house.obj", "Models/Farm_texture.png");
@@ -26,6 +35,15 @@ Ground::Ground(const glm::vec3& position)
     m_rot = { 0.f, 0.f, 0.f };
     m_scale = { 1.f, 1.f, 1.f };
     m_name = "ground";
+}
+
+Big_Tree::Big_Tree(const glm::vec3& position)
+{
+    m_model = std::make_shared<Model>("Models/big_tree.obj", "Models/Farm_texture.png");
+    m_pos = position;
+    m_rot = { 0.f, 0.f, 0.f };
+    m_scale = { 1.f, 1.f, 1.f };
+    m_name = "tree";
 }
 
 Tree::Tree(const glm::vec3& position)

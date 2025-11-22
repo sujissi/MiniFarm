@@ -16,12 +16,7 @@ void SceneManager::Init()
     
     AddObject(std::make_shared<Player>());
     AddObject(std::make_shared<House>(glm::vec3(-10.f, 0.f, -10.f)));
-    AddObject(std::make_shared<House>(glm::vec3(0.f, 0.f, -10.f)));
-    AddObject(std::make_shared<Fance>(glm::vec3(-10.f, 0.f, 10.f)));
-    AddObject(std::make_shared<Fance>(glm::vec3(10.f, 0.f, 10.f)));
 	AddObject(std::make_shared<Ground>(glm::vec3(0.f, -2.f, 0.f)));
-	AddObject(std::make_shared<Tree>(glm::vec3(0.f, -2.f, 0.f)));
-	AddObject(std::make_shared<Boat>(glm::vec3(0.f, -2.f, 0.f)));
 
     for (auto& obj : s_objects)
     {

@@ -7,6 +7,12 @@ public:
 	Fance(const glm::vec3& position);
 };
 
+class Fance_Curved : public GameObject
+{
+	public:
+	Fance_Curved(const glm::vec3& position);
+};
+
 class House : public GameObject
 {
 public:
@@ -17,6 +23,12 @@ class Ground : public GameObject
 {
 public:
 	Ground(const glm::vec3& position);
+};
+
+class Big_Tree : public GameObject
+{
+	public:
+	Big_Tree(const glm::vec3& position);
 };
 
 class Tree : public GameObject
