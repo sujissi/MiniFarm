@@ -36,3 +36,9 @@ enum class EToolID : ItemID
     SeedCarrot,
     SeedCabbage,
 };
+
+struct ObjectInfo
+{
+    std::string modelPath;
+    std::string texturePath;
+};

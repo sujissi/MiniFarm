@@ -2,7 +2,7 @@
 #include "DataTable.h"
 
 std::unordered_map<int, CropData> DataTable::s_crops;
-std::unordered_map<std::string, std::string> DataTable::s_objectModels;
+std::unordered_map<std::string, ObjectInfo> DataTable::s_objects;
 
 void DataTable::Init()
 {
@@ -49,35 +49,35 @@ const CropData* DataTable::GetCrop(ECropID  id) { return &s_crops[(int)id]; }
 
 void DataTable::LoadObjects(const std::string& path)
 {
-	std::string content = LoadFile(path.c_str());
-	if (content.empty()) {
-		return;
-	}
-
-	std::stringstream ss(content);
+	std::ifstream file(path);
 	std::string line;
 
-	std::getline(ss, line);
+	std::getline(file, line);
 
-	while (std::getline(ss, line))
+	while (std::getline(file, line))
 	{
-		std::stringstream ls(line);
-		std::string type, model;
+		if (line.empty()) continue;
 
-		std::getline(ls, type, ',');
-		std::getline(ls, model, ',');
+		std::stringstream ss(line);
+		std::string type, modelPath, texturePath;
 
-		s_objectModels[type] = model;
+		std::getline(ss, type, ',');
+		std::getline(ss, modelPath, ',');
+		std::getline(ss, texturePath, ',');
+
+		ObjectInfo info;
+		info.modelPath = modelPath;
+		info.texturePath = texturePath;
+
+		s_objects[type] = info;
 	}
 }
 
-const std::string& DataTable::GetObjectModel(const std::string& type)
+const ObjectInfo* DataTable::GetObjectInfo(const std::string& type)
 {
-	static std::string empty = "";
+	auto it = s_objects.find(type);
+	if (it == s_objects.end())
+		return nullptr;
 
-	auto it = s_objectModels.find(type);
-	if (it == s_objectModels.end())
-		return empty;
-
-	return it->second;
+	return &it->second;
 }

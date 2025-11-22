@@ -59,9 +59,16 @@ void SceneManager::LoadMap(const std::string& path)
         glm::vec3 pos = readVec3(obj["pos"]);
         glm::vec3 rot = readVec3(obj["rot"]);
         glm::vec3 scale = readVec3(obj["scale"]);
+        rot.y = -rot.y;
 
-        std::string model = DataTable::GetObjectModel(type);
-        auto inst = std::make_shared<StaticProp>(pos, rot, scale, model);
+        auto objInfo = DataTable::GetObjectInfo(type);
+        if(!objInfo)
+        {
+            LOG_E("No object info for type: %s", type.c_str());
+            continue;
+		}
+
+        auto inst = std::make_shared<StaticProp>(pos, rot, scale, objInfo->modelPath, objInfo->texturePath);
         if (inst)
         {
             AddObject(inst);

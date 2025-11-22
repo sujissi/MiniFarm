@@ -5,18 +5,17 @@
 class StaticProp : public GameObject
 {
 public:
-    std::string modelPath;
+	std::string m_modelPath;
+	std::string m_texturePath;
 
-    StaticProp(const glm::vec3& pos,
-        const glm::vec3& rot,
-        const glm::vec3& scale,
-        const std::string& model)
-        : GameObject(pos, rot, scale), modelPath(model)
-    {
-    }
+	StaticProp(const glm::vec3& pos, const glm::vec3& rot, const glm::vec3& scale,
+		const std::string& model, const std::string& texture)
+		: GameObject(pos, rot, scale), m_modelPath(model), m_texturePath(texture)
+	{
+	}
 
-    void Init() override
-    {
-        m_model = std::make_shared<Model>(modelPath, "Models/Farm_texture.png");
-    }
+	void Init() override
+	{
+		m_model = std::make_shared<Model>(m_modelPath, m_texturePath);
+	}
 };
