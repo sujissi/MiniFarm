@@ -129,7 +129,7 @@
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>PCH.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(ProjectDir)\Source\Core;$(ProjectDir)\Source\Game;$(ProjectDir)\Source\Render;$(ProjectDir)\Source\Systems;$(ProjectDir)\Source\PCH;$(ProjectDir)\Source\Utils;$(ProjectDir)\Source\Lib;$(ProjectDir)\Shaders;$(ProjectDir)\Assets;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\Source\Core;$(ProjectDir)\Source\Game;$(ProjectDir)\Source\Render;$(ProjectDir)\Source\Systems;$(ProjectDir)\Source\PCH;$(ProjectDir)\Source\Utils;$(ProjectDir)\Includes;$(ProjectDir)\Shaders;$(ProjectDir)\Assets;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -148,7 +148,7 @@
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>PCH.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(ProjectDir)\Source\Core;$(ProjectDir)\Source\Game;$(ProjectDir)\Source\Render;$(ProjectDir)\Source\Systems;$(ProjectDir)\Source\PCH;$(ProjectDir)\Source\Utils;$(ProjectDir)\Source\Lib;$(ProjectDir)\Shaders;$(ProjectDir)\Assets;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\Source\Core;$(ProjectDir)\Source\Game;$(ProjectDir)\Source\Render;$(ProjectDir)\Source\Systems;$(ProjectDir)\Source\PCH;$(ProjectDir)\Source\Utils;$(ProjectDir)\Includes;$(ProjectDir)\Shaders;$(ProjectDir)\Assets;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -165,7 +165,7 @@
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>PCH.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(ProjectDir)\Source\Core;$(ProjectDir)\Source\Game;$(ProjectDir)\Source\Render;$(ProjectDir)\Source\Systems;$(ProjectDir)\Source\PCH;$(ProjectDir)\Source\Utils;$(ProjectDir)\Source\Lib;$(ProjectDir)\Shaders;$(ProjectDir)\Assets;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\Source\Core;$(ProjectDir)\Source\Game;$(ProjectDir)\Source\Render;$(ProjectDir)\Source\Systems;$(ProjectDir)\Source\PCH;$(ProjectDir)\Source\Utils;$(ProjectDir)\Includes;$(ProjectDir)\Shaders;$(ProjectDir)\Assets;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -184,7 +184,7 @@
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>PCH.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(ProjectDir)\Source\Core;$(ProjectDir)\Source\Game;$(ProjectDir)\Source\Render;$(ProjectDir)\Source\Systems;$(ProjectDir)\Source\PCH;$(ProjectDir)\Source\Utils;$(ProjectDir)\Source\Lib;$(ProjectDir)\Shaders;$(ProjectDir)\Assets;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\Source\Core;$(ProjectDir)\Source\Game;$(ProjectDir)\Source\Render;$(ProjectDir)\Source\Systems;$(ProjectDir)\Source\PCH;$(ProjectDir)\Source\Utils;$(ProjectDir)\Includes;$(ProjectDir)\Shaders;$(ProjectDir)\Assets;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
