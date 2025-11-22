@@ -16,6 +16,7 @@
 #include <array>
 #include <memory>
 #include <unordered_map>
+#include <functional>
 
 #include "FileUtils.h"
 #include "MathUtils.h"

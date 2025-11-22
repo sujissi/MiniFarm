@@ -1,0 +1,9 @@
+type,model
+Fance,Models/fance.obj
+Fance_Curved,Models/fance_curved.obj
+Tree,Models/tree.obj
+Big_Tree,Models/big_tree.obj
+House,Models/house.obj
+Field,Models/field.obj
+Landform,Models/landform.obj
+Boat,Models/boat.obj

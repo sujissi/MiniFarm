@@ -13,6 +13,13 @@ public:
 	std::string m_name = ""; // for debug
 	std::shared_ptr<class Collider> m_collider;
 public:
+    GameObject(
+        const glm::vec3& pos = glm::vec3(0.0f),
+        const glm::vec3& rot = glm::vec3(0.0f),
+        const glm::vec3& scale = glm::vec3(1.0f))
+        : m_pos(pos), m_rot(rot), m_scale(scale), m_alive(true)
+    {
+	}
     virtual ~GameObject() = default;
 
     virtual void Init();

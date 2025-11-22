@@ -7,6 +7,7 @@ class SceneManager
 public:
     static void Init();
     static void AddObject(std::shared_ptr<GameObject> obj);
+	static void LoadMap(const std::string& path);
 
     static void Update(int time);
     static void Draw();

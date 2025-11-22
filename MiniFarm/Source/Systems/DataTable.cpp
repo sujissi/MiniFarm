@@ -2,10 +2,12 @@
 #include "DataTable.h"
 
 std::unordered_map<int, CropData> DataTable::s_crops;
+std::unordered_map<std::string, std::string> DataTable::s_objectModels;
 
 void DataTable::Init()
 {
 	LoadCrops("Data/crops.csv");
+	LoadObjects("Data/object_table.csv");
 }
 
 void DataTable::LoadCrops(const std::string& path)
@@ -44,3 +46,38 @@ void DataTable::LoadCrops(const std::string& path)
 }
 
 const CropData* DataTable::GetCrop(ECropID  id) { return &s_crops[(int)id]; }
+
+void DataTable::LoadObjects(const std::string& path)
+{
+	std::string content = LoadFile(path.c_str());
+	if (content.empty()) {
+		return;
+	}
+
+	std::stringstream ss(content);
+	std::string line;
+
+	std::getline(ss, line);
+
+	while (std::getline(ss, line))
+	{
+		std::stringstream ls(line);
+		std::string type, model;
+
+		std::getline(ls, type, ',');
+		std::getline(ls, model, ',');
+
+		s_objectModels[type] = model;
+	}
+}
+
+const std::string& DataTable::GetObjectModel(const std::string& type)
+{
+	static std::string empty = "";
+
+	auto it = s_objectModels.find(type);
+	if (it == s_objectModels.end())
+		return empty;
+
+	return it->second;
+}

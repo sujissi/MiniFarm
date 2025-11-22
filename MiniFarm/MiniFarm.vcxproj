@@ -23,7 +23,6 @@
     <ClCompile Include="Source\Systems\CollisionSystem.cpp" />
     <ClCompile Include="Source\Systems\DebugDrawer.cpp" />
     <ClCompile Include="Source\Systems\BoxCollider.cpp" />
-    <ClCompile Include="Source\Game\Landform.cpp" />
     <ClCompile Include="Source\Game\Crop.cpp" />
     <ClCompile Include="Source\Systems\DataTable.cpp" />
     <ClCompile Include="Source\Core\InputManager.cpp" />
@@ -41,6 +40,7 @@
     <ClCompile Include="Source\Game\Player.cpp" />
     <ClCompile Include="Source\Core\SceneManager.cpp" />
     <ClCompile Include="Source\Render\Shader.cpp" />
+    <ClCompile Include="Source\Render\StaticRrop.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Game\IInteractable.h" />
@@ -51,8 +51,6 @@
     <ClInclude Include="Source\Systems\DebugDrawer.h" />
     <ClInclude Include="Source\Systems\BoxCollider.h" />
     <ClInclude Include="Source\Systems\Collider.h" />
-    <ClInclude Include="Source\Lib\stb_image.h" />
-    <ClInclude Include="Source\Game\Landform.h" />
     <ClInclude Include="Source\Game\GameTypes.h" />
     <ClInclude Include="Source\Game\Crop.h" />
     <ClInclude Include="Source\Systems\DataTable.h" />
@@ -67,6 +65,7 @@
     <ClInclude Include="Source\Core\SceneManager.h" />
     <ClInclude Include="Source\Render\Shader.h" />
     <ClInclude Include="Source\Utils\MathUtils.h" />
+    <ClInclude Include="Source\Render\StaticRrop.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

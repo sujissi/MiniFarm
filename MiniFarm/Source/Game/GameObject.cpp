@@ -21,7 +21,8 @@ void GameObject::Init()
 void GameObject::Update(int time)
 {
     if (!m_alive) return;
-	m_collider->UpdatePos(m_pos);
+    if(m_collider)
+	    m_collider->UpdatePos(m_pos);
 }
 
 void GameObject::Draw()

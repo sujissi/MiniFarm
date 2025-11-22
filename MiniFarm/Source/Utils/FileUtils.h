@@ -1,6 +1,6 @@
 #pragma once
 
-inline std::string LoadFile(const char* path)
+inline std::string LoadFile(const std::string& path)
 {
     std::ifstream file(path);
     if (!file.is_open()) {
