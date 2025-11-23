@@ -11,8 +11,10 @@ private:
     float m_water = 0.f;
 
 public:
-    Crop(ECropID id);
+    Crop(const glm::vec3& pos, const glm::vec3& rot, const glm::vec3& scale,
+        const std::string& model, const std::string& texture);
 
+	void SetCropID(ECropID id) { m_id = id; }
     void Update(int dt) override;
     void AddWater(float amount);
 

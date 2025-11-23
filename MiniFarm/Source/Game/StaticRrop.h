@@ -12,11 +12,6 @@ public:
 		const std::string& model, const std::string& texture)
 		: GameObject(pos, rot, scale), m_modelPath(model), m_texturePath(texture)
 	{
-	}
-
-	void Init() override
-	{
 		m_model = ModelCache::Get(m_modelPath, m_texturePath);
-		GameObject::Init();
 	}
 };

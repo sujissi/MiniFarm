@@ -3,50 +3,52 @@
 #include "DataTable.h"
 #include "Model.h"
 
-Crop::Crop(ECropID id)
-    : m_id(id)
+Crop::Crop(const glm::vec3& pos, const glm::vec3& rot, const glm::vec3& scale,
+	const std::string& model, const std::string& texture)
+	: InteractableObject(pos, rot, scale)
 {
-    const auto* data = DataTable::GetCrop(id);
+	m_level = 0;
+	m_time = 0.f;
+	m_water = 0.f;
+	m_id = ECropID::Empty;
 
-    m_level = 0;
-    m_time = 0.f;
-    m_water = 0.f;
-
-    m_model = std::make_shared<Model>(data->levels[0].model);// TDDO: empty ground obj
-    m_scale = { 1,1,1 };
+	m_model = ModelCache::Get(model, texture);
 }
 
 
 void Crop::Update(int dt)
 {
-    if (!m_model)
-    {
-        LOG_E("");
-        return;
-    }
+	if (!m_model)
+	{
+		LOG_E("");
+		return;
+	}
 
-    const auto* data = DataTable::GetCrop(m_id);
-    const auto& info = data->levels[m_level];
+	if (m_id == ECropID::Empty || m_id == ECropID::Tilled)
+		return;
 
-    if (m_water < info.waterRequired)
-        return;
+	const auto* data = DataTable::GetCrop(m_id);
+	const auto& info = data->levels[m_level];
 
-    m_time += dt * 0.001f;
-    bool bLevelUp = (m_time >= info.timeRequired) && (m_level < 3);
-    if (bLevelUp)
-    {
-        m_time = 0.f;
-        m_level++;
-        m_model = std::make_shared<Model>(data->levels[m_level].model);
-    }
+	if (m_water < info.waterRequired)
+		return;
 
-    m_water -= dt * 0.001f;
-    if (m_water < 0.f) m_water = 0.f;
+	m_time += dt * 0.001f;
+	bool bLevelUp = (m_time >= info.timeRequired) && (m_level < 3);
+	if (bLevelUp)
+	{
+		m_time = 0.f;
+		m_level++;
+		m_model = std::make_shared<Model>(data->levels[m_level].model);
+	}
+
+	m_water -= dt * 0.001f;
+	if (m_water < 0.f) m_water = 0.f;
 }
 
 void Crop::AddWater(float amount)
 {
-    m_water += amount;
+	m_water += amount;
 }
 
 void Crop::Interact(Player* player)

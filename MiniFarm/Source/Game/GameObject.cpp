@@ -14,6 +14,8 @@ void GameObject::Init()
         glm::vec3 max = m_model->GetMaxBounds();
 
         m_collider = std::make_shared<BoxCollider>(min, max);
+        m_collider->UpdatePos(m_pos);
+        m_collider->InitTransform(m_pos, m_scale, m_rot);
     }
 }
 
@@ -46,6 +48,4 @@ void GameObject::DebugDraw()
 {
     if (m_collider)
         m_collider->DrawDebug();
-
-    DebugDrawer::DrawAxis(m_pos, 1.0f);
 }

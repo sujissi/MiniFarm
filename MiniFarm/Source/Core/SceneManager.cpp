@@ -6,6 +6,7 @@
 #include <rapidjson/document.h>
 #include "DataTable.h"
 #include "StaticRrop.h"
+#include "Crop.h"
 
 std::vector<std::shared_ptr<GameObject>> SceneManager::s_objects;
 Camera SceneManager::s_camera;
@@ -17,7 +18,8 @@ void SceneManager::Init()
     s_camera.Init();
 	DataTable::Init();
     AddObject(std::make_shared<Player>());
-    LoadMap("Data/static_props_pos.json");
+    LoadStaticObjects("Data/static_props_pos.json");
+    LoadCropsObjects("Data/crops_pos.json");
 }
 
 void SceneManager::AddObject(std::shared_ptr<GameObject> obj)
@@ -25,7 +27,7 @@ void SceneManager::AddObject(std::shared_ptr<GameObject> obj)
     s_objects.push_back(obj);
 }
 
-void SceneManager::LoadMap(const std::string& path)
+void SceneManager::LoadStaticObjects(const std::string& path)
 {
     std::string json = LoadFile(path);
 
@@ -70,6 +72,62 @@ void SceneManager::LoadMap(const std::string& path)
 		}
 
         auto inst = std::make_shared<StaticProp>(pos, rot, scale, objInfo->modelPath, objInfo->texturePath);
+        if (inst)
+        {
+            inst->m_name = type;
+            AddObject(inst);
+            inst->Init();
+        }
+        else
+            LOG_E("Unknown object type: %s", type.c_str());
+    }
+}
+
+void SceneManager::LoadCropsObjects(const std::string& path)
+{
+    std::string json = LoadFile(path);
+
+    if (json.empty()) {
+        LOG_E("Failed to load map file: %s", path.c_str());
+        return;
+    }
+
+    rapidjson::Document doc;
+    doc.Parse(json.c_str());
+
+    if (!doc.IsObject() || !doc.HasMember("objects")) {
+        LOG_E("Invalid map file: %s", path.c_str());
+        return;
+    }
+
+    const auto& arr = doc["objects"].GetArray();
+
+    auto readVec3 = [&](const rapidjson::Value& v)
+        {
+            return glm::vec3(
+                v[0].GetFloat(),
+                v[1].GetFloat(),
+                v[2].GetFloat()
+            );
+        };
+
+    for (auto& obj : arr)
+    {
+        std::string type = obj["type"].GetString();
+        glm::vec3 pos = readVec3(obj["pos"]);
+        glm::vec3 rot = readVec3(obj["rot"]);
+        glm::vec3 scale = readVec3(obj["scale"]);
+        pos.x = -pos.x;
+        rot.y = -rot.y;
+
+        auto objInfo = DataTable::GetObjectInfo(type);
+        if (!objInfo)
+        {
+            LOG_E("No object info for type: %s", type.c_str());
+            continue;
+        }
+
+        auto inst = std::make_shared<Crop>(pos, rot, scale, objInfo->modelPath, objInfo->texturePath);
         if (inst)
         {
             inst->m_name = type;

@@ -4,6 +4,8 @@ using ItemID = int;
 
 enum class ECropID : ItemID
 {
+    Empty = -1, // 갈지 않은 땅
+    Tilled = 0, // 갈아놓은 땅
     Carrot = 1,
     Cabbage = 2
 };
