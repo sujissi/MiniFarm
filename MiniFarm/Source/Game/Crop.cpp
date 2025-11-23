@@ -24,7 +24,7 @@ void Crop::Update(int dt)
 		return;
 	}
 
-	if (m_id == ECropID::Empty || m_id == ECropID::Tilled)
+	if (m_id == ECropID::Empty|| m_id == ECropID::Tilled)
 		return;
 
 	const auto* data = DataTable::GetCrop(m_id);

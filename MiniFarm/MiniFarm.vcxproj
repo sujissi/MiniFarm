@@ -19,6 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Game\Boat.cpp" />
+    <ClCompile Include="Source\Game\Shop.cpp" />
     <ClCompile Include="Source\Systems\PickingSystem.cpp" />
     <ClCompile Include="Source\Systems\CollisionSystem.cpp" />
     <ClCompile Include="Source\Systems\DebugDrawer.cpp" />
@@ -28,7 +30,7 @@
     <ClCompile Include="Source\Core\InputManager.cpp" />
     <ClCompile Include="Source\Render\Camera.cpp" />
     <ClCompile Include="Source\Game\GameObject.cpp" />
-    <ClCompile Include="Source\Systems\Inventory.cpp" />
+    <ClCompile Include="Source\Game\Inventory.cpp" />
     <ClCompile Include="Source\Main.cpp" />
     <ClCompile Include="Source\Render\Model.cpp" />
     <ClCompile Include="Source\PCH\PCH.cpp">
@@ -40,11 +42,14 @@
     <ClCompile Include="Source\Game\Player.cpp" />
     <ClCompile Include="Source\Core\SceneManager.cpp" />
     <ClCompile Include="Source\Render\Shader.cpp" />
-    <ClCompile Include="Source\Game\StaticRrop.cpp" />
+    <ClCompile Include="Source\Game\StaticProp.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Game\Boat.h" />
+    <ClInclude Include="Source\Game\Shop.h" />
     <ClInclude Include="Source\Game\IInteractable.h" />
     <ClInclude Include="Source\Game\InteractableObject.h" />
+    <ClInclude Include="Source\Game\StaticProp.h" />
     <ClInclude Include="Source\Utils\FileUtils.h" />
     <ClInclude Include="Source\Systems\PickingSystem.h" />
     <ClInclude Include="Source\Systems\CollisionSystem.h" />
@@ -57,7 +62,7 @@
     <ClInclude Include="Source\Core\InputManager.h" />
     <ClInclude Include="Source\Render\Camera.h" />
     <ClInclude Include="Source\Game\GameObject.h" />
-    <ClInclude Include="Source\Systems\Inventory.h" />
+    <ClInclude Include="Source\Game\Inventory.h" />
     <ClInclude Include="Source\Utils\Logger.h" />
     <ClInclude Include="Source\Render\Model.h" />
     <ClInclude Include="Source\PCH\PCH.h" />
@@ -65,7 +70,6 @@
     <ClInclude Include="Source\Core\SceneManager.h" />
     <ClInclude Include="Source\Render\Shader.h" />
     <ClInclude Include="Source\Utils\MathUtils.h" />
-    <ClInclude Include="Source\Game\StaticRrop.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

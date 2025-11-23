@@ -8,7 +8,7 @@ public:
     static void Init();
     static void AddObject(std::shared_ptr<GameObject> obj);
 	static void LoadStaticObjects(const std::string& path);
-	static void LoadCropsObjects(const std::string& path);
+	static void LoadInteractableObjects(const std::string& path);
 
     static void Update(int time);
     static void Draw();

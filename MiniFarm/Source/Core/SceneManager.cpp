@@ -5,8 +5,10 @@
 #include "PickingSystem.h"
 #include <rapidjson/document.h>
 #include "DataTable.h"
-#include "StaticRrop.h"
+#include "StaticProp.h"
 #include "Crop.h"
+#include "Shop.h"
+#include "Boat.h"
 
 std::vector<std::shared_ptr<GameObject>> SceneManager::s_objects;
 Camera SceneManager::s_camera;
@@ -14,182 +16,194 @@ GameObject* SceneManager::s_selected = nullptr;
 
 void SceneManager::Init()
 {
-    s_objects.clear();
-    s_camera.Init();
+	s_objects.clear();
+	s_camera.Init();
 	DataTable::Init();
-    AddObject(std::make_shared<Player>());
-    LoadStaticObjects("Data/static_props_pos.json");
-    LoadCropsObjects("Data/crops_pos.json");
+	AddObject(std::make_shared<Player>());
+	LoadStaticObjects("Data/static_props_pos.json");
+	LoadInteractableObjects("Data/Interactable_props_pos.json");
 }
 
 void SceneManager::AddObject(std::shared_ptr<GameObject> obj)
 {
-    s_objects.push_back(obj);
+	s_objects.push_back(obj);
 }
 
 void SceneManager::LoadStaticObjects(const std::string& path)
 {
-    std::string json = LoadFile(path);
+	std::string json = LoadFile(path);
 
-    if (json.empty()) {
+	if (json.empty()) {
 		LOG_E("Failed to load map file: %s", path.c_str());
-        return;
-    }
+		return;
+	}
 
-    rapidjson::Document doc;
-    doc.Parse(json.c_str());
+	rapidjson::Document doc;
+	doc.Parse(json.c_str());
 
-    if (!doc.IsObject() || !doc.HasMember("objects")) {
+	if (!doc.IsObject() || !doc.HasMember("objects")) {
 		LOG_E("Invalid map file: %s", path.c_str());
-        return;
-    }
+		return;
+	}
 
-    const auto& arr = doc["objects"].GetArray();
+	const auto& arr = doc["objects"].GetArray();
 
-    auto readVec3 = [&](const rapidjson::Value& v)
-        {
-            return glm::vec3(
-                v[0].GetFloat(),
-                v[1].GetFloat(),
-                v[2].GetFloat()
+	auto readVec3 = [&](const rapidjson::Value& v)
+		{
+			return glm::vec3(
+				v[0].GetFloat(),
+				v[1].GetFloat(),
+				v[2].GetFloat()
 			);
-        };
+		};
 
-    for (auto& obj : arr)
-    {
-        std::string type = obj["type"].GetString();
-        glm::vec3 pos = readVec3(obj["pos"]);
-        glm::vec3 rot = readVec3(obj["rot"]);
-        glm::vec3 scale = readVec3(obj["scale"]);
-        pos.x = -pos.x;
+	for (auto& obj : arr)
+	{
+		std::string type = obj["type"].GetString();
+		glm::vec3 pos = readVec3(obj["pos"]);
+		glm::vec3 rot = readVec3(obj["rot"]);
+		glm::vec3 scale = readVec3(obj["scale"]);
+		pos.x = -pos.x;
 		rot.y = -rot.y;
 
-        auto objInfo = DataTable::GetObjectInfo(type);
-        if(!objInfo)
-        {
-            LOG_E("No object info for type: %s", type.c_str());
-            continue;
+		auto objInfo = DataTable::GetObjectInfo(type);
+		if (!objInfo)
+		{
+			LOG_E("No object info for type: %s", type.c_str());
+			continue;
 		}
-
-        auto inst = std::make_shared<StaticProp>(pos, rot, scale, objInfo->modelPath, objInfo->texturePath);
-        if (inst)
-        {
-            inst->m_name = type;
-            AddObject(inst);
-            inst->Init();
-        }
-        else
-            LOG_E("Unknown object type: %s", type.c_str());
-    }
+		auto inst = std::make_shared<StaticProp>(pos, rot, scale, objInfo->modelPath, objInfo->texturePath);
+		if (inst)
+		{
+			inst->m_name = type;
+			AddObject(inst);
+			inst->Init();
+		}
+		else
+			LOG_E("Unknown object type: %s", type.c_str());
+	}
 }
 
-void SceneManager::LoadCropsObjects(const std::string& path)
+void SceneManager::LoadInteractableObjects(const std::string& path)
 {
-    std::string json = LoadFile(path);
+	std::string json = LoadFile(path);
 
-    if (json.empty()) {
-        LOG_E("Failed to load map file: %s", path.c_str());
-        return;
-    }
+	if (json.empty()) {
+		LOG_E("Failed to load map file: %s", path.c_str());
+		return;
+	}
 
-    rapidjson::Document doc;
-    doc.Parse(json.c_str());
+	rapidjson::Document doc;
+	doc.Parse(json.c_str());
 
-    if (!doc.IsObject() || !doc.HasMember("objects")) {
-        LOG_E("Invalid map file: %s", path.c_str());
-        return;
-    }
+	if (!doc.IsObject() || !doc.HasMember("objects")) {
+		LOG_E("Invalid map file: %s", path.c_str());
+		return;
+	}
 
-    const auto& arr = doc["objects"].GetArray();
+	const auto& arr = doc["objects"].GetArray();
 
-    auto readVec3 = [&](const rapidjson::Value& v)
-        {
-            return glm::vec3(
-                v[0].GetFloat(),
-                v[1].GetFloat(),
-                v[2].GetFloat()
-            );
-        };
+	auto readVec3 = [&](const rapidjson::Value& v)
+		{
+			return glm::vec3(
+				v[0].GetFloat(),
+				v[1].GetFloat(),
+				v[2].GetFloat()
+			);
+		};
 
-    for (auto& obj : arr)
-    {
-        std::string type = obj["type"].GetString();
-        glm::vec3 pos = readVec3(obj["pos"]);
-        glm::vec3 rot = readVec3(obj["rot"]);
-        glm::vec3 scale = readVec3(obj["scale"]);
-        pos.x = -pos.x;
-        rot.y = -rot.y;
+	for (auto& obj : arr)
+	{
+		std::string type = obj["type"].GetString();
+		glm::vec3 pos = readVec3(obj["pos"]);
+		glm::vec3 rot = readVec3(obj["rot"]);
+		glm::vec3 scale = readVec3(obj["scale"]);
+		pos.x = -pos.x;
+		rot.y = -rot.y;
 
-        auto objInfo = DataTable::GetObjectInfo(type);
-        if (!objInfo)
-        {
-            LOG_E("No object info for type: %s", type.c_str());
-            continue;
-        }
+		auto objInfo = DataTable::GetObjectInfo(type);
+		if (!objInfo)
+		{
+			LOG_E("No object info for type: %s", type.c_str());
+			continue;
+		}
 
-        auto inst = std::make_shared<Crop>(pos, rot, scale, objInfo->modelPath, objInfo->texturePath);
-        if (inst)
-        {
-            inst->m_name = type;
-            AddObject(inst);
-            inst->Init();
-        }
-        else
-            LOG_E("Unknown object type: %s", type.c_str());
-    }
+		std::shared_ptr<GameObject> inst;
+		if (type == "Field")
+		{
+			inst = std::make_shared<Crop>(pos, rot, scale, objInfo->modelPath, objInfo->texturePath);
+		}
+		else if (type == "House")
+		{
+			inst = std::make_shared<Shop>(pos, rot, scale, objInfo->modelPath, objInfo->texturePath);
+		}
+		else if (type == "Boat")
+		{
+			inst = std::make_shared<Boat>(pos, rot, scale, objInfo->modelPath, objInfo->texturePath);
+		}
+
+		if (inst)
+		{
+			inst->m_name = type;
+			AddObject(inst);
+			inst->Init();
+		}
+		else
+			LOG_E("Unknown object type: %s", type.c_str());
+	}
 }
 
 void SceneManager::Update(int time)
 {
-    for (auto& obj : s_objects)
-    {
-        obj->Update(time);
-    }
-    glutPostRedisplay();
-    glutTimerFunc(FRAME_TIME_MS, SceneManager::Update, 0);
+	for (auto& obj : s_objects)
+	{
+		obj->Update(time);
+	}
+	glutPostRedisplay();
+	glutTimerFunc(FRAME_TIME_MS, SceneManager::Update, 0);
 }
 
 void SceneManager::Draw()
 {
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    Shader::Use();
-    Shader::SetView(s_camera.GetView());
-    Shader::SetProj(s_camera.GetProj((float)WINDOW_W / WINDOW_H));
-    
-    Shader::SetLightPos(glm::vec3(10.f, 15.f, 10.f));
-    Shader::SetLightColor(glm::vec3(1.0f, 1.0f, 1.0f));
-    Shader::SetViewPos(s_camera.eye);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	Shader::Use();
+	Shader::SetView(s_camera.GetView());
+	Shader::SetProj(s_camera.GetProj((float)WINDOW_W / WINDOW_H));
 
-    Shader::SetModel(glm::mat4(1.0f));
+	Shader::SetLightPos(glm::vec3(10.f, 15.f, 10.f));
+	Shader::SetLightColor(glm::vec3(1.0f, 1.0f, 1.0f));
+	Shader::SetViewPos(s_camera.eye);
 
-    for (auto& obj : s_objects)
-    {
-        obj->DebugDraw();
-        obj->Draw();
-    }
+	Shader::SetModel(glm::mat4(1.0f));
 
-    glutSwapBuffers();
+	for (auto& obj : s_objects)
+	{
+		obj->DebugDraw();
+		obj->Draw();
+	}
+
+	glutSwapBuffers();
 }
 
 void SceneManager::Reshape(int w, int h)
 {
-    glViewport(0, 0, w, h);
+	glViewport(0, 0, w, h);
 }
 
 void SceneManager::OnMouseClick(int x, int y)
 {
-    auto clickedObj = PickingSystem::PickObject(x, y);
+	auto clickedObj = PickingSystem::PickObject(x, y);
 
-    if (clickedObj && dynamic_cast<Player*>(clickedObj))
-        return;
+	if (clickedObj && dynamic_cast<Player*>(clickedObj))
+		return;
 
-    if (clickedObj)
-    {
-        s_selected = clickedObj;
-        LOG_D("Selected %s", clickedObj->m_name.c_str());
-        return;
-    }
+	if (clickedObj)
+	{
+		s_selected = clickedObj;
+		LOG_D("Selected %s", clickedObj->m_name.c_str());
+		return;
+	}
 
-    s_selected = nullptr;
-    LOG_D("Selection cleared");
+	s_selected = nullptr;
+	LOG_D("Selection cleared");
 }
