@@ -17,7 +17,7 @@ void SceneManager::Init()
     s_camera.Init();
 	DataTable::Init();
     AddObject(std::make_shared<Player>());
-    LoadMap("Data/ObjectPosition.json");
+    LoadMap("Data/static_props_pos.json");
 }
 
 void SceneManager::AddObject(std::shared_ptr<GameObject> obj)

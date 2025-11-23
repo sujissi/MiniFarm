@@ -18,6 +18,7 @@ glm::vec3 CollisionSystem::TryMove(GameObject* obj, const glm::vec3& desiredPos)
 
     for (auto& other : objects)
     {
+        if (other.get()->m_name == "Landform") continue;
         if (other.get() == obj || !other->m_collider) continue;
         if (obj->m_collider->Intersects(other->m_collider.get()))
         {
@@ -31,6 +32,7 @@ glm::vec3 CollisionSystem::TryMove(GameObject* obj, const glm::vec3& desiredPos)
 
     for (auto& other : objects)
     {
+        if (other.get()->m_name == "Landform") continue;
         if (other.get() == obj || !other->m_collider) continue;
         if (obj->m_collider->Intersects(other->m_collider.get()))
         {
