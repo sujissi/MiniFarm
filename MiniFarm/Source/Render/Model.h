@@ -1,6 +1,17 @@
 #pragma once
 
 class Shader;
+class Model;
+
+class ModelCache
+{
+public:
+	static std::shared_ptr<Model> Get(const std::string& modelPath,
+		const std::string& texturePath);
+
+private:
+	static std::unordered_map<std::string, std::shared_ptr<Model>> s_cache;
+};
 
 class Model
 {

@@ -5,10 +5,24 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 
+std::unordered_map<std::string, std::shared_ptr<Model>> ModelCache::s_cache;
+std::shared_ptr<Model> ModelCache::Get(const std::string& modelPath,
+	const std::string& texturePath)
+{
+	std::string key = modelPath + "|" + texturePath;
+
+	auto it = s_cache.find(key);
+	if (it != s_cache.end())
+		return it->second;
+
+	auto model = std::make_shared<Model>(modelPath, texturePath);
+	s_cache[key] = model;
+	return model;
+}
+
 Model::Model(const std::string& name)
 	:Model(name + ".obj", name + ".png")
 {
-	LOG("Model loaded. Vertex Count = %d", (int)m_vertices.size());
 }
 
 Model::Model(const std::string& path, const std::string& texturePath)
@@ -16,7 +30,6 @@ Model::Model(const std::string& path, const std::string& texturePath)
 	LOG("%s", path.c_str());
 	LoadOBJ(path);
 	m_textureID = LoadIMG(texturePath);	
-	LOG("Model loaded. Vertex Count = %d", (int)m_vertices.size());
 }
 
 Model::~Model()

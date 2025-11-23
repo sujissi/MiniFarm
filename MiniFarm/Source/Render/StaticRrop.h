@@ -16,6 +16,6 @@ public:
 
 	void Init() override
 	{
-		m_model = std::make_shared<Model>(m_modelPath, m_texturePath);
+		m_model = ModelCache::Get(m_modelPath, m_texturePath);
 	}
 };

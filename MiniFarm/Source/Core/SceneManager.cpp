@@ -59,7 +59,6 @@ void SceneManager::LoadMap(const std::string& path)
         glm::vec3 pos = readVec3(obj["pos"]);
         glm::vec3 rot = readVec3(obj["rot"]);
         glm::vec3 scale = readVec3(obj["scale"]);
-        rot.y = -rot.y;
 
         auto objInfo = DataTable::GetObjectInfo(type);
         if(!objInfo)
