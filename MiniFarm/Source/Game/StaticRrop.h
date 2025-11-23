@@ -17,5 +17,6 @@ public:
 	void Init() override
 	{
 		m_model = ModelCache::Get(m_modelPath, m_texturePath);
+		GameObject::Init();
 	}
 };

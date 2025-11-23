@@ -14,15 +14,17 @@ void GameObject::Init()
         glm::vec3 max = m_model->GetMaxBounds();
 
         m_collider = std::make_shared<BoxCollider>(min, max);
-        m_collider->InitTransform(m_pos, m_scale, m_rot);
     }
 }
 
 void GameObject::Update(int time)
 {
     if (!m_alive) return;
-    if(m_collider)
-	    m_collider->UpdatePos(m_pos);
+    if (m_collider)
+    {
+        m_collider->UpdatePos(m_pos);
+        m_collider->InitTransform(m_pos, m_scale, m_rot);
+    }
 }
 
 void GameObject::Draw()

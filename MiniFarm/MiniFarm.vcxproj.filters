@@ -70,17 +70,17 @@
     <ClCompile Include="Source\Game\Player.cpp">
       <Filter>소스 파일\Game</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Game\Terrarian.cpp">
+    <ClCompile Include="Source\Core\SceneManager.cpp">
+      <Filter>소스 파일\Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\StaticRrop.cpp">
       <Filter>소스 파일\Game</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Core\SceneManager.cpp">
+    <ClCompile Include="Source\Systems\MeshCollider.cpp">
       <Filter>소스 파일\Systems</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\Lib\stb_image.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Systems\CollisionSystem.h">
       <Filter>소스 파일\Systems</Filter>
     </ClInclude>
@@ -138,13 +138,20 @@
     <ClInclude Include="Source\Game\Player.h">
       <Filter>소스 파일\Game</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Game\Terrarian.h">
-      <Filter>소스 파일\Game</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Core\SceneManager.h">
       <Filter>소스 파일\Systems</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Game\IInteractable.h" />
-    <ClInclude Include="Source\Game\InteractableObject.h" />
+    <ClInclude Include="Source\Game\StaticRrop.h">
+      <Filter>소스 파일\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\IInteractable.h">
+      <Filter>소스 파일\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\InteractableObject.h">
+      <Filter>소스 파일\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Systems\MeshCollider.h">
+      <Filter>소스 파일\Systems</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

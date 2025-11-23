@@ -50,7 +50,7 @@ void SceneManager::LoadMap(const std::string& path)
                 v[0].GetFloat(),
                 v[1].GetFloat(),
                 v[2].GetFloat()
-            );
+			);
         };
 
     for (auto& obj : arr)
@@ -59,6 +59,8 @@ void SceneManager::LoadMap(const std::string& path)
         glm::vec3 pos = readVec3(obj["pos"]);
         glm::vec3 rot = readVec3(obj["rot"]);
         glm::vec3 scale = readVec3(obj["scale"]);
+        pos.x = -pos.x;
+		rot.y = -rot.y;
 
         auto objInfo = DataTable::GetObjectInfo(type);
         if(!objInfo)
@@ -70,6 +72,7 @@ void SceneManager::LoadMap(const std::string& path)
         auto inst = std::make_shared<StaticProp>(pos, rot, scale, objInfo->modelPath, objInfo->texturePath);
         if (inst)
         {
+            inst->m_name = type;
             AddObject(inst);
             inst->Init();
         }
