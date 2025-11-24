@@ -5,6 +5,7 @@
 #include "DataTable.h"
 #include "BoxCollider.h"
 #include "CollisionSystem.h"
+#include "IInteractable.h"
 
 Player::Player()
 {
@@ -25,7 +26,8 @@ Player::Player()
 
 void Player::Update(int time)
 {
-    HandleInteractTest();
+    TryUpdateInteractTarget();
+    HandleInteractInput();
 
     HandleRotate();
     HandleMove();
@@ -72,12 +74,52 @@ void Player::HandleMove()
     cam.FollowTarget(m_pos);
 }
 
-void Player::HandleInteractTest()
+void Player::HandleInteractInput()
 {
-    if (InputManager::IsKeyPressed('1')) BuySeed((ItemID)EToolID::SeedCarrot, 1);
-    if (InputManager::IsKeyPressed('2')) SellCrop((ItemID)ECropID::Carrot, 1);
-    if (InputManager::IsKeyPressed('3')) UseTool((ItemID)EToolID::Hoe);
+    if (m_FocusedInteractable == nullptr)
+        return;
+
+    if (InputManager::IsKeyPressed('e'))
+    {
+        LOG("상호작용");
+        m_FocusedInteractable->OnInteract(this);
+    }
 }
+
+void Player::TryUpdateInteractTarget()
+{
+    m_FocusedInteractable = nullptr;
+
+    const auto& objects = SceneManager::GetObjects();
+    glm::vec3 playerPos = m_pos;
+
+    float bestDistance = std::numeric_limits<float>::max();
+
+    for (const auto& obj : objects)
+    {
+        if (obj.get() == this)
+            continue;
+
+        IInteractable* interactable = dynamic_cast<IInteractable*>(obj.get());
+		if (!interactable || !interactable->IsInteractable())
+            continue;
+
+        float maxDistance = interactable->GetInteractDistance();
+
+        glm::vec3 toObj = obj->m_pos - playerPos;
+
+        float dist = glm::length(toObj);
+        if (dist > maxDistance)
+            continue;
+
+        if (dist < bestDistance)
+        {
+            bestDistance = dist;
+            m_FocusedInteractable = interactable;
+        }
+    }
+}
+
 
 void Player::UseTool(ItemID toolID)
 {

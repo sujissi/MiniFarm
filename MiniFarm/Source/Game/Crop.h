@@ -18,5 +18,5 @@ public:
     void Update(int dt) override;
     void AddWater(float amount);
 
-    virtual void Interact(Player* player) override;
+    virtual void OnInteract(Player* player) override;
 };

@@ -49,12 +49,6 @@
     <ClCompile Include="Source\Systems\DebugDrawer.cpp">
       <Filter>소스 파일\Utils</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Core\InputManager.cpp">
-      <Filter>소스 파일\Systems</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Systems\Inventory.cpp">
-      <Filter>소스 파일\Game</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Render\Model.cpp">
       <Filter>소스 파일\Rendering</Filter>
     </ClCompile>
@@ -71,13 +65,22 @@
       <Filter>소스 파일\Game</Filter>
     </ClCompile>
     <ClCompile Include="Source\Core\SceneManager.cpp">
-      <Filter>소스 파일\Systems</Filter>
+      <Filter>소스 파일\Core</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Game\StaticRrop.cpp">
+    <ClCompile Include="Source\Core\InputManager.cpp">
+      <Filter>소스 파일\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Boat.cpp">
       <Filter>소스 파일\Game</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Systems\MeshCollider.cpp">
-      <Filter>소스 파일\Systems</Filter>
+    <ClCompile Include="Source\Game\Inventory.cpp">
+      <Filter>소스 파일\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Shop.cpp">
+      <Filter>소스 파일\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\StaticProp.cpp">
+      <Filter>소스 파일\Game</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -111,12 +114,6 @@
     <ClInclude Include="Source\Systems\DebugDrawer.h">
       <Filter>소스 파일\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Core\InputManager.h">
-      <Filter>소스 파일\Systems</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Systems\Inventory.h">
-      <Filter>소스 파일\Game</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Render\Model.h">
       <Filter>소스 파일\Rendering</Filter>
     </ClInclude>
@@ -138,20 +135,29 @@
     <ClInclude Include="Source\Game\Player.h">
       <Filter>소스 파일\Game</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Core\SceneManager.h">
-      <Filter>소스 파일\Systems</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Game\StaticRrop.h">
-      <Filter>소스 파일\Game</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Game\IInteractable.h">
       <Filter>소스 파일\Game</Filter>
     </ClInclude>
     <ClInclude Include="Source\Game\InteractableObject.h">
       <Filter>소스 파일\Game</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Systems\MeshCollider.h">
-      <Filter>소스 파일\Systems</Filter>
+    <ClInclude Include="Source\Core\SceneManager.h">
+      <Filter>소스 파일\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Core\InputManager.h">
+      <Filter>소스 파일\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Boat.h">
+      <Filter>소스 파일\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Shop.h">
+      <Filter>소스 파일\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\StaticProp.h">
+      <Filter>소스 파일\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Inventory.h">
+      <Filter>소스 파일\Game</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

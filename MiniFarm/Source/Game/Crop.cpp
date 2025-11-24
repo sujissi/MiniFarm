@@ -51,6 +51,6 @@ void Crop::AddWater(float amount)
 	m_water += amount;
 }
 
-void Crop::Interact(Player* player)
+void Crop::OnInteract(Player* player)
 {
 }

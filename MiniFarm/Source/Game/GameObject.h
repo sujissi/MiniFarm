@@ -29,6 +29,4 @@ public:
 	
     virtual void OnCollision(GameObject* other) {}
 
-    virtual bool IsInteractable() const { return false; }
-    virtual class IInteractable* AsInteractable() { return nullptr; }
 };

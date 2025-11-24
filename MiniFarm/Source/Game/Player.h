@@ -2,6 +2,7 @@
 #include "GameObject.h"
 #include "Inventory.h"
 
+class IInteractable;
 class Player : public GameObject
 {
 public:
@@ -11,8 +12,10 @@ public:
 private:
 	void HandleRotate();
 	void HandleMove();
-	void HandleInteractTest(); //for test
-	
+	void HandleInteractInput();
+	void TryUpdateInteractTarget();
+	IInteractable* m_FocusedInteractable = nullptr;
+
 	void UseTool(ItemID toolID);
 	void BuySeed(ItemID seedID, int count);
 	void SellCrop(ItemID cropID, int count);
