@@ -1,7 +1,6 @@
 #include "PCH.h"
 #include "SceneManager.h"
 #include "Shader.h"
-#include "Player.h"
 #include "PickingSystem.h"
 #include <rapidjson/document.h>
 #include "DataTable.h"
@@ -16,6 +15,7 @@ Camera SceneManager::s_camera;
 GameObject* SceneManager::s_selected = nullptr;
 Shader SceneManager::s_mainShader;
 Text   SceneManager::s_uiText;
+Player* SceneManager::s_player = nullptr;
 
 void SceneManager::Init()
 {
@@ -23,10 +23,13 @@ void SceneManager::Init()
 	DebugDrawer::Init(&s_mainShader);
 	s_uiText.Init(WINDOW_W, WINDOW_H);
 
+	DataTable::Init();
 	s_objects.clear();
 	s_camera.Init();
-	DataTable::Init();
-	AddObject(std::make_shared<Player>());
+	auto player = std::make_shared<Player>();
+	s_player = player.get();
+	AddObject(player);
+
 	LoadStaticObjects("Data/static_props_pos.json");
 	LoadInteractableObjects("Data/Interactable_props_pos.json");
 }
@@ -189,8 +192,11 @@ void SceneManager::Draw()
 		obj->DebugDraw();
 		obj->Draw();
 	}
-	SceneManager::GetUIText().DrawCentered("HELLO", WINDOW_H * 0.5f, 3.0f, { 1,1,1 });
 
+	if (s_player->HasInteractTarget())
+	{
+		s_uiText.DrawAt("Press E to interact", WINDOW_W * 0.5f, WINDOW_H * 0.55f, 2.0f, { 0,1,0.3 });
+	}
 	glutSwapBuffers();
 }
 

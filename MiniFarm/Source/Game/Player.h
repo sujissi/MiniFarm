@@ -20,6 +20,8 @@ private:
 	void UseTool(ItemID toolID);
 	void BuySeed(ItemID seedID, int count);
 	void SellCrop(ItemID cropID, int count);
+public:
+	bool HasInteractTarget() { return m_FocusedInteractable != nullptr; }
 private:
     float m_speed;
 	Inventory m_inventory;

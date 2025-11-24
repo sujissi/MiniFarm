@@ -2,6 +2,7 @@
 #include "GameObject.h"
 #include "Camera.h"
 #include "Text.h"
+#include "Player.h"
 
 class SceneManager
 {
@@ -28,4 +29,5 @@ private:
     static GameObject* s_selected;
     static Shader s_mainShader;
     static Text   s_uiText;
+    static Player* s_player;
 };
