@@ -9,13 +9,20 @@
 #include "Crop.h"
 #include "Shop.h"
 #include "Boat.h"
+#include "DebugDrawer.h"
 
 std::vector<std::shared_ptr<GameObject>> SceneManager::s_objects;
 Camera SceneManager::s_camera;
 GameObject* SceneManager::s_selected = nullptr;
+Shader SceneManager::s_mainShader;
+Text   SceneManager::s_uiText;
 
 void SceneManager::Init()
 {
+	s_mainShader.Init("Shaders/main.vert", "Shaders/main.frag");
+	DebugDrawer::Init(&s_mainShader);
+	s_uiText.Init(WINDOW_W, WINDOW_H);
+
 	s_objects.clear();
 	s_camera.Init();
 	DataTable::Init();
@@ -62,10 +69,11 @@ void SceneManager::LoadStaticObjects(const std::string& path)
 		std::string type = obj["type"].GetString();
 		glm::vec3 pos = readVec3(obj["pos"]);
 		glm::vec3 rot = readVec3(obj["rot"]);
-		glm::vec3 scale = readVec3(obj["scale"]);
+
+		glm::vec3 scale(1.0);
 		pos.x = -pos.x;
 		rot.y = -rot.y;
-		
+
 		auto objInfo = DataTable::GetObjectInfo(type);
 		if (!objInfo)
 		{
@@ -166,21 +174,22 @@ void SceneManager::Update(int time)
 void SceneManager::Draw()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	Shader::Use();
-	Shader::SetView(s_camera.GetView());
-	Shader::SetProj(s_camera.GetProj((float)WINDOW_W / WINDOW_H));
+	s_mainShader.Use();
+	s_mainShader.SetView(s_camera.GetView());
+	s_mainShader.SetProj(s_camera.GetProj((float)WINDOW_W / WINDOW_H));
 
-	Shader::SetLightPos(glm::vec3(10.f, 15.f, 10.f));
-	Shader::SetLightColor(glm::vec3(1.0f, 1.0f, 1.0f));
-	Shader::SetViewPos(s_camera.eye);
+	s_mainShader.SetLightPos(glm::vec3(10.f, 15.f, 10.f));
+	s_mainShader.SetLightColor(glm::vec3(1.0f, 1.0f, 1.0f));
+	s_mainShader.SetViewPos(s_camera.eye);
 
-	Shader::SetModel(glm::mat4(1.0f));
+	s_mainShader.SetModel(glm::mat4(1.0f));
 
 	for (auto& obj : s_objects)
 	{
 		obj->DebugDraw();
 		obj->Draw();
 	}
+	SceneManager::GetUIText().DrawCentered("HELLO", WINDOW_H * 0.5f, 3.0f, { 1,1,1 });
 
 	glutSwapBuffers();
 }

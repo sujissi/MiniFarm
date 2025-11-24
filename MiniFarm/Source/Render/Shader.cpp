@@ -1,36 +1,93 @@
 #include "PCH.h"
 #include "Shader.h"
 
-GLuint Shader::s_programID = 0;
-
 void Shader::Init(const char* vertexPath, const char* fragmentPath)
 {
-	LOG("Shader Init");
+    LOG("Shader Init");
 
-	std::string vertexSource = LoadFile(vertexPath);
-	std::string fragmentSource = LoadFile(fragmentPath);
+    std::string vertexSource = LoadFile(vertexPath);
+    std::string fragmentSource = LoadFile(fragmentPath);
 
-	GLuint vertexShader = CompileShader(vertexSource, GL_VERTEX_SHADER);
-	GLuint fragmentShader = CompileShader(fragmentSource, GL_FRAGMENT_SHADER);
+    GLuint vertexShader = CompileShader(vertexSource, GL_VERTEX_SHADER);
+    GLuint fragmentShader = CompileShader(fragmentSource, GL_FRAGMENT_SHADER);
 
-	s_programID = glCreateProgram();
-	glAttachShader(s_programID, vertexShader);
-	glAttachShader(s_programID, fragmentShader);
-	glLinkProgram(s_programID);
+    if (m_programID != 0)
+    {
+        glDeleteProgram(m_programID);
+        m_programID = 0;
+    }
 
-	glDeleteShader(vertexShader);
-	glDeleteShader(fragmentShader);
+    m_programID = glCreateProgram();
+    glAttachShader(m_programID, vertexShader);
+    glAttachShader(m_programID, fragmentShader);
+    glLinkProgram(m_programID);
 
-	GLint success;
-	glGetProgramiv(s_programID, GL_LINK_STATUS, &success);
+    glDeleteShader(vertexShader);
+    glDeleteShader(fragmentShader);
 
-	if (!success) {
-		GLchar log[512];
-		glGetProgramInfoLog(s_programID, 512, nullptr, log);
-		LOG_E("Shader link failed: %s", log);
-		glDeleteProgram(s_programID);
-		s_programID = 0;
-	}
+    GLint success;
+    glGetProgramiv(m_programID, GL_LINK_STATUS, &success);
+
+    if (!success) {
+        GLchar log[512];
+        glGetProgramInfoLog(m_programID, 512, nullptr, log);
+        LOG_E("Shader link failed: %s", log);
+        glDeleteProgram(m_programID);
+        m_programID = 0;
+    }
+}
+
+void Shader::SetModel(const glm::mat4& m_model, const char* name)
+{
+    glUniformMatrix4fv(glGetUniformLocation(m_programID, name),
+                       1, GL_FALSE, &m_model[0][0]);
+}
+
+void Shader::SetView(const glm::mat4& view, const char* name)
+{
+    glUniformMatrix4fv(glGetUniformLocation(m_programID, name),
+                       1, GL_FALSE, &view[0][0]);
+}
+
+void Shader::SetProj(const glm::mat4& proj, const char* name)
+{
+    glUniformMatrix4fv(glGetUniformLocation(m_programID, name),
+                       1, GL_FALSE, &proj[0][0]);
+}
+
+void Shader::SetTexture(GLint textureUnit, const char* name)
+{
+    glUniform1i(glGetUniformLocation(m_programID, name), textureUnit);
+}
+
+void Shader::SetLightPos(const glm::vec3& pos, const char* name)
+{
+    glUniform3f(glGetUniformLocation(m_programID, name), pos.x, pos.y, pos.z);
+}
+
+void Shader::SetLightColor(const glm::vec3& color, const char* name)
+{
+    glUniform3f(glGetUniformLocation(m_programID, name), color.x, color.y, color.z);
+}
+
+void Shader::SetViewPos(const glm::vec3& pos, const char* name)
+{
+    glUniform3f(glGetUniformLocation(m_programID, name), pos.x, pos.y, pos.z);
+}
+
+void Shader::BeginDebugDraw(const glm::vec3& color)
+{
+    Use(); // glUseProgram(m_programID);
+
+    SetModel(glm::mat4(1.0f));
+    glUniform1i(glGetUniformLocation(m_programID, "uDebugMode"), 1);
+    glUniform3f(glGetUniformLocation(m_programID, "uDebugColor"),
+                color.x, color.y, color.z);
+}
+
+void Shader::EndDebugDraw()
+{
+    glUniform1i(glGetUniformLocation(m_programID, "uDebugMode"), 0);
 }
 
 GLuint Shader::CompileShader(const std::string& source, GLenum type)
@@ -54,52 +111,4 @@ GLuint Shader::CompileShader(const std::string& source, GLenum type)
 	}
 
 	return shader;
-}
-
-void Shader::SetModel(const glm::mat4& m_model, const char* name)
-{
-	glUniformMatrix4fv(glGetUniformLocation(s_programID, name), 1, GL_FALSE, &m_model[0][0]);
-}
-
-void Shader::SetView(const glm::mat4& view, const char* name)
-{
-	glUniformMatrix4fv(glGetUniformLocation(s_programID, name), 1, GL_FALSE, &view[0][0]);
-}
-
-void Shader::SetProj(const glm::mat4& proj, const char* name)
-{
-	glUniformMatrix4fv(glGetUniformLocation(s_programID, name), 1, GL_FALSE, &proj[0][0]);
-}
-
-void Shader::SetTexture(GLint textureUnit, const char* name)
-{
-	glUniform1i(glGetUniformLocation(s_programID, name), textureUnit);
-}
-
-void Shader::BeginDebugDraw(const glm::vec3& color)
-{
-	Use();
-	SetModel(glm::mat4(1.0f));
-	glUniform1i(glGetUniformLocation(s_programID, "uDebugMode"), 1);
-	glUniform3f(glGetUniformLocation(s_programID, "uDebugColor"), color.x, color.y, color.z);
-}
-
-void Shader::EndDebugDraw()
-{
-	glUniform1i(glGetUniformLocation(s_programID, "uDebugMode"), 0);
-}
-
-void Shader::SetLightPos(const glm::vec3& pos, const char* name)
-{
-	glUniform3f(glGetUniformLocation(s_programID, name), pos.x, pos.y, pos.z);
-}
-
-void Shader::SetLightColor(const glm::vec3& color, const char* name)
-{
-	glUniform3f(glGetUniformLocation(s_programID, name), color.x, color.y, color.z);
-}
-
-void Shader::SetViewPos(const glm::vec3& pos, const char* name)
-{
-	glUniform3f(glGetUniformLocation(s_programID, name), pos.x, pos.y, pos.z);
 }

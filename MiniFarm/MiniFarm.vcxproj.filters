@@ -82,6 +82,9 @@
     <ClCompile Include="Source\Game\StaticProp.cpp">
       <Filter>소스 파일\Game</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Render\Text.cpp">
+      <Filter>소스 파일\Rendering</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Systems\CollisionSystem.h">
@@ -158,6 +161,9 @@
     </ClInclude>
     <ClInclude Include="Source\Game\Inventory.h">
       <Filter>소스 파일\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Render\Text.h">
+      <Filter>소스 파일\Rendering</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

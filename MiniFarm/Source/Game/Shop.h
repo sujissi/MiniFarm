@@ -6,7 +6,7 @@ class Shop : public InteractableObject
 public:
 	Shop(const glm::vec3& pos, const glm::vec3& rot, const glm::vec3& scale,
 		const std::string& model, const std::string& texture)
-		: InteractableObject(pos, rot, scale, 8.0f)
+		: InteractableObject(pos, rot, scale, 9.0f)
 	{
 		m_model = ModelCache::Get(model, texture);
 	}

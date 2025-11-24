@@ -1,7 +1,6 @@
 #include "PCH.h"
 #include "Model.h"
 #include "Shader.h"
-// STB 이미지 로더 포함
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 

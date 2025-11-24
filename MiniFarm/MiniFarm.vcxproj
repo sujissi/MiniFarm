@@ -43,6 +43,7 @@
     <ClCompile Include="Source\Core\SceneManager.cpp" />
     <ClCompile Include="Source\Render\Shader.cpp" />
     <ClCompile Include="Source\Game\StaticProp.cpp" />
+    <ClCompile Include="Source\Render\Text.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Game\Boat.h" />
@@ -70,6 +71,7 @@
     <ClInclude Include="Source\Core\SceneManager.h" />
     <ClInclude Include="Source\Render\Shader.h" />
     <ClInclude Include="Source\Utils\MathUtils.h" />
+    <ClInclude Include="Source\Render\Text.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

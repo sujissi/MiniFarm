@@ -3,6 +3,7 @@
 #include "Inventory.h"
 
 class IInteractable;
+class Text;
 class Player : public GameObject
 {
 public:

@@ -6,6 +6,7 @@
 #include "BoxCollider.h"
 #include "CollisionSystem.h"
 #include "IInteractable.h"
+#include "Text.h"
 
 Player::Player()
 {

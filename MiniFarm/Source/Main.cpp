@@ -15,7 +15,6 @@ void main(int argc, char** argv) {
 	glEnable(GL_DEPTH_TEST);
 	glClearColor(1, 1, 1, 1);
 
-	Shader::Init("Shaders/vertex.glsl", "Shaders/fragment.glsl");
 	SceneManager::Init();
 	InputManager::Init();
 	DataTable::Init();

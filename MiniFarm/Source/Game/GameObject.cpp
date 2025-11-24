@@ -5,6 +5,7 @@
 #include "DebugDrawer.h"
 #include "Model.h"
 #include "BoxCollider.h"
+#include "SceneManager.h"
 
 void GameObject::Init()
 {
@@ -40,7 +41,7 @@ void GameObject::Draw()
         * Rotate(m_rot.z, { 0,0,1 })
         * Scale(m_scale);
 
-    Shader::SetModel(modelMat);
+    SceneManager::GetMainShader().SetModel(modelMat);
     m_model->Draw();
 }
 
