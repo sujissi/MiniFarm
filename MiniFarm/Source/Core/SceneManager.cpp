@@ -65,7 +65,7 @@ void SceneManager::LoadStaticObjects(const std::string& path)
 		glm::vec3 scale = readVec3(obj["scale"]);
 		pos.x = -pos.x;
 		rot.y = -rot.y;
-
+		
 		auto objInfo = DataTable::GetObjectInfo(type);
 		if (!objInfo)
 		{
