@@ -15,7 +15,7 @@ void DataTable::LoadCrops(const std::string& path)
     std::ifstream file(path);
     std::string line;
 
-    // Çì´õ ½ºÅµ
+    // header skip
     std::getline(file, line);
 
     while (std::getline(file, line))
@@ -26,7 +26,7 @@ void DataTable::LoadCrops(const std::string& path)
         CropData data;
         std::string token;
 
-        // id (map key)
+        // id
         std::getline(ss, token, ',');
         int cropId = std::stoi(token);
 
@@ -43,18 +43,25 @@ void DataTable::LoadCrops(const std::string& path)
 
         // growStages
         std::getline(ss, token, ',');
-        std::stringstream ssStages(token);
-        std::string typeToken;
-
-        while (std::getline(ssStages, typeToken, '|'))
         {
-            data.stageTypes.push_back(typeToken);
+            std::stringstream gs(token);
+            std::string t;
+            while (std::getline(gs, t, '|'))
+                data.stageTypes.push_back(t);
+        }
+
+        // waterStages
+        std::getline(ss, token, ',');
+        {
+            std::stringstream ws(token);
+            std::string t;
+            while (std::getline(ws, t, '|'))
+                data.waterStages.push_back(std::stof(t));
         }
 
         s_crops[cropId] = data;
     }
 }
-
 
 const CropData* DataTable::GetCrop(EItemID  id) { return &s_crops[(int)id]; }
 

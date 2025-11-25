@@ -7,6 +7,7 @@ struct CropData {
     int seedPrice;
     int sellPrice;
     std::vector<std::string> stageTypes;
+    std::vector<float> waterStages;
 };
 
 enum class EItemID : ItemID

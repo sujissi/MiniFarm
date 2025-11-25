@@ -4,16 +4,16 @@
 Inventory::Inventory()
 {
 	//for test
-	AddItem((ItemID)EItemID::Carrot, 5);
+	AddItem(EItemID::Carrot, 5);
 	m_money = 1000;
 }
 
-void Inventory::AddItem(ItemID id, int count)
+void Inventory::AddItem(EItemID id, int count)
 {
 	m_items[id] += count;
 }
 
-bool Inventory::UseItem(ItemID id, int count)
+bool Inventory::UseItem(EItemID id, int count)
 {
 	if (!HasItem(id))
 		return false;
@@ -22,7 +22,7 @@ bool Inventory::UseItem(ItemID id, int count)
 	return true;
 }
 
-bool Inventory::HasItem(ItemID id) const
+bool Inventory::HasItem(EItemID id) const
 {
 	return m_items.find(id) != m_items.end() && m_items.at(id) > 0;
 }

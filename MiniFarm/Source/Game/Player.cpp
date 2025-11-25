@@ -150,11 +150,10 @@ void Player::TryUpdateInteractTarget()
     }
 }
 
-void Player::BuySeed(ItemID seedID, int count)
+void Player::BuySeed(EItemID seedID, int count)
 {
-    auto seed = static_cast<EItemID>(seedID);
     const CropData* data = nullptr;
-    switch (seed)
+    switch (seedID)
     {
     case EItemID::SeedCarrot:
         data = DataTable::GetCrop(EItemID::Carrot);
@@ -177,11 +176,10 @@ void Player::BuySeed(ItemID seedID, int count)
     }
 }
 
-void Player::SellCrop(ItemID cropID, int count)
+void Player::SellCrop(EItemID cropID, int count)
 {
-    auto crop = static_cast<EItemID>(cropID);
     const CropData* data = nullptr;
-    switch (crop)
+    switch (cropID)
     {
     case EItemID::Carrot:
         data = DataTable::GetCrop(EItemID::Carrot);
@@ -205,7 +203,7 @@ void Player::SellCrop(ItemID cropID, int count)
     }
 }
 
-void Player::AddItem(ItemID itemID, int count)
+void Player::AddItem(EItemID itemID, int count)
 {
 	m_inventory.AddItem(itemID, count);
 }

@@ -9,7 +9,6 @@ Crop::Crop(const glm::vec3& pos, const glm::vec3& rot, const glm::vec3& scale,
 	: InteractableObject(pos, rot, scale)
 {
 	m_level = 0;
-	m_time = 0.f;
 	m_water = 0.f;
 	m_id = EItemID::Empty;
 
@@ -20,7 +19,6 @@ void Crop::SetCropState(EItemID newID, int newLevel)
 {
     m_id = newID;
     m_level = newLevel;
-    m_time = 0.f;
     m_water = 0.f;
 
     const CropData* data = DataTable::GetCrop(m_id);
@@ -36,41 +34,38 @@ void Crop::SetCropState(EItemID newID, int newLevel)
 
 void Crop::Update(int dt)
 {
-	if (!m_model)
-	{
-		LOG_E("Crop model missing");
-		return;
-	}
+    if (!m_model) return;
 
-	if (m_id == EItemID::Empty || m_id == EItemID::Tilled)
-		return;
+    if (m_id == EItemID::Empty || m_id == EItemID::Tilled)
+        return;
 
-	const auto* data = DataTable::GetCrop(m_id);
-	if (!data) return;
+    const CropData* data = DataTable::GetCrop(m_id);
+    if (!data) return;
 
-	if (m_water <= 0.f)
-		return;
+    int maxLevel = (int)data->stageTypes.size() - 1;
+    if (m_level >= maxLevel)
+        return;
 
-	m_time += dt * 0.001f;
-	bool canLevelUp = (m_time >= 5.f) && (m_level < (int)data->stageTypes.size() - 1);
+    float requiredWater = data->waterStages[m_level];
 
-	if (canLevelUp)
-	{
-		m_time = 0.f;
-		m_level++;
+    if (m_water >= requiredWater)
+    {
+        m_water -= requiredWater;
+        m_level++;
 
-		const std::string& typeName = data->stageTypes[m_level];
-		const ObjectInfo* info = DataTable::GetObjectInfo(typeName);
+        const std::string& typeName = data->stageTypes[m_level];
+        const ObjectInfo* info = DataTable::GetObjectInfo(typeName);
 
-		if (info)
-			m_model = ModelCache::Get(info->modelPath, info->texturePath);
+        if (info)
+            m_model = ModelCache::Get(info->modelPath, info->texturePath);
 
-		LOG_D("Crop grew to level %d", m_level);
-	}
+        LOG_D("Crop grew to level %d (used %.1f water)", m_level, requiredWater);
+    }
 
-	m_water -= dt * 0.001f;
-	if (m_water < 0.f) m_water = 0.f;
+    if (m_water < 0.f)
+        m_water = 0.f;
 }
+
 
 void Crop::AddWater(float amount)
 {
@@ -125,7 +120,7 @@ void Crop::OnInteract(Player* player)
 
         if (data && m_level == (int)data->stageTypes.size() - 1)
         {
-            // TODO: player->AddItem(m_id);
+            player->AddItem(m_id);
             SetCropState(EItemID::Tilled, 0);
             LOG_D("Crop harvested");
         }

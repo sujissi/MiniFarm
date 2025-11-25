@@ -13,7 +13,7 @@ Sign1,Models/carrot_seed.obj,Models/Farm_texture.png
 Sign2,Models/cabbage_seed.obj,Models/Farm_texture.png
 Carrot1,Models/carrot_sprout.obj,Models/Farm_texture.png
 Carrot2,Models/carrot_mid.obj,Models/Farm_texture.png
-Carrot3,Models/carrots.obj,Models/Farm_texture.png
+Carrot3,Models/carrot.obj,Models/Farm_texture.png
 Cabbage1,Models/cabbage_sprout.obj,Models/Farm_texture.png
 Cabbage2,Models/cabbage_mid.obj,Models/Farm_texture.png
 Cabbage3,Models/cabbage.obj,Models/Farm_texture.png

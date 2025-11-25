@@ -7,7 +7,6 @@ class Crop : public InteractableObject
 private:
     EItemID m_id;
     int   m_level = 0;
-    float m_time = 0.f;
     float m_water = 0.f;
 
 public:
