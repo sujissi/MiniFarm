@@ -12,40 +12,51 @@ void DataTable::Init()
 
 void DataTable::LoadCrops(const std::string& path)
 {
-	std::ifstream file(path);
-	std::string line;
+    std::ifstream file(path);
+    std::string line;
 
-	for (int i = 0; i < 5; i++)
-		std::getline(file, line);
+    // Çì´õ ½ºÅµ
+    std::getline(file, line);
 
-	while (std::getline(file, line))
-	{
-		if (line.empty()) continue;
+    while (std::getline(file, line))
+    {
+        if (line.empty()) continue;
 
-		std::stringstream ss(line);
-		CropData data;
-		std::string token;
+        std::stringstream ss(line);
+        CropData data;
+        std::string token;
 
-		std::getline(ss, token, ','); data.id = static_cast<ECropID>(std::stoi(token));
-		std::getline(ss, data.name, ',');
-		std::getline(ss, token, ','); data.seedPrice = std::stoi(token);
-		std::getline(ss, token, ','); data.sellPrice = std::stoi(token);
+        // id (map key)
+        std::getline(ss, token, ',');
+        int cropId = std::stoi(token);
 
-		for (int i = 0; i < 4; i++)
-		{
-			std::getline(file, line);
-			std::stringstream ss2(line);
+        // name
+        std::getline(ss, data.name, ',');
 
-			std::getline(ss2, data.levels[i].model, ',');
-			std::getline(ss2, token, ','); data.levels[i].waterRequired = std::stof(token);
-			std::getline(ss2, token, ','); data.levels[i].timeRequired = std::stof(token);
-		}
+        // seedPrice
+        std::getline(ss, token, ',');
+        data.seedPrice = std::stoi(token);
 
-		s_crops[(int)data.id] = data;
-	}
+        // sellPrice
+        std::getline(ss, token, ',');
+        data.sellPrice = std::stoi(token);
+
+        // growStages
+        std::getline(ss, token, ',');
+        std::stringstream ssStages(token);
+        std::string typeToken;
+
+        while (std::getline(ssStages, typeToken, '|'))
+        {
+            data.stageTypes.push_back(typeToken);
+        }
+
+        s_crops[cropId] = data;
+    }
 }
 
-const CropData* DataTable::GetCrop(ECropID  id) { return &s_crops[(int)id]; }
+
+const CropData* DataTable::GetCrop(EItemID  id) { return &s_crops[(int)id]; }
 
 void DataTable::LoadObjects(const std::string& path)
 {

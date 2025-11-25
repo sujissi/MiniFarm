@@ -18,16 +18,16 @@ private:
 	
 	void HandleEquipmentInput();
 
-	void BuySeed(ItemID seedID, int count);
-	void SellCrop(ItemID cropID, int count);
-
+	void BuySeed(ItemID seedID, int count = 1);
+	void SellCrop(ItemID cropID, int count = 1);
+	void AddItem(ItemID itemID, int count = 1);
 public:
 	bool HasInteractTarget() { return m_FocusedInteractable != nullptr; }
-	EToolID GetEquippedTool() const { return m_equippedTool; }
-	void SetEquippedTool(EToolID tool) { m_equippedTool = tool; }
+	EItemID GetEquippedTool() const { return m_equippedTool; }
+	void SetEquippedTool(EItemID tool) { m_equippedTool = tool; }
 private:
     float m_speed = 0.2f;
 	Inventory m_inventory;
 	IInteractable* m_FocusedInteractable = nullptr;
-	EToolID m_equippedTool = EToolID::None;
+	EItemID m_equippedTool = EItemID::Empty;
 };

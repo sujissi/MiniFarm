@@ -2,34 +2,20 @@
 
 using ItemID = int;
 
-enum class ECropID : ItemID
-{
-    Empty = -1, // ∞•¡ˆ æ ¿∫ ∂•
-    Tilled = 0, // ∞•æ∆≥ı¿∫ ∂•
-    Carrot = 1,
-    Cabbage = 2
-};
-
-struct CropData
-{
-    ECropID id;
+struct CropData {
     std::string name;
     int seedPrice;
     int sellPrice;
-
-    struct LevelInfo
-    {
-        std::string model;
-        float waterRequired;
-        float timeRequired;
-    };
-
-    LevelInfo levels[4];
+    std::vector<std::string> stageTypes;
 };
 
-enum class EToolID : ItemID
+enum class EItemID : ItemID
 {
-    None = -1,
+    Empty = -1, 
+    Tilled = 0, // ∞•æ∆≥ı¿∫ ∂•
+    Carrot = 1,
+    Cabbage = 2,
+
     // Tools
     Hoe = 3,
     WateringCan,

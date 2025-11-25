@@ -4,7 +4,7 @@
 Inventory::Inventory()
 {
 	//for test
-	AddItem((ItemID)ECropID::Carrot, 5);
+	AddItem((ItemID)EItemID::Carrot, 5);
 	m_money = 1000;
 }
 

@@ -5,7 +5,7 @@ class DataTable
 {
 public:
     static void Init();
-    static const CropData* GetCrop(ECropID  id);
+    static const CropData* GetCrop(EItemID  id);
     static const ObjectInfo* GetObjectInfo(const std::string& type);
 
 private:

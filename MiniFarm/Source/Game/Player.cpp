@@ -82,7 +82,7 @@ void Player::HandleInteractInput()
 
     if (InputManager::IsKeyPressed('e'))
     {
-        LOG("상호작용");
+        LOG_D("상호작용");
         m_FocusedInteractable->OnInteract(this);
     }
 }
@@ -91,27 +91,27 @@ void Player::HandleEquipmentInput()
 {
     if (InputManager::IsKeyPressed('1'))
     {
-        SetEquippedTool(EToolID::Hoe);
+        SetEquippedTool(EItemID::Hoe);
         LOG_D("도구 변경: 괭이");
     }
     else if (InputManager::IsKeyPressed('2'))
     {
-        SetEquippedTool(EToolID::WateringCan);
+        SetEquippedTool(EItemID::WateringCan);
         LOG_D("도구 변경: 물뿌리개");
     }
     else if (InputManager::IsKeyPressed('3'))
     {
-        SetEquippedTool(EToolID::Sickle);
+        SetEquippedTool(EItemID::Sickle);
         LOG_D("도구 변경: 낫");
     }
     else if (InputManager::IsKeyPressed('4'))
     {
-        SetEquippedTool(EToolID::SeedCarrot);
+        SetEquippedTool(EItemID::SeedCarrot);
         LOG_D("도구 변경: 당근 씨앗");
     }
     else if (InputManager::IsKeyPressed('5'))
     {
-        SetEquippedTool(EToolID::SeedCabbage);
+        SetEquippedTool(EItemID::SeedCabbage);
         LOG_D("도구 변경: 양배추 씨앗");
 	}
 }
@@ -152,15 +152,15 @@ void Player::TryUpdateInteractTarget()
 
 void Player::BuySeed(ItemID seedID, int count)
 {
-    auto seed = static_cast<EToolID>(seedID);
+    auto seed = static_cast<EItemID>(seedID);
     const CropData* data = nullptr;
     switch (seed)
     {
-    case EToolID::SeedCarrot:
-        data = DataTable::GetCrop(ECropID::Carrot);
+    case EItemID::SeedCarrot:
+        data = DataTable::GetCrop(EItemID::Carrot);
         break;
-    case EToolID::SeedCabbage:
-        data = DataTable::GetCrop(ECropID::Cabbage);
+    case EItemID::SeedCabbage:
+        data = DataTable::GetCrop(EItemID::Cabbage);
         break;
     default:
         return;
@@ -168,7 +168,7 @@ void Player::BuySeed(ItemID seedID, int count)
     int totalPrice = data->seedPrice * count;
     if (m_inventory.SpendMoney(totalPrice))
     {
-        m_inventory.AddItem(seedID, count);
+        AddItem(seedID, count);
         LOG_D("%s를 %d개 구매 (-%d원) ", data->name.c_str(), count, totalPrice);
 	}
     else
@@ -179,15 +179,15 @@ void Player::BuySeed(ItemID seedID, int count)
 
 void Player::SellCrop(ItemID cropID, int count)
 {
-    auto crop = static_cast<ECropID>(cropID);
+    auto crop = static_cast<EItemID>(cropID);
     const CropData* data = nullptr;
     switch (crop)
     {
-    case ECropID::Carrot:
-        data = DataTable::GetCrop(ECropID::Carrot);
+    case EItemID::Carrot:
+        data = DataTable::GetCrop(EItemID::Carrot);
         break;
-    case ECropID::Cabbage:
-        data = DataTable::GetCrop(ECropID::Cabbage);
+    case EItemID::Cabbage:
+        data = DataTable::GetCrop(EItemID::Cabbage);
         break;
     default:
         return;
@@ -203,4 +203,9 @@ void Player::SellCrop(ItemID cropID, int count)
     {
         LOG_D("판매할 %s 없음", data->name.c_str());
     }
+}
+
+void Player::AddItem(ItemID itemID, int count)
+{
+	m_inventory.AddItem(itemID, count);
 }
