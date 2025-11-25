@@ -29,6 +29,7 @@ struct CropData
 
 enum class EToolID : ItemID
 {
+    None = -1,
     // Tools
     Hoe = 3,
     WateringCan,

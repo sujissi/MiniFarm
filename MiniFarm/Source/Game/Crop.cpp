@@ -2,6 +2,7 @@
 #include "Crop.h"
 #include "DataTable.h"
 #include "Model.h"
+#include "Player.h"
 
 Crop::Crop(const glm::vec3& pos, const glm::vec3& rot, const glm::vec3& scale,
 	const std::string& model, const std::string& texture)
@@ -53,4 +54,11 @@ void Crop::AddWater(float amount)
 
 void Crop::OnInteract(Player* player)
 {
+	auto tool = static_cast<EToolID>(player->GetEquippedTool());
+	
+	if (tool == EToolID::WateringCan)
+	{
+		AddWater(5.f);
+		LOG_D("Crop watered. Current water: %.2f", m_water);
+	}
 }

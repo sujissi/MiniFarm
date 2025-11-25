@@ -14,7 +14,6 @@ Player::Player()
 	m_pos = { 0.f, 6.2f, 0.f };
 	m_rot = { 0.f, 0.f, 0.f };
 	m_scale = { 1.f, 1.f, 1.f };
-    m_speed = 0.3f;
 
     m_collider = std::make_shared<BoxCollider>(
         glm::vec3(-0.5f, 0.0f, -0.5f),
@@ -29,6 +28,7 @@ void Player::Update(int time)
 {
     TryUpdateInteractTarget();
     HandleInteractInput();
+    HandleEquipmentInput();
 
     HandleRotate();
     HandleMove();
@@ -87,6 +87,35 @@ void Player::HandleInteractInput()
     }
 }
 
+void Player::HandleEquipmentInput()
+{
+    if (InputManager::IsKeyPressed('1'))
+    {
+        SetEquippedTool(EToolID::Hoe);
+        LOG_D("도구 변경: 괭이");
+    }
+    else if (InputManager::IsKeyPressed('2'))
+    {
+        SetEquippedTool(EToolID::WateringCan);
+        LOG_D("도구 변경: 물뿌리개");
+    }
+    else if (InputManager::IsKeyPressed('3'))
+    {
+        SetEquippedTool(EToolID::Sickle);
+        LOG_D("도구 변경: 낫");
+    }
+    else if (InputManager::IsKeyPressed('4'))
+    {
+        SetEquippedTool(EToolID::SeedCarrot);
+        LOG_D("도구 변경: 당근 씨앗");
+    }
+    else if (InputManager::IsKeyPressed('5'))
+    {
+        SetEquippedTool(EToolID::SeedCabbage);
+        LOG_D("도구 변경: 양배추 씨앗");
+	}
+}
+
 void Player::TryUpdateInteractTarget()
 {
     m_FocusedInteractable = nullptr;
@@ -119,28 +148,6 @@ void Player::TryUpdateInteractTarget()
             m_FocusedInteractable = interactable;
         }
     }
-}
-
-
-void Player::UseTool(ItemID toolID)
-{
-	auto tool = static_cast<EToolID>(toolID);
-
-    //TODO: 각 애니메이션 다르게?
-    switch (tool)
-    {
-	case EToolID::Hoe:
-        break;
-	case EToolID::WateringCan:
-		break;
-	case EToolID::Sickle:
-		break;
-    case EToolID::SeedCarrot:
-    case EToolID::SeedCabbage:
-		break;
-    }
-
-    LOG_D("도구 사용");
 }
 
 void Player::BuySeed(ItemID seedID, int count)
