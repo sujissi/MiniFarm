@@ -1,5 +1,7 @@
 #include "PCH.h"
 #include "Inventory.h"
+#include "UIRenderer.h"
+#include "TextRenderer.h"
 
 Inventory::Inventory()
 {
@@ -37,4 +39,14 @@ bool Inventory::SpendMoney(int amount)
 	if (m_money < amount) return false;
 	m_money -= amount;
 	return true;
+}
+
+void Inventory::DrawUI() const
+{
+	UIRenderer::Draw(TextureLoader::Load("Assets/ui_inventory.png"), { 0.01f,0.01f }, 0.45f);
+	UIRenderer::Draw(TextureLoader::Load("Assets/ui_goldbar.png"), { 0.01f,0.9f }, 0.25f);
+
+	std::string moneyStr = std::to_string(m_money);
+	TextRenderer::DrawLeft(moneyStr, 50, WINDOW_H - 50, 2, { 0,0,0 });
+
 }

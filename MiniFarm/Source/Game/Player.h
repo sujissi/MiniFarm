@@ -25,6 +25,7 @@ public:
 	bool HasInteractTarget() { return m_FocusedInteractable != nullptr; }
 	EItemID GetEquippedTool() const { return m_equippedTool; }
 	void SetEquippedTool(EItemID tool) { m_equippedTool = tool; }
+	Inventory& GetInventory() { return m_inventory; }
 private:
     float m_speed = 0.2f;
 	Inventory m_inventory;

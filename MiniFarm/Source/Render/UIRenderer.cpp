@@ -52,6 +52,9 @@ void UIRenderer::Draw(const TextureInfo& textureInfo, const glm::vec2& posNDC, f
 	if (!s_shader) return;
 	float aspect = (float)textureInfo.width / (float)textureInfo.height;
 	glm::vec2 sizeNDC(size, size / aspect);
+	glDisable(GL_DEPTH_TEST);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	s_shader->Use();
 	s_shader->SetVec2(posNDC, "uPos");
@@ -64,4 +67,7 @@ void UIRenderer::Draw(const TextureInfo& textureInfo, const glm::vec2& posNDC, f
 	glBindVertexArray(s_VAO);
 	glDrawArrays(GL_TRIANGLES, 0, 6);
 	glBindVertexArray(0);
+
+	glDisable(GL_BLEND);
+	glEnable(GL_DEPTH_TEST);
 }

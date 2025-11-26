@@ -13,6 +13,7 @@ public:
     void AddMoney(int amount);
     bool SpendMoney(int amount);
     int GetMoney() const { return m_money; }
+	void DrawUI() const;
 private:
 	std::unordered_map<EItemID, int> m_items;
 	int m_money = 0;
