@@ -22,13 +22,10 @@ public:
 	~Model();
 
 	void Draw();
-private:
 	void LoadOBJ(const std::string& path);
-	GLuint LoadIMG(const std::string& path);
+	static GLuint LoadIMG(const std::string& path);
 	void SetupBuffers();
-
 	void InitBounds();
-public:
 	glm::vec3 GetMinBounds() const { return m_minBounds; }
 	glm::vec3 GetMaxBounds() const { return m_maxBounds; }
 

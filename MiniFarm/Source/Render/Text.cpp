@@ -25,24 +25,24 @@ void Text::Init(int screenWidth, int screenHeight)
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
 
-    m_Shader = std::make_shared<Shader>("Shaders/text.vert", "Shaders/text.frag");
+    m_shader = std::make_shared<Shader>("Shaders/text.vert", "Shaders/text.frag");
 
-    if (m_Shader->GetID() == 0)
+    if (m_shader->GetID() == 0)
     {
         LOG_E("Text shader program is 0 (compile/link failed)");
     }
 
     glm::mat4 proj = glm::ortho(0.0f, (float)screenWidth,
         0.0f, (float)screenHeight);
-    m_Shader->Use();
-    m_Shader->SetProj(proj, "uProj");
+    m_shader->Use();
+    m_shader->SetProj(proj, "uProj");
 
-    m_Shader->SetTexture(0, "uFont");
+    m_shader->SetTexture(0, "uFont");
 
-    m_FontTexture = LoadFontAtlas("font_atlas.png");
+    m_texture = LoadFontAtlas("font_atlas.png");
     LOG_D("Text::Init result - shaderID: %u, fontTex: %u",
-        m_Shader ? m_Shader->GetID() : 0,
-        m_FontTexture);
+        m_shader ? m_shader->GetID() : 0,
+        m_texture);
 }
 
 GLuint Text::LoadFontAtlas(const std::string& path)
@@ -100,7 +100,7 @@ void Text::Draw(const std::string& text,
     float scale,
     const glm::vec3& color)
 {
-    if (!m_Shader || m_Shader->GetID() == 0 || m_FontTexture == 0)
+    if (!m_shader || m_shader->GetID() == 0 || m_texture == 0)
     {
         LOG_E("Text::Draw aborted: shader or texture not ready");
         return;
@@ -109,17 +109,17 @@ void Text::Draw(const std::string& text,
     if (text.empty())
         return;
 
-    m_Shader->Use();
+    m_shader->Use();
 
     glDisable(GL_DEPTH_TEST);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-    GLint colorLoc = glGetUniformLocation(m_Shader->GetID(), "uTextColor");
+    GLint colorLoc = glGetUniformLocation(m_shader->GetID(), "uTextColor");
     glUniform3f(colorLoc, color.x, color.y, color.z);
 
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, m_FontTexture);
+    glBindTexture(GL_TEXTURE_2D, m_texture);
 
     glBindVertexArray(m_VAO);
     glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
@@ -138,7 +138,7 @@ void Text::Draw(const std::string& text,
 
         float uCellStart = col * cellU;
         float uCellEnd = (col + 1) * cellU;
-        float trimU = cellU * trimRatioX;
+        float trimU = cellU * m_trimRatioX;
 
         float u0 = uCellStart + trimU;
         float u1 = uCellEnd - trimU;
@@ -149,7 +149,7 @@ void Text::Draw(const std::string& text,
         float v1 = vCellEnd;
 
         float baseWidth = glyphW * scale;
-        float usedRatioX = 1.0f - (2.0f * trimRatioX);
+        float usedRatioX = 1.0f - (2.0f * m_trimRatioX);
         float w = baseWidth * usedRatioX;
         float h = glyphH * scale;
 
@@ -190,7 +190,7 @@ void Text::DrawAt(const std::string& text, float centerX, float centerY, float s
 
     float baseWidth = glyphW * scale;
 
-    float usedRatioX = 1.0f - 2.0f * trimRatioX;
+    float usedRatioX = 1.0f - 2.0f * m_trimRatioX;
     float w = baseWidth * usedRatioX;
     float advance = w + m_spacing;
 

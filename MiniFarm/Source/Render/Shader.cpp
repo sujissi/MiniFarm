@@ -75,6 +75,42 @@ void Shader::SetViewPos(const glm::vec3& pos, const char* name)
     glUniform3f(glGetUniformLocation(m_programID, name), pos.x, pos.y, pos.z);
 }
 
+void Shader::SetVec2(const glm::vec2& v, const char* name)
+{
+    GLint loc = glGetUniformLocation(m_programID, name);
+    if (loc != -1)
+        glUniform2f(loc, v.x, v.y);
+}
+
+void Shader::SetVec3(const glm::vec3& v, const char* name)
+{
+    GLint loc = glGetUniformLocation(m_programID, name);
+    if (loc != -1)
+        glUniform3f(loc, v.x, v.y, v.z);
+}
+
+void Shader::SetVec4(const glm::vec4& v, const char* name)
+{
+    GLint loc = glGetUniformLocation(m_programID, name);
+    if (loc != -1)
+        glUniform4f(loc, v.x, v.y, v.z, v.w);
+}
+
+void Shader::SetFloat(float v, const char* name)
+{
+    GLint loc = glGetUniformLocation(m_programID, name);
+    if (loc != -1)
+        glUniform1f(loc, v);
+}
+
+void Shader::SetInt(int v, const char* name)
+{
+    GLint loc = glGetUniformLocation(m_programID, name);
+    if (loc != -1)
+        glUniform1i(loc, v);
+}
+
+
 void Shader::BeginDebugDraw(const glm::vec3& color)
 {
     Use(); // glUseProgram(m_programID);

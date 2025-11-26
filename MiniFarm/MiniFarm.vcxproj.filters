@@ -88,6 +88,9 @@
     <ClCompile Include="Source\Game\Shop.cpp">
       <Filter>소스 파일\Game\Interactable</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Render\UI.cpp">
+      <Filter>소스 파일\Rendering</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Systems\CollisionSystem.h">
@@ -167,6 +170,9 @@
     </ClInclude>
     <ClInclude Include="Source\Game\Shop.h">
       <Filter>소스 파일\Game\Interactable</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Render\UI.h">
+      <Filter>소스 파일\Rendering</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

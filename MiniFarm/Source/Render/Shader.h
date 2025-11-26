@@ -25,6 +25,12 @@ public:
 	 void SetLightColor(const glm::vec3& color, const char* name = "uLightColor");
 	 void SetViewPos(const glm::vec3& pos, const char* name = "uViewPos");
 	
+	 void SetVec2(const glm::vec2& v, const char* name);
+	 void SetVec3(const glm::vec3& v, const char* name);
+	 void SetVec4(const glm::vec4& v, const char* name);
+	 void SetFloat(float v, const char* name);
+	 void SetInt(int v, const char* name);
+
 	 void BeginDebugDraw(const glm::vec3& color);
 	 void EndDebugDraw();
 private:
