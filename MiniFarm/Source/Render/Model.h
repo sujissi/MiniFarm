@@ -23,7 +23,6 @@ public:
 
 	void Draw();
 	void LoadOBJ(const std::string& path);
-	static GLuint LoadIMG(const std::string& path);
 	void SetupBuffers();
 	void InitBounds();
 	glm::vec3 GetMinBounds() const { return m_minBounds; }

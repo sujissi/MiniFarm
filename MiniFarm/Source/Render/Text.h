@@ -14,9 +14,6 @@ public:
 	void SetSpacing(float s) { m_spacing = s; }
 
 private:
-	GLuint LoadFontAtlas(const std::string& path);
-
-private:
 	GLuint m_VAO = 0;
 	GLuint m_VBO = 0;
 	GLuint m_texture = 0;

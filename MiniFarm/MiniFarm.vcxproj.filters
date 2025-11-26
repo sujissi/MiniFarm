@@ -88,7 +88,10 @@
     <ClCompile Include="Source\Game\Shop.cpp">
       <Filter>소스 파일\Game\Interactable</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Render\UI.cpp">
+    <ClCompile Include="Source\Render\UIRenderer.cpp">
+      <Filter>소스 파일\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Render\TextureLoader.cpp">
       <Filter>소스 파일\Rendering</Filter>
     </ClCompile>
   </ItemGroup>
@@ -171,7 +174,10 @@
     <ClInclude Include="Source\Game\Shop.h">
       <Filter>소스 파일\Game\Interactable</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Render\UI.h">
+    <ClInclude Include="Source\Render\UIRenderer.h">
+      <Filter>소스 파일\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Render\TextureLoader.h">
       <Filter>소스 파일\Rendering</Filter>
     </ClInclude>
   </ItemGroup>

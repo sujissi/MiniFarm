@@ -1,13 +1,13 @@
 #include "PCH.h"
-#include "UI.h"
+#include "UIRenderer.h"
 #include "Shader.h"
 
 
-GLuint UI::s_VAO = 0;
-GLuint UI::s_VBO = 0;
-std::shared_ptr<Shader> UI::s_shader = nullptr;
+GLuint UIRenderer::s_VAO = 0;
+GLuint UIRenderer::s_VBO = 0;
+std::shared_ptr<Shader> UIRenderer::s_shader = nullptr;
 
-void UI::Init()
+void UIRenderer::Init()
 {
 	// Fullscreen quad vertices
 	float vertices[] = {
@@ -48,7 +48,7 @@ void UI::Init()
 	}
 }
 
-void UI::Draw(GLuint texture, const glm::vec2& posNDC, const glm::vec2& sizeNDC, const glm::vec4& color)
+void UIRenderer::Draw(GLuint texture, const glm::vec2& posNDC, const glm::vec2& sizeNDC, const glm::vec4& color)
 {
 	if (!s_shader) return;
 

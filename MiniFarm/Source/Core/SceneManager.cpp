@@ -9,8 +9,8 @@
 #include "Shop.h"
 #include "Boat.h"
 #include "DebugDrawer.h"
-#include "UI.h"
-#include "Model.h"
+#include "UIRenderer.h"
+#include "TextureLoader.h"
 
 std::vector<std::shared_ptr<GameObject>> SceneManager::s_objects;
 Camera SceneManager::s_camera;
@@ -24,7 +24,7 @@ void SceneManager::Init()
 	s_mainShader.Init("Shaders/main.vert", "Shaders/main.frag");
 	DebugDrawer::Init(&s_mainShader);
 	s_uiText.Init(WINDOW_W, WINDOW_H);
-	UI::Init();
+	UIRenderer::Init();
 	DataTable::Init();
 	s_objects.clear();
 	s_camera.Init();
@@ -200,8 +200,9 @@ void SceneManager::Draw()
 		s_uiText.DrawAt("Press E to interact", WINDOW_W * 0.5f, WINDOW_H * 0.55f, 2.0f, { 0,1,0.3 });
 	}
 	//for test
-	GLuint waterIcon = Model::LoadIMG("font_atlas.png");
-	UI::Draw(waterIcon, glm::vec3(0), {0.1,0.2}, glm::vec4(1));
+	GLuint waterIcon = TextureLoader::Load("font_atlas.png");
+
+	UIRenderer::Draw(waterIcon, glm::vec3(0), {0.1,0.2}, glm::vec4(1));
 	
 	glutSwapBuffers();
 }

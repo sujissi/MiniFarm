@@ -1,7 +1,7 @@
 #include "PCH.h"
 #include "Text.h"
 #include "Shader.h"
-#include "stb_image.h"
+#include "TextureLoader.h"
 
 void Text::Init(int screenWidth, int screenHeight)
 {
@@ -39,61 +39,12 @@ void Text::Init(int screenWidth, int screenHeight)
 
     m_shader->SetTexture(0, "uFont");
 
-    m_texture = LoadFontAtlas("font_atlas.png");
+    m_texture = TextureLoader::Load("font_atlas.png");
     LOG_D("Text::Init result - shaderID: %u, fontTex: %u",
         m_shader ? m_shader->GetID() : 0,
         m_texture);
 }
 
-GLuint Text::LoadFontAtlas(const std::string& path)
-{
-    GLuint texture;
-    glGenTextures(1, &texture);
-    glBindTexture(GL_TEXTURE_2D, texture);
-
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-    int width, height, nrChannels;
-    stbi_set_flip_vertically_on_load(true);
-    unsigned char* data = stbi_load(path.c_str(), &width, &height, &nrChannels, 0);
-
-    if (data)
-    {
-        GLenum format;
-        switch (nrChannels)
-        {
-        case 1: format = GL_RED;  break;
-        case 3: format = GL_RGB;  break;
-        case 4: format = GL_RGBA; break;
-        default:
-            LOG_E("Unsupported font texture format with %d channels", nrChannels);
-            stbi_image_free(data);
-            glDeleteTextures(1, &texture);
-            return 0;
-        }
-
-        glTexImage2D(GL_TEXTURE_2D, 0, format,
-            width, height, 0,
-            format, GL_UNSIGNED_BYTE, data);
-        glGenerateMipmap(GL_TEXTURE_2D);
-
-        LOG("Font texture loaded: %s (%dx%d, channels: %d)",
-            path.c_str(), width, height, nrChannels);
-    }
-    else
-    {
-        LOG_E("Failed to load font texture: %s", path.c_str());
-        glDeleteTextures(1, &texture);
-        texture = 0;
-    }
-
-    stbi_image_free(data);
-    glBindTexture(GL_TEXTURE_2D, 0);
-    return texture;
-}
 
 void Text::Draw(const std::string& text,
     float x, float y,

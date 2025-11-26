@@ -1,7 +1,7 @@
 #pragma once
 
 class Shader;
-class UI
+class UIRenderer
 {
 public:
     static void Init();
