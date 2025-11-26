@@ -71,3 +71,9 @@ void UIRenderer::Draw(const TextureInfo& textureInfo, const glm::vec2& posNDC, f
 	glDisable(GL_BLEND);
 	glEnable(GL_DEPTH_TEST);
 }
+
+void UIRenderer::DrawCenter(const TextureInfo& textureInfo, const glm::vec2& centerNDC, float size, const glm::vec4& color)
+{
+	glm::vec2 posNDC = centerNDC - glm::vec2(size / 2.0f, size / 2.0f * ((float)textureInfo.height / (float)textureInfo.width));
+	Draw(textureInfo, posNDC, size, color);
+}

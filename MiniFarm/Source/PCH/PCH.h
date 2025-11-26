@@ -17,6 +17,7 @@
 #include <memory>
 #include <unordered_map>
 #include <functional>
+#include <format>
 
 #include "FileUtils.h"
 #include "MathUtils.h"

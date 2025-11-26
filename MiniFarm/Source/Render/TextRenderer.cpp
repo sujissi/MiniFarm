@@ -41,21 +41,18 @@ void TextRenderer::Init()
     LOG("TextRenderer loaded font atlas (tex = %u)", s_texture);
 }
 
-float TextRenderer::CalcTextWidth(const std::string& text, float scale)
+void TextRenderer::Draw(const std::string& text, float centerX, float centerY, float scale, const glm::vec3& color)
 {
-    float usedRatio = 1.0f - (2.0f * TRIM_X);
-    float glyphW = GLYPH_W * scale * usedRatio;
-    float adv = glyphW + s_spacing;
+    float textWidth = CalcTextWidth(text, scale);
+    float textHeight = GLYPH_H * scale;
 
-    if (text.empty()) return 0.f;
+    float startX = centerX - textWidth * 0.5f;
+    float startY = centerY - textHeight * 0.5f;
 
-    return (float)text.size() * adv - s_spacing;
+    DrawLeft(text, startX, startY, scale, color);
 }
 
-void TextRenderer::DrawLeft(const std::string& text,
-    float x, float y,
-    float scale,
-    const glm::vec3& color)
+void TextRenderer::DrawLeft(const std::string& text, float x, float y, float scale, const glm::vec3& color)
 {
     if (!s_shader || s_texture == 0 || text.empty()) return;
 
@@ -114,16 +111,13 @@ void TextRenderer::DrawLeft(const std::string& text,
     glEnable(GL_DEPTH_TEST);
 }
 
-void TextRenderer::Draw(const std::string& text,
-    float centerX, float centerY,
-    float scale,
-    const glm::vec3& color)
+float TextRenderer::CalcTextWidth(const std::string& text, float scale)
 {
-    float textWidth = CalcTextWidth(text, scale);
-    float textHeight = GLYPH_H * scale;
+    float usedRatio = 1.0f - (2.0f * TRIM_X);
+    float glyphW = GLYPH_W * scale * usedRatio;
+    float adv = glyphW + s_spacing;
 
-    float startX = centerX - textWidth * 0.5f;
-    float startY = centerY - textHeight * 0.5f;
+    if (text.empty()) return 0.f;
 
-    DrawLeft(text, startX, startY, scale, color);
+    return (float)text.size() * adv - s_spacing;
 }

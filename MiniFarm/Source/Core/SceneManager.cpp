@@ -148,7 +148,13 @@ void SceneManager::LoadInteractableObjects(const std::string& path)
 		}
 		else if (type == "House")
 		{
+			static int hcnt = 0;
+			auto croptype = (hcnt == 0) ? EItemID::Carrot : EItemID::Cabbage;
+			hcnt++;
+			if (hcnt >= 2) LOG_E("");
+
 			inst = std::make_shared<Shop>(pos, rot, scale, objInfo->modelPath, objInfo->texturePath);
+			std::dynamic_pointer_cast<Shop>(inst)->SetCropType(croptype);
 		}
 		else if (type == "Boat")
 		{
@@ -195,9 +201,14 @@ void SceneManager::Draw()
 		obj->Draw();
 	}
 
-	if (s_player->HasInteractTarget())
+	if (s_player->IsShopping())
 	{
-		TextRenderer::Draw("Press E to interact", WINDOW_W / 2, WINDOW_H / 2, 2, { 0,1,0.3 });
+		DrawMessage("Buy[B]\nSell[S]\nExit[X]");
+	}
+	else if (s_player->HasInteractTarget())
+	{
+		TextRenderer::Draw("Press [E] to interact", WINDOW_W / 2, WINDOW_H / 2, 2, { 0,1,0.3 });
+
 	}
 
 	s_player->GetInventory().DrawUI();
@@ -226,4 +237,26 @@ void SceneManager::OnMouseClick(int x, int y)
 
 	s_selected = nullptr;
 	LOG_D("Selection cleared");
+}
+
+void SceneManager::DrawMessage(const std::string& msg)
+{
+	UIRenderer::DrawCenter(TextureLoader::Load("Assets/ui_board.png"), { 0.5f,0.5f }, 0.5f, { 1,1,1,0.5 });
+	std::stringstream ss(msg);
+	std::vector<std::string> lines;
+	std::string line;
+
+	while (std::getline(ss, line, '\n'))
+		lines.push_back(line);
+
+	float lineHeight = 30.f;
+
+	float totalHeight = lineHeight * (lines.size() - 1);
+	float startY = WINDOW_H / 2 - totalHeight * 0.5f;
+
+	for (int i = 0; i < lines.size(); i++)
+	{
+		float y = startY + i * lineHeight;
+		TextRenderer::Draw(lines[lines.size() - 1 - i], WINDOW_W / 2, y, 2, glm::vec4(0.f));
+	}
 }

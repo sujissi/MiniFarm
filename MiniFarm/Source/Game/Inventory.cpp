@@ -6,7 +6,10 @@
 Inventory::Inventory()
 {
 	//for test
-	AddItem(EItemID::Carrot, 5);
+	AddItem(EItemID::SeedCarrot, 5);
+	AddItem(EItemID::SeedCabbage, 5);
+	AddItem(EItemID::Carrot, 3);
+	AddItem(EItemID::Cabbage, 3);
 	m_money = 1000;
 }
 
@@ -44,7 +47,7 @@ bool Inventory::SpendMoney(int amount)
 void Inventory::DrawUI() const
 {
 	glm::vec3 tcolor{ 0.f };
-	UIRenderer::Draw(TextureLoader::Load("Assets/ui_inventory.png"), { 0.06f,0.01f }, 0.85f);
+	UIRenderer::DrawCenter(TextureLoader::Load("Assets/ui_inventory.png"), { 0.5f,0.1f }, 0.85f);
 	UIRenderer::Draw(TextureLoader::Load("Assets/ui_goldbar.png"), { 0.01f,0.9f }, 0.25f);
 
 	std::string moneyStr = std::to_string(m_money);
@@ -56,8 +59,8 @@ void Inventory::DrawUI() const
 	std::string cabbagecnt = "x" + std::to_string(m_items.count(EItemID::Cabbage) ? m_items.at(EItemID::Cabbage) : 0);
 
 	float slotDist = 60.f;
-	TextRenderer::DrawLeft(cseedscnt, WINDOW_W / 2, 10, 1.5f, tcolor);
-	TextRenderer::DrawLeft(cabseedscnt, WINDOW_W / 2 + slotDist, 10, 1.5f, tcolor);
-	TextRenderer::DrawLeft(carrotcnt, WINDOW_W / 2 + slotDist * 2, 10, 1.5f, tcolor);
-	TextRenderer::DrawLeft(cabbagecnt, WINDOW_W / 2 + slotDist * 3, 10, 1.5f, tcolor);
+	TextRenderer::DrawLeft(cseedscnt, WINDOW_W / 2, 20, 1.5f, tcolor);
+	TextRenderer::DrawLeft(cabseedscnt, WINDOW_W / 2 + slotDist, 20, 1.5f, tcolor);
+	TextRenderer::DrawLeft(carrotcnt, WINDOW_W / 2 + slotDist * 2, 20, 1.5f, tcolor);
+	TextRenderer::DrawLeft(cabbagecnt, WINDOW_W / 2 + slotDist * 3, 20, 1.5f, tcolor);
 }

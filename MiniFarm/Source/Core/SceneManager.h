@@ -16,6 +16,7 @@ public:
     static void Reshape(int w, int h);
     
     static void OnMouseClick(int x, int y);
+	static void DrawMessage(const std::string& msg);
 
     static Camera& GetCamera() { return s_camera; }
     static std::vector<std::shared_ptr<GameObject>>& GetObjects() { return s_objects; }
