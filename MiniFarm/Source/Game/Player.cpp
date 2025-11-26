@@ -6,7 +6,6 @@
 #include "BoxCollider.h"
 #include "CollisionSystem.h"
 #include "IInteractable.h"
-#include "Text.h"
 
 Player::Player()
 {
@@ -44,7 +43,7 @@ void Player::HandleRotate()
 
     auto& cam = SceneManager::GetCamera();
 
-    float rotSpeed = 0.2f;
+    float rotSpeed = 0.1f;
     cam.AddYaw(InputManager::GetDeltaX() * rotSpeed);
     cam.AddPitch(-InputManager::GetDeltaY() * rotSpeed);
 

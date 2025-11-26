@@ -43,6 +43,10 @@ float Camera::GetFlatYaw() const
 
 void Camera::AddYaw(float delta)
 {
+	const float MAX_DELTA = 4.0f;
+
+	delta = glm::clamp(delta, -MAX_DELTA, MAX_DELTA);
+
 	yaw += delta;
 	yaw = glm::mod(yaw, 360.0f);
 	if (yaw < 0.f) yaw += 360.0f;

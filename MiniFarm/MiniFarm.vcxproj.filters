@@ -26,6 +26,9 @@
     <Filter Include="소스 파일\Game\Interactable">
       <UniqueIdentifier>{12c29c21-6576-46ee-a65d-26980081237c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Game\UI">
+      <UniqueIdentifier>{73f4686c-ac01-4872-9221-501e5f4efabd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
@@ -76,7 +79,7 @@
     <ClCompile Include="Source\Game\StaticProp.cpp">
       <Filter>소스 파일\Game</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Render\Text.cpp">
+    <ClCompile Include="Source\Render\TextRenderer.cpp">
       <Filter>소스 파일\Rendering</Filter>
     </ClCompile>
     <ClCompile Include="Source\Game\Boat.cpp">
@@ -93,6 +96,9 @@
     </ClCompile>
     <ClCompile Include="Source\Render\TextureLoader.cpp">
       <Filter>소스 파일\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\GameUI.cpp">
+      <Filter>소스 파일\Game\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -156,7 +162,7 @@
     <ClInclude Include="Source\Game\Inventory.h">
       <Filter>소스 파일\Game</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Render\Text.h">
+    <ClInclude Include="Source\Render\TextRenderer.h">
       <Filter>소스 파일\Rendering</Filter>
     </ClInclude>
     <ClInclude Include="Source\Game\Boat.h">
@@ -179,6 +185,9 @@
     </ClInclude>
     <ClInclude Include="Source\Render\TextureLoader.h">
       <Filter>소스 파일\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\GameUI.h">
+      <Filter>소스 파일\Game\UI</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Game\GameUI.cpp" />
     <ClCompile Include="Source\Game\Boat.cpp" />
     <ClCompile Include="Source\Game\Shop.cpp" />
     <ClCompile Include="Source\Systems\PickingSystem.cpp" />
@@ -43,11 +44,12 @@
     <ClCompile Include="Source\Core\SceneManager.cpp" />
     <ClCompile Include="Source\Render\Shader.cpp" />
     <ClCompile Include="Source\Game\StaticProp.cpp" />
-    <ClCompile Include="Source\Render\Text.cpp" />
+    <ClCompile Include="Source\Render\TextRenderer.cpp" />
     <ClCompile Include="Source\Render\UIRenderer.cpp" />
     <ClCompile Include="Source\Render\TextureLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Game\GameUI.h" />
     <ClInclude Include="Source\Game\Boat.h" />
     <ClInclude Include="Source\Game\Shop.h" />
     <ClInclude Include="Source\Game\IInteractable.h" />
@@ -73,7 +75,7 @@
     <ClInclude Include="Source\Core\SceneManager.h" />
     <ClInclude Include="Source\Render\Shader.h" />
     <ClInclude Include="Source\Utils\MathUtils.h" />
-    <ClInclude Include="Source\Render\Text.h" />
+    <ClInclude Include="Source\Render\TextRenderer.h" />
     <ClInclude Include="Source\Render\UIRenderer.h" />
     <ClInclude Include="Source\Render\TextureLoader.h" />
   </ItemGroup>

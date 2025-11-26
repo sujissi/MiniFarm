@@ -11,19 +11,19 @@
 #include "DebugDrawer.h"
 #include "UIRenderer.h"
 #include "TextureLoader.h"
+#include "TextRenderer.h"
 
 std::vector<std::shared_ptr<GameObject>> SceneManager::s_objects;
 Camera SceneManager::s_camera;
 GameObject* SceneManager::s_selected = nullptr;
 Shader SceneManager::s_mainShader;
-Text   SceneManager::s_uiText;
 Player* SceneManager::s_player = nullptr;
 
 void SceneManager::Init()
 {
 	s_mainShader.Init("Shaders/main.vert", "Shaders/main.frag");
 	DebugDrawer::Init(&s_mainShader);
-	s_uiText.Init(WINDOW_W, WINDOW_H);
+	TextRenderer::Init();
 	UIRenderer::Init();
 	DataTable::Init();
 	s_objects.clear();
@@ -197,12 +197,8 @@ void SceneManager::Draw()
 
 	if (s_player->HasInteractTarget())
 	{
-		s_uiText.DrawAt("Press E to interact", WINDOW_W * 0.5f, WINDOW_H * 0.55f, 2.0f, { 0,1,0.3 });
+		TextRenderer::Draw("Press E to interact", WINDOW_H/2, WINDOW_W/2, 2, { 0,1,0.3 });
 	}
-	//for test
-	GLuint waterIcon = TextureLoader::Load("font_atlas.png");
-
-	UIRenderer::Draw(waterIcon, glm::vec3(0), {0.1,0.2}, glm::vec4(1));
 	
 	glutSwapBuffers();
 }

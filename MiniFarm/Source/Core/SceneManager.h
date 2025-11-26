@@ -1,7 +1,6 @@
 #pragma once
 #include "GameObject.h"
 #include "Camera.h"
-#include "Text.h"
 #include "Player.h"
 
 class SceneManager
@@ -21,13 +20,11 @@ public:
     static Camera& GetCamera() { return s_camera; }
     static std::vector<std::shared_ptr<GameObject>>& GetObjects() { return s_objects; }
     static Shader& GetMainShader() { return s_mainShader; }
-	static Text& GetUIText() { return s_uiText; }
 private:
     static std::vector<std::shared_ptr<GameObject>> s_objects;
     static Camera s_camera;
 
     static GameObject* s_selected;
     static Shader s_mainShader;
-    static Text   s_uiText;
     static Player* s_player;
 };
