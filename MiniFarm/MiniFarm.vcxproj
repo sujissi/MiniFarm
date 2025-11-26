@@ -19,7 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source\Game\GameUI.cpp" />
     <ClCompile Include="Source\Game\Boat.cpp" />
     <ClCompile Include="Source\Game\Shop.cpp" />
     <ClCompile Include="Source\Systems\PickingSystem.cpp" />
@@ -49,7 +48,6 @@
     <ClCompile Include="Source\Render\TextureLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\Game\GameUI.h" />
     <ClInclude Include="Source\Game\Boat.h" />
     <ClInclude Include="Source\Game\Shop.h" />
     <ClInclude Include="Source\Game\IInteractable.h" />

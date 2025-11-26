@@ -1,11 +1,12 @@
 #pragma once
+#include "TextureLoader.h"
 
 class Shader;
 class UIRenderer
 {
 public:
     static void Init();
-    static void Draw(GLuint texture, const glm::vec2& posNDC, const glm::vec2& sizeNDC, const glm::vec4& color);
+    static void Draw(const TextureInfo& textureInfo, const glm::vec2& posNDC, float size, const glm::vec4& color = glm::vec4(1.0f));
 
 private:
     static GLuint s_VAO, s_VBO;

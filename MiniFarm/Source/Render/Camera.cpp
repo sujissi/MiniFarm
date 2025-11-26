@@ -55,7 +55,7 @@ void Camera::AddYaw(float delta)
 void Camera::AddPitch(float delta)
 {
 	pitch += delta;
-	pitch = glm::clamp(pitch, 10.f, 30.f);
+	pitch = glm::clamp(pitch, 10.f, 50.f);
 }
 
 void Camera::FollowTarget(const glm::vec3& targetPos)
@@ -72,6 +72,25 @@ void Camera::FollowTarget(const glm::vec3& targetPos)
 	eye.y = at.y + v;
 	eye.z = at.z + h * cos(yawRad);
 }
+
+glm::vec2 Camera::WorldToScreen(const glm::vec3& worldPos, float screenW, float screenH) const
+{
+	glm::mat4 view = GetView();
+	glm::mat4 proj = GetProj(screenW / screenH);
+
+	glm::vec4 clip = proj * view * glm::vec4(worldPos, 1.0f);
+
+	if (clip.w <= 0)
+		return glm::vec2(-9999, -9999); // 화면 뒤에 있음 = 안 보이게
+
+	glm::vec3 ndc = glm::vec3(clip) / clip.w;
+
+	float x = (ndc.x * 0.5f + 0.5f) * screenW;
+	float y = (ndc.y * 0.5f + 0.5f) * screenH;
+
+	return { x, y };
+}
+
 
 
 glm::mat4 Camera::GetView() const

@@ -197,9 +197,11 @@ void SceneManager::Draw()
 
 	if (s_player->HasInteractTarget())
 	{
-		TextRenderer::Draw("Press E to interact", WINDOW_H/2, WINDOW_W/2, 2, { 0,1,0.3 });
+		TextRenderer::Draw("Press E to interact", WINDOW_W / 2, WINDOW_H / 2, 2, { 0,1,0.3 });
 	}
-	
+
+	UIRenderer::Draw(TextureLoader::Load("Assets/ui_inventory.png"), { 0.01f,0.01f }, 0.5f);
+
 	glutSwapBuffers();
 }
 

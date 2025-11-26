@@ -22,7 +22,7 @@
 #include "MathUtils.h"
 #include "Logger.h"
 
-constexpr GLint WINDOW_W = 600;
+constexpr GLint WINDOW_W = 800;
 constexpr GLint WINDOW_H = 600;
 
 constexpr int FPS = 60;

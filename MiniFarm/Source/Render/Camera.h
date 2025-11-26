@@ -19,7 +19,7 @@ public:
     void AddPitch(float delta);
 
     void FollowTarget(const glm::vec3& targetPos);
-
+    glm::vec2 WorldToScreen(const glm::vec3& worldPos, float screenW, float screenH) const;
 public:
     glm::vec3 eye;
     glm::vec3 at;

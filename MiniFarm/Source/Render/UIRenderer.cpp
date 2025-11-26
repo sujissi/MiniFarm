@@ -2,7 +2,6 @@
 #include "UIRenderer.h"
 #include "Shader.h"
 
-
 GLuint UIRenderer::s_VAO = 0;
 GLuint UIRenderer::s_VBO = 0;
 std::shared_ptr<Shader> UIRenderer::s_shader = nullptr;
@@ -48,9 +47,11 @@ void UIRenderer::Init()
 	}
 }
 
-void UIRenderer::Draw(GLuint texture, const glm::vec2& posNDC, const glm::vec2& sizeNDC, const glm::vec4& color)
+void UIRenderer::Draw(const TextureInfo& textureInfo, const glm::vec2& posNDC, float size, const glm::vec4& color)
 {
 	if (!s_shader) return;
+	float aspect = (float)textureInfo.width / (float)textureInfo.height;
+	glm::vec2 sizeNDC(size, size / aspect);
 
 	s_shader->Use();
 	s_shader->SetVec2(posNDC, "uPos");
@@ -58,7 +59,7 @@ void UIRenderer::Draw(GLuint texture, const glm::vec2& posNDC, const glm::vec2& 
 	s_shader->SetVec4(color, "uColor");
 
 	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, texture);
+	glBindTexture(GL_TEXTURE_2D, textureInfo.id);
 
 	glBindVertexArray(s_VAO);
 	glDrawArrays(GL_TRIANGLES, 0, 6);

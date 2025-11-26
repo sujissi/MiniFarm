@@ -37,7 +37,7 @@ void TextRenderer::Init()
     s_shader->SetProj(proj, "uProj");
     s_shader->SetTexture(0, "uFont");
 
-    s_texture = TextureLoader::Load("font_atlas.png");
+    s_texture = TextureLoader::Load("Assets/font_atlas.png").id;
     LOG("TextRenderer loaded font atlas (tex = %u)", s_texture);
 }
 

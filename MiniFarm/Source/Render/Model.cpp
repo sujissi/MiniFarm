@@ -27,7 +27,7 @@ Model::Model(const std::string& path, const std::string& texturePath)
 {
 	LOG("%s", path.c_str());
 	LoadOBJ(path);
-	m_textureID = TextureLoader::Load(texturePath);
+	m_textureID = TextureLoader::Load(texturePath).id;
 }
 
 Model::~Model()
