@@ -43,10 +43,21 @@ bool Inventory::SpendMoney(int amount)
 
 void Inventory::DrawUI() const
 {
-	UIRenderer::Draw(TextureLoader::Load("Assets/ui_inventory.png"), { 0.01f,0.01f }, 0.45f);
+	glm::vec3 tcolor{ 0.f };
+	UIRenderer::Draw(TextureLoader::Load("Assets/ui_inventory.png"), { 0.06f,0.01f }, 0.85f);
 	UIRenderer::Draw(TextureLoader::Load("Assets/ui_goldbar.png"), { 0.01f,0.9f }, 0.25f);
 
 	std::string moneyStr = std::to_string(m_money);
-	TextRenderer::DrawLeft(moneyStr, 50, WINDOW_H - 50, 2, { 0,0,0 });
+	TextRenderer::DrawLeft(moneyStr, 50, WINDOW_H - 50, 2, tcolor);
 
+	std::string cseedscnt = "x" + std::to_string(m_items.count(EItemID::SeedCarrot) ? m_items.at(EItemID::SeedCarrot) : 0);
+	std::string cabseedscnt = "x" + std::to_string(m_items.count(EItemID::SeedCabbage) ? m_items.at(EItemID::SeedCabbage) : 0);
+	std::string carrotcnt = "x" + std::to_string(m_items.count(EItemID::Carrot) ? m_items.at(EItemID::Carrot) : 0);
+	std::string cabbagecnt = "x" + std::to_string(m_items.count(EItemID::Cabbage) ? m_items.at(EItemID::Cabbage) : 0);
+
+	float slotDist = 60.f;
+	TextRenderer::DrawLeft(cseedscnt, WINDOW_W / 2, 10, 1.5f, tcolor);
+	TextRenderer::DrawLeft(cabseedscnt, WINDOW_W / 2 + slotDist, 10, 1.5f, tcolor);
+	TextRenderer::DrawLeft(carrotcnt, WINDOW_W / 2 + slotDist * 2, 10, 1.5f, tcolor);
+	TextRenderer::DrawLeft(cabbagecnt, WINDOW_W / 2 + slotDist * 3, 10, 1.5f, tcolor);
 }
