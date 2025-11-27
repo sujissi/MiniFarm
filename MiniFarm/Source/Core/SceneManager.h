@@ -15,6 +15,10 @@ public:
     static void Draw();
     static void Reshape(int w, int h);
     
+    static void DrawWorld();
+    static void DrawUI();
+    static void SetupCameraAndLight();
+
     static Camera& GetCamera() { return s_camera; }
     static std::vector<std::shared_ptr<GameObject>>& GetObjects() { return s_objects; }
     static Shader& GetMainShader() { return s_mainShader; }

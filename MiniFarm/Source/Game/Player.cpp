@@ -147,7 +147,7 @@ void Player::HandleShopDirectInput()
 
 void Player::HandleBoatDirectInput()
 {
-	if(!IsEscaping())
+	if (!IsEscaping())
 		return;
 
 	if (InputManager::IsKeyPressed('y'))
@@ -159,7 +159,7 @@ void Player::HandleBoatDirectInput()
 			LOG("탈출 성공!");
 		}
 	}
-	if (InputManager::IsKeyPressed('n')|| InputManager::IsKeyPressed(' '))
+	if (InputManager::IsKeyPressed('n') || InputManager::IsKeyPressed(' '))
 	{
 		InputManager::SetUIMode(false);
 		SetEscaping(false);
@@ -246,7 +246,7 @@ void Player::SellCrop(EItemID cropID, int count)
 		return;
 	}
 
-	if (m_inventory.UseItem(cropID, count))
+	if (UseItem(cropID, count))
 	{
 		int totalPrice = data->sellPrice * count;
 		m_inventory.AddMoney(totalPrice);
@@ -261,4 +261,15 @@ void Player::SellCrop(EItemID cropID, int count)
 void Player::AddItem(EItemID itemID, int count)
 {
 	m_inventory.AddItem(itemID, count);
+}
+
+bool Player::UseItem(EItemID itemID, int count)
+{
+	if (m_inventory.UseItem(itemID, count))
+	{
+		LOG_D("아이템 사용: %d개", count);
+		return true;
+	}
+	LOG_D("아이템 부족");
+	return false;
 }
