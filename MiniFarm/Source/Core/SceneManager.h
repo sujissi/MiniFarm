@@ -8,8 +8,6 @@ class SceneManager
 public:
     static void Init();
     static void AddObject(std::shared_ptr<GameObject> obj);
-	static void LoadStaticObjects(const std::string& path);
-	static void LoadInteractableObjects(const std::string& path);
 
     static void Update(int time);
     static void Draw();
@@ -18,6 +16,9 @@ public:
     static void DrawWorld();
     static void DrawUI();
     static void SetupCameraAndLight();
+
+    static void LoadStaticObjects(const std::string& path);
+	static void LoadInteractableObjects(const std::string& path);
 
     static Camera& GetCamera() { return s_camera; }
     static std::vector<std::shared_ptr<GameObject>>& GetObjects() { return s_objects; }

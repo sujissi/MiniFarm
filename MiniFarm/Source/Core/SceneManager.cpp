@@ -12,6 +12,7 @@
 #include "UIRenderer.h"
 #include "TextureLoader.h"
 #include "TextRenderer.h"
+#include "ObjectLoader.h"
 
 std::vector<std::shared_ptr<GameObject>> SceneManager::s_objects;
 Camera SceneManager::s_camera;
@@ -32,144 +33,13 @@ void SceneManager::Init()
 	s_player = player.get();
 	AddObject(player);
 
-	LoadStaticObjects("Data/static_props_pos.json");
-	LoadInteractableObjects("Data/Interactable_props_pos.json");
+	ObjectLoader::LoadStaticObjects("Data/static_props_pos.json");
+	ObjectLoader::LoadInteractableObjects("Data/Interactable_props_pos.json");
 }
 
 void SceneManager::AddObject(std::shared_ptr<GameObject> obj)
 {
 	s_objects.push_back(obj);
-}
-
-void SceneManager::LoadStaticObjects(const std::string& path)
-{
-	std::string json = LoadFile(path);
-
-	if (json.empty()) {
-		LOG_E("Failed to load map file: %s", path.c_str());
-		return;
-	}
-
-	rapidjson::Document doc;
-	doc.Parse(json.c_str());
-
-	if (!doc.IsObject() || !doc.HasMember("objects")) {
-		LOG_E("Invalid map file: %s", path.c_str());
-		return;
-	}
-
-	const auto& arr = doc["objects"].GetArray();
-
-	auto readVec3 = [&](const rapidjson::Value& v)
-		{
-			return glm::vec3(
-				v[0].GetFloat(),
-				v[1].GetFloat(),
-				v[2].GetFloat()
-			);
-		};
-
-	for (auto& obj : arr)
-	{
-		std::string type = obj["type"].GetString();
-		glm::vec3 pos = readVec3(obj["pos"]);
-		glm::vec3 rot = readVec3(obj["rot"]);
-
-		glm::vec3 scale(1.0);
-		pos.x = -pos.x;
-		rot.y = -rot.y;
-
-		auto objInfo = DataTable::GetObjectInfo(type);
-		if (!objInfo)
-		{
-			LOG_E("No object info for type: %s", type.c_str());
-			continue;
-		}
-		auto inst = std::make_shared<StaticProp>(pos, rot, scale, objInfo->modelPath, objInfo->texturePath);
-		if (inst)
-		{
-			inst->m_name = type;
-			AddObject(inst);
-			inst->Init();
-		}
-		else
-			LOG_E("Unknown object type: %s", type.c_str());
-	}
-}
-
-void SceneManager::LoadInteractableObjects(const std::string& path)
-{
-	std::string json = LoadFile(path);
-
-	if (json.empty()) {
-		LOG_E("Failed to load map file: %s", path.c_str());
-		return;
-	}
-
-	rapidjson::Document doc;
-	doc.Parse(json.c_str());
-
-	if (!doc.IsObject() || !doc.HasMember("objects")) {
-		LOG_E("Invalid map file: %s", path.c_str());
-		return;
-	}
-
-	const auto& arr = doc["objects"].GetArray();
-
-	auto readVec3 = [&](const rapidjson::Value& v)
-		{
-			return glm::vec3(
-				v[0].GetFloat(),
-				v[1].GetFloat(),
-				v[2].GetFloat()
-			);
-		};
-
-	for (auto& obj : arr)
-	{
-		std::string type = obj["type"].GetString();
-		glm::vec3 pos = readVec3(obj["pos"]);
-		glm::vec3 rot = readVec3(obj["rot"]);
-		glm::vec3 scale = readVec3(obj["scale"]);
-		pos.x = -pos.x;
-		rot.y = -rot.y;
-
-		auto objInfo = DataTable::GetObjectInfo(type);
-		if (!objInfo)
-		{
-			LOG_E("No object info for type: %s", type.c_str());
-			continue;
-		}
-
-		std::shared_ptr<GameObject> inst;
-		if (type == "Field")
-		{
-			inst = std::make_shared<Crop>(pos, rot, scale, objInfo->modelPath, objInfo->texturePath);
-		}
-		else if (type == "House")
-		{
-			static int hcnt = 0;
-			auto croptype = (hcnt == 0) ? EItemID::Carrot : EItemID::Cabbage;
-			hcnt++;
-			if (hcnt >= 2) LOG_E("");
-
-			inst = std::make_shared<Shop>(pos, rot, scale, objInfo->modelPath, objInfo->texturePath);
-			std::dynamic_pointer_cast<Shop>(inst)->SetCropType(croptype);
-		}
-		else if (type == "Boat")
-		{
-			inst = std::make_shared<Boat>(pos, rot, scale, objInfo->modelPath, objInfo->texturePath);
-		}
-
-		if (inst)
-		{
-			inst->m_name = type;
-			AddObject(inst);
-			inst->Init();
-		}
-		else
-			LOG_E("Unknown object type: %s", type.c_str());
-	}
 }
 
 void SceneManager::Update(int time)
@@ -234,3 +104,4 @@ void SceneManager::SetupCameraAndLight()
 
 	s_mainShader.SetModel(glm::mat4(1.0f));
 }
+

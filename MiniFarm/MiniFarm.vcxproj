@@ -19,6 +19,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Systems\ObjectLoader.cpp" />
+    <ClCompile Include="Source\Systems\ObjectFactory.cpp" />
+    <ClCompile Include="Source\Game\ExitScene.cpp" />
+    <ClCompile Include="Source\Game\IngameScene.cpp" />
     <ClCompile Include="Source\Game\Boat.cpp" />
     <ClCompile Include="Source\Game\Shop.cpp" />
     <ClCompile Include="Source\Systems\PickingSystem.cpp" />
@@ -46,8 +50,14 @@
     <ClCompile Include="Source\Render\TextRenderer.cpp" />
     <ClCompile Include="Source\Render\UIRenderer.cpp" />
     <ClCompile Include="Source\Render\TextureLoader.cpp" />
+    <ClCompile Include="Source\Game\TitleScene.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Systems\ObjectLoader.h" />
+    <ClInclude Include="Source\Systems\ObjectFactory.h" />
+    <ClInclude Include="Source\Game\ExitScene.h" />
+    <ClInclude Include="Source\Game\IngameScene.h" />
+    <ClInclude Include="Source\Game\Scene.h" />
     <ClInclude Include="Source\Game\Boat.h" />
     <ClInclude Include="Source\Game\Shop.h" />
     <ClInclude Include="Source\Game\IInteractable.h" />
@@ -76,6 +86,7 @@
     <ClInclude Include="Source\Render\TextRenderer.h" />
     <ClInclude Include="Source\Render\UIRenderer.h" />
     <ClInclude Include="Source\Render\TextureLoader.h" />
+    <ClInclude Include="Source\Game\TitleScene.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

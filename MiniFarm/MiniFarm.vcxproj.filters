@@ -26,6 +26,9 @@
     <Filter Include="소스 파일\Game\Interactable">
       <UniqueIdentifier>{12c29c21-6576-46ee-a65d-26980081237c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Game\Scene">
+      <UniqueIdentifier>{07877201-c56c-4ce5-a9ff-d648091228f1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
@@ -93,6 +96,21 @@
     </ClCompile>
     <ClCompile Include="Source\Render\TextureLoader.cpp">
       <Filter>소스 파일\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\ExitScene.cpp">
+      <Filter>소스 파일\Game\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\IngameScene.cpp">
+      <Filter>소스 파일\Game\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\TitleScene.cpp">
+      <Filter>소스 파일\Game\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Systems\ObjectFactory.cpp">
+      <Filter>소스 파일\Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Systems\ObjectLoader.cpp">
+      <Filter>소스 파일\Systems</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -179,6 +197,24 @@
     </ClInclude>
     <ClInclude Include="Source\Render\TextureLoader.h">
       <Filter>소스 파일\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\ExitScene.h">
+      <Filter>소스 파일\Game\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\IngameScene.h">
+      <Filter>소스 파일\Game\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Scene.h">
+      <Filter>소스 파일\Game\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\TitleScene.h">
+      <Filter>소스 파일\Game\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Systems\ObjectFactory.h">
+      <Filter>소스 파일\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Systems\ObjectLoader.h">
+      <Filter>소스 파일\Systems</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
