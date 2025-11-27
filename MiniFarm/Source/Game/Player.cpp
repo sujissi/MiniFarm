@@ -30,6 +30,7 @@ void Player::Update(int time)
 	HandleInteractInput();
 	HandleEquipmentInput();
 	HandleShopDirectInput();
+	HandleBoatDirectInput();
 
 	HandleRotate();
 	HandleMove();
@@ -141,6 +142,27 @@ void Player::HandleShopDirectInput()
 		LOG("상점 이용 종료");
 		InputManager::SetUIMode(false);
 		SetShopping(false);
+	}
+}
+
+void Player::HandleBoatDirectInput()
+{
+	if(!IsEscaping())
+		return;
+
+	if (InputManager::IsKeyPressed('y'))
+	{
+		LOG("탈출 시도");
+		if (CanEscape())
+		{
+			//TODO: 탈출 처리
+			LOG("탈출 성공!");
+		}
+	}
+	if (InputManager::IsKeyPressed('n')|| InputManager::IsKeyPressed(' '))
+	{
+		InputManager::SetUIMode(false);
+		SetEscaping(false);
 	}
 }
 

@@ -10,8 +10,6 @@ public:
 	{
 		m_model = ModelCache::Get(model, texture);
 	}
-	virtual void OnInteract(Player* player) override
-	{
-	}
+	virtual void OnInteract(Player* player) override;
 };
 

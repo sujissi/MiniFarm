@@ -201,14 +201,14 @@ void SceneManager::Draw()
 		obj->Draw();
 	}
 
-	if (s_player->IsShopping())
+	if (s_player->IsShopping()|| s_player->IsEscaping())
 	{
-		DrawMessage("Buy[B]\nSell[S]\nExit[X]");
+		DrawMessage(s_player->GetSysMsg());
 	}
 	else if (s_player->HasInteractTarget())
 	{
-		TextRenderer::Draw("Press [E] to interact", WINDOW_W / 2, WINDOW_H / 2, 2, { 0,1,0.3 });
-
+		UIRenderer::DrawCenter(TextureLoader::Load("Assets/ui_board_black_thin.png"), { 0.5f,0.6f }, 0.6f, { 1,1,1,0.6 });
+		TextRenderer::Draw("Press [E] to interact", WINDOW_W / 2, WINDOW_H / 2 + 50, 2, { 0,1,0.2 });
 	}
 
 	s_player->GetInventory().DrawUI();
@@ -241,7 +241,7 @@ void SceneManager::OnMouseClick(int x, int y)
 
 void SceneManager::DrawMessage(const std::string& msg)
 {
-	UIRenderer::DrawCenter(TextureLoader::Load("Assets/ui_board.png"), { 0.5f,0.5f }, 0.5f, { 1,1,1,0.5 });
+	UIRenderer::DrawCenter(TextureLoader::Load("Assets/ui_board_black.png"), { 0.5f,0.5f }, 0.6f, { 1,1,1,0.7 });
 	std::stringstream ss(msg);
 	std::vector<std::string> lines;
 	std::string line;
@@ -257,6 +257,6 @@ void SceneManager::DrawMessage(const std::string& msg)
 	for (int i = 0; i < lines.size(); i++)
 	{
 		float y = startY + i * lineHeight;
-		TextRenderer::Draw(lines[lines.size() - 1 - i], WINDOW_W / 2, y, 2, glm::vec4(0.f));
+		TextRenderer::Draw(lines[lines.size() - 1 - i], WINDOW_W / 2, y, 2, glm::vec4(1.f));
 	}
 }

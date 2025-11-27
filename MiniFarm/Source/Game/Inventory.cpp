@@ -10,7 +10,7 @@ Inventory::Inventory()
 	AddItem(EItemID::SeedCabbage, 5);
 	AddItem(EItemID::Carrot, 3);
 	AddItem(EItemID::Cabbage, 3);
-	m_money = 1000;
+	//m_money = 1000;
 }
 
 void Inventory::AddItem(EItemID id, int count)
