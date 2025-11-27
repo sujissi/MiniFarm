@@ -1,6 +1,7 @@
 #include "PCH.h"
 #include "UIRenderer.h"
 #include "Shader.h"
+#include "TextRenderer.h"
 
 GLuint UIRenderer::s_VAO = 0;
 GLuint UIRenderer::s_VBO = 0;
@@ -76,4 +77,26 @@ void UIRenderer::DrawCenter(const TextureInfo& textureInfo, const glm::vec2& cen
 {
 	glm::vec2 posNDC = centerNDC - glm::vec2(size / 2.0f, size / 2.0f * ((float)textureInfo.height / (float)textureInfo.width));
 	Draw(textureInfo, posNDC, size, color);
+}
+
+void UIRenderer::DrawMessage(const std::string& msg)
+{
+	UIRenderer::DrawCenter(TextureLoader::Load("Assets/ui_board_black.png"), { 0.5f,0.5f }, 0.6f, { 1,1,1,0.7 });
+	std::stringstream ss(msg);
+	std::vector<std::string> lines;
+	std::string line;
+
+	while (std::getline(ss, line, '\n'))
+		lines.push_back(line);
+
+	float lineHeight = 30.f;
+
+	float totalHeight = lineHeight * (lines.size() - 1);
+	float startY = WINDOW_H / 2 - totalHeight * 0.5f;
+
+	for (int i = 0; i < lines.size(); i++)
+	{
+		float y = startY + i * lineHeight;
+		TextRenderer::Draw(lines[lines.size() - 1 - i], WINDOW_W / 2, y, 2, glm::vec4(1.f));
+	}
 }

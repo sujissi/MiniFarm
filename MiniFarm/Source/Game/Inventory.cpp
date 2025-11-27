@@ -51,7 +51,7 @@ void Inventory::DrawUI() const
 	UIRenderer::Draw(TextureLoader::Load("Assets/ui_goldbar.png"), { 0.01f,0.9f }, 0.25f);
 
 	std::string moneyStr = std::to_string(m_money);
-	TextRenderer::DrawLeft(moneyStr, 50, WINDOW_H - 50, 2, tcolor);
+	TextRenderer::Draw(moneyStr, 80, WINDOW_H - 35, 2, tcolor);
 
 	std::string cseedscnt = "x" + std::to_string(m_items.count(EItemID::SeedCarrot) ? m_items.at(EItemID::SeedCarrot) : 0);
 	std::string cabseedscnt = "x" + std::to_string(m_items.count(EItemID::SeedCabbage) ? m_items.at(EItemID::SeedCabbage) : 0);

@@ -56,21 +56,10 @@ bool InputManager::IsKeyPressed(unsigned char key)
 	return (s_keys[key] && !s_prevKeys[key]);
 }
 
-// UI 모드 토글 및 클릭 처리
-//	-> 추후 UIManager 추가 시 수정 필요
-//	ex) 상호작용 키 눌렀을 때만 클릭 처리 기능 활성
 void InputManager::MouseButton(int button, int state, int x, int y)
 {
 	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
 	{
-		if (s_uiMode)
-		{
-			SceneManager::OnMouseClick(x, y);
-			// TODO:
-			// UIManager::OnClick(x, y);
-			return;
-		}
-
 		s_uiMode = !s_uiMode;
 		SetUIMode(s_uiMode);
 		return;

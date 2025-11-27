@@ -203,7 +203,7 @@ void SceneManager::Draw()
 
 	if (s_player->IsShopping()|| s_player->IsEscaping())
 	{
-		DrawMessage(s_player->GetSysMsg());
+		UIRenderer::DrawMessage(s_player->GetSysMsg());
 	}
 	else if (s_player->HasInteractTarget())
 	{
@@ -219,44 +219,4 @@ void SceneManager::Draw()
 void SceneManager::Reshape(int w, int h)
 {
 	glViewport(0, 0, w, h);
-}
-
-void SceneManager::OnMouseClick(int x, int y)
-{
-	auto clickedObj = PickingSystem::PickObject(x, y);
-
-	if (clickedObj && dynamic_cast<Player*>(clickedObj))
-		return;
-
-	if (clickedObj)
-	{
-		s_selected = clickedObj;
-		LOG_D("Selected %s", clickedObj->m_name.c_str());
-		return;
-	}
-
-	s_selected = nullptr;
-	LOG_D("Selection cleared");
-}
-
-void SceneManager::DrawMessage(const std::string& msg)
-{
-	UIRenderer::DrawCenter(TextureLoader::Load("Assets/ui_board_black.png"), { 0.5f,0.5f }, 0.6f, { 1,1,1,0.7 });
-	std::stringstream ss(msg);
-	std::vector<std::string> lines;
-	std::string line;
-
-	while (std::getline(ss, line, '\n'))
-		lines.push_back(line);
-
-	float lineHeight = 30.f;
-
-	float totalHeight = lineHeight * (lines.size() - 1);
-	float startY = WINDOW_H / 2 - totalHeight * 0.5f;
-
-	for (int i = 0; i < lines.size(); i++)
-	{
-		float y = startY + i * lineHeight;
-		TextRenderer::Draw(lines[lines.size() - 1 - i], WINDOW_W / 2, y, 2, glm::vec4(1.f));
-	}
 }
