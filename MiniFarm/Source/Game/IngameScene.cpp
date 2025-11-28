@@ -9,6 +9,7 @@
 
 void IngameScene::Init()
 {
+	SetClearColor(glm::vec3(1, 1, 1));
 	m_shader.Init("Shaders/main.vert", "Shaders/main.frag");
 	DebugDrawer::Init(&m_shader);
 
@@ -34,18 +35,13 @@ void IngameScene::Update(int dt)
 	{
 		obj->Update(dt);
 	}
-	glutPostRedisplay();
-	glutTimerFunc(FRAME_TIME_MS, SceneManager::Update, 0);
 }
 
 void IngameScene::Draw()
 {
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	SetupCameraAndLight();
 	DrawWorld();
 	DrawUI();
-	glutSwapBuffers();
-
 }
 
 void IngameScene::DrawWorld()

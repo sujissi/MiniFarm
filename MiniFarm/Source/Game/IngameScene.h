@@ -15,10 +15,6 @@ public:
 	void DrawWorld();
 	void DrawUI();
 	void SetupCameraAndLight();
-	void AddObject(std::shared_ptr<GameObject> obj)
-	{
-		m_objects.push_back(obj);
-	}
 
 private:
 	Player* m_player;

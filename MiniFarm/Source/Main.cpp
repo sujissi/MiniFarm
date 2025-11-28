@@ -16,7 +16,6 @@ void main(int argc, char** argv) {
 
 	glewInit();
 	glEnable(GL_DEPTH_TEST);
-	glClearColor(1, 1, 1, 1);
 
 	DataTable::Init();
 	TextRenderer::Init();

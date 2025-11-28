@@ -4,7 +4,7 @@
 class TitleScene : public Scene
 {
 public:
-    void Init() override {}
-    void Update(int dt) override {}
-    void Draw() override {}
+    void Init() override;
+    void Update(int dt) override;
+    void Draw() override;
 };
