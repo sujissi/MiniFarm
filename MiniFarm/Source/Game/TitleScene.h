@@ -7,5 +7,4 @@ public:
     void Init() override {}
     void Update(int dt) override {}
     void Draw() override {}
-    void OnKey(unsigned char key) override {}
 };

@@ -1,33 +1,25 @@
 #pragma once
-#include "GameObject.h"
-#include "Camera.h"
-#include "Player.h"
+#include "Scene.h"
+
+class Shader;
+class Camera;
 
 class SceneManager
 {
 public:
     static void Init();
-    static void AddObject(std::shared_ptr<GameObject> obj);
 
     static void Update(int time);
     static void Draw();
     static void Reshape(int w, int h);
     
-    static void DrawWorld();
-    static void DrawUI();
-    static void SetupCameraAndLight();
+    static void SetScene(std::unique_ptr<Scene> newScene);
+    static Scene* GetScene() { return s_currentScene.get(); }
 
-    static void LoadStaticObjects(const std::string& path);
-	static void LoadInteractableObjects(const std::string& path);
+    static Camera& GetCamera();
+    static Shader& GetMainShader();
+    static std::vector<std::shared_ptr<GameObject>>& GetObjects();
 
-    static Camera& GetCamera() { return s_camera; }
-    static std::vector<std::shared_ptr<GameObject>>& GetObjects() { return s_objects; }
-    static Shader& GetMainShader() { return s_mainShader; }
 private:
-    static std::vector<std::shared_ptr<GameObject>> s_objects;
-    static Camera s_camera;
-
-    static GameObject* s_selected;
-    static Shader s_mainShader;
-    static Player* s_player;
+    static std::unique_ptr<Scene> s_currentScene;
 };

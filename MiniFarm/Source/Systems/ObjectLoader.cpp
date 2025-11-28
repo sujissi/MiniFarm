@@ -1,6 +1,5 @@
 #include "PCH.h"
 #include "ObjectLoader.h"
-#include "SceneManager.h"
 #include "ObjectFactory.h"
 #include "DataTable.h"
 #include "GameObject.h"
@@ -28,10 +27,15 @@ void ObjectLoader::FlipCoord(glm::vec3& pos, glm::vec3& rot)
     rot.y = -rot.y;
 }
 
-void ObjectLoader::LoadStaticObjects(const std::string& path)
+std::vector<std::shared_ptr<GameObject>> ObjectLoader::LoadStaticObjects(const std::string& path)
 {
+    std::vector<std::shared_ptr<GameObject>> results;
+
     rapidjson::Document doc;
-    if (!LoadJson(path, doc)) return;
+    if (!LoadJson(path, doc)) {
+        LOG_E("JSON load fail: %s", path.c_str());
+        return results;
+    }
 
     auto arr = doc["objects"].GetArray();
     for (auto& obj : arr)
@@ -47,17 +51,24 @@ void ObjectLoader::LoadStaticObjects(const std::string& path)
         if (!info) continue;
 
         auto inst = ObjectFactory::Create(type, pos, rot, scale, info);
-
         inst->m_name = type;
-        SceneManager::AddObject(inst);
         inst->Init();
+
+        results.push_back(inst);
     }
+
+    return results;
 }
 
-void ObjectLoader::LoadInteractableObjects(const std::string& path)
+std::vector<std::shared_ptr<GameObject>> ObjectLoader::LoadInteractableObjects(const std::string& path)
 {
+    std::vector<std::shared_ptr<GameObject>> results;
+
     rapidjson::Document doc;
-    if (!LoadJson(path, doc)) return;
+    if (!LoadJson(path, doc)) {
+        LOG_E("JSON load fail: %s", path.c_str());
+        return results;
+    }
 
     auto arr = doc["objects"].GetArray();
     for (auto& obj : arr)
@@ -73,10 +84,11 @@ void ObjectLoader::LoadInteractableObjects(const std::string& path)
         if (!info) continue;
 
         auto inst = ObjectFactory::Create(type, pos, rot, scale, info);
-
         inst->m_name = type;
-        SceneManager::AddObject(inst);
         inst->Init();
-    }
-}
 
+        results.push_back(inst);
+    }
+
+    return results;
+}

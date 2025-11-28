@@ -2,10 +2,11 @@
 #include "DataTable.h"
 
 std::unordered_map<int, CropData> DataTable::s_crops;
-std::unordered_map<std::string, ObjectInfo> DataTable::s_objects;
+std::unordered_map<std::string, ObjectInfo> DataTable::m_objects;
 
 void DataTable::Init()
 {
+	LOG("DataTable Init");
 	LoadCrops("Data/crops.csv");
 	LoadObjects("Data/object_table.csv");
 }
@@ -87,14 +88,14 @@ void DataTable::LoadObjects(const std::string& path)
 		info.modelPath = modelPath;
 		info.texturePath = texturePath;
 
-		s_objects[type] = info;
+		m_objects[type] = info;
 	}
 }
 
 const ObjectInfo* DataTable::GetObjectInfo(const std::string& type)
 {
-	auto it = s_objects.find(type);
-	if (it == s_objects.end())
+	auto it = m_objects.find(type);
+	if (it == m_objects.end())
 		return nullptr;
 
 	return &it->second;

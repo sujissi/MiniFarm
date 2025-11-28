@@ -3,6 +3,8 @@
 #include "SceneManager.h"
 #include "InputManager.h"
 #include "DataTable.h"
+#include "UIRenderer.h"
+#include "TextRenderer.h"
 
 void main(int argc, char** argv) {
 
@@ -16,9 +18,12 @@ void main(int argc, char** argv) {
 	glEnable(GL_DEPTH_TEST);
 	glClearColor(1, 1, 1, 1);
 
-	SceneManager::Init();
-	InputManager::Init();
 	DataTable::Init();
+	TextRenderer::Init();
+	UIRenderer::Init();
+	InputManager::Init();
+
+	SceneManager::Init();
 
 	glutKeyboardFunc(InputManager::KeyDown);
 	glutKeyboardUpFunc(InputManager::KeyUp);
