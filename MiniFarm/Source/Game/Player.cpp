@@ -7,10 +7,15 @@
 #include "CollisionSystem.h"
 #include "IInteractable.h"
 #include "Shop.h"
+#include "Shader.h"
 
 Player::Player()
 {
-	m_model = std::make_shared<Model>("Models/player");
+	m_model = std::make_shared<Model>("Models/player_body.obj", "Models/player.png");
+	m_limbs.emplace_back("Models/player_left_arm.obj", "Models/player.png");
+	m_limbs.emplace_back("Models/player_right_arm.obj", "Models/player.png");
+	m_limbs.emplace_back("Models/player_left_leg.obj", "Models/player.png");
+	m_limbs.emplace_back("Models/player_right_leg.obj", "Models/player.png");
 	m_pos = { 0.f, 6.2f, 0.f };
 	m_rot = { 0.f, 0.f, 0.f };
 	m_scale = { 1.f, 1.f, 1.f };
@@ -34,6 +39,8 @@ void Player::Update(int time)
 
 	HandleRotate();
 	HandleMove();
+	UpdateWalkAnimations();
+	Draw();
 
 	GameObject::Update(time);
 	InputManager::Update();
@@ -66,13 +73,16 @@ void Player::HandleMove()
 	glm::vec3 right = cam.GetRightFlat();
 
 	glm::vec3 move(0);
+	bool wasWalking = m_isWalking;
 
 	if (InputManager::IsKeyDown('w')) move += forward;
 	if (InputManager::IsKeyDown('s')) move -= forward;
 	if (InputManager::IsKeyDown('a')) move -= right;
 	if (InputManager::IsKeyDown('d')) move += right;
+		
+	m_isWalking = glm::length(move) > 0;
 
-	if (glm::length(move) > 0)
+	if (m_isWalking)
 	{
 		glm::vec3 desired = m_pos + glm::normalize(move) * m_speed;
 		m_pos = CollisionSystem::TryMove(this, desired);
@@ -272,4 +282,67 @@ bool Player::UseItem(EItemID itemID, int count)
 	}
 	LOG_D("아이템 부족");
 	return false;
+}
+
+void Player::Draw()
+{
+	GameObject::Draw();
+	glm::mat4 playerTransform =
+		Translate(m_pos) *
+		Rotate(m_rot.y, { 0,1,0 }) *
+		Rotate(m_rot.x, { 1,0,0 }) *
+		Rotate(m_rot.z, { 0,0,1 }) *
+		Scale(m_scale);
+
+	auto& shader = SceneManager::GetMainShader();
+
+	glm::vec3 jointPositions[] = {
+		{ -0.3f, 1.5f, 0.0f }, // 왼쪽 팔
+		{ 0.3f, 1.5f, 0.0f }, // 오른쪽 팔
+		{ -0.15f, 0.8f, 0.0f }, // 왼쪽 다리
+		{ 0.15f, 0.8f, 0.0f } // 오른쪽 다리
+	};
+
+	for (size_t i = 0; i < m_limbs.size(); ++i) {
+		auto& limb = m_limbs[i];
+		if (limb.model) {
+			glm::mat4 limbTransform = playerTransform *
+				Translate(jointPositions[i]) *
+				Rotate(limb.currentRot.x, { 1,0,0 }) *
+				Rotate(limb.currentRot.y, { 0,1,0 }) *
+				Rotate(limb.currentRot.z, { 0,0,1 }) *
+				Translate(-jointPositions[i]);
+			shader.SetModel(limbTransform);
+			limb.model->Draw();
+		}
+	}
+}
+
+void Player::UpdateWalkAnimations()
+{
+	if (m_isWalking) {
+		m_walkAnimTime += 0.15f;
+		
+		float armSwing = std::sin(m_walkAnimTime) * 20.f;
+		if (m_limbs.size() >= 2) {
+			m_limbs[0].currentRot.x = armSwing;   // 왼쪽 팔
+			m_limbs[1].currentRot.x = -armSwing;  // 오른쪽 팔
+		}
+		
+		float legSwing = std::sin(m_walkAnimTime + 3.14159f) * 20.0f;
+		if (m_limbs.size() >= 4) {
+			m_limbs[2].currentRot.x = legSwing;   // 왼쪽 다리
+			m_limbs[3].currentRot.x = -legSwing;  // 오른쪽 다리
+		}
+	}
+	else {
+		for (auto& limb : m_limbs) {
+			limb.currentRot *= 0.92f; // 복귀 속도를 조금 더 빠르게
+		}
+		
+		m_walkAnimTime *= 0.85f;
+		if (std::fabs(m_walkAnimTime) < 0.01f) {
+			m_walkAnimTime = 0.0f;
+		}
+	}
 }
