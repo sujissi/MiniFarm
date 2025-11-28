@@ -9,7 +9,7 @@ class SceneManager
 public:
     static void Init();
 
-    static void Update(int time);
+    static void Update(int);
     static void Draw();
     static void Reshape(int w, int h);
     
@@ -22,4 +22,5 @@ public:
 
 private:
     static std::unique_ptr<Scene> s_currentScene;
+    static int s_prevTime;
 };

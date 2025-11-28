@@ -7,4 +7,8 @@ public:
     void Init() override;
     void Update(int dt) override;
     void Draw() override;
+
+    void DrawWorld();
+    void SetupCameraAndLight();
+
 };

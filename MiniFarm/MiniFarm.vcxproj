@@ -25,7 +25,6 @@
     <ClCompile Include="Source\Game\IngameScene.cpp" />
     <ClCompile Include="Source\Game\Boat.cpp" />
     <ClCompile Include="Source\Game\Shop.cpp" />
-    <ClCompile Include="Source\Systems\PickingSystem.cpp" />
     <ClCompile Include="Source\Systems\CollisionSystem.cpp" />
     <ClCompile Include="Source\Systems\DebugDrawer.cpp" />
     <ClCompile Include="Source\Systems\BoxCollider.cpp" />
@@ -64,7 +63,6 @@
     <ClInclude Include="Source\Game\InteractableObject.h" />
     <ClInclude Include="Source\Game\StaticProp.h" />
     <ClInclude Include="Source\Utils\FileUtils.h" />
-    <ClInclude Include="Source\Systems\PickingSystem.h" />
     <ClInclude Include="Source\Systems\CollisionSystem.h" />
     <ClInclude Include="Source\Systems\DebugDrawer.h" />
     <ClInclude Include="Source\Systems\BoxCollider.h" />

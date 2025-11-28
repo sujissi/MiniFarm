@@ -4,15 +4,22 @@
 #include "TitleScene.h"
 
 std::unique_ptr<Scene> SceneManager::s_currentScene = nullptr;
+int SceneManager::s_prevTime = 0;
 
 void SceneManager::Init()
 {
 	SetScene(std::make_unique<TitleScene>());
 }
 
-void SceneManager::Update(int time)
+void SceneManager::Update(int)
 {
-	s_currentScene->Update(time);
+	int now = glutGet(GLUT_ELAPSED_TIME);
+	int dt = now - s_prevTime;
+	s_prevTime = now;
+
+	if (dt < 0) dt = 0;
+
+	s_currentScene->Update(dt);
 	glutPostRedisplay();
 	glutTimerFunc(FRAME_TIME_MS, SceneManager::Update, 0);
 }
