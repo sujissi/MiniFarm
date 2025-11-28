@@ -5,6 +5,7 @@
 #include "IngameScene.h"
 #include "InputManager.h"
 #include "ObjectLoader.h"
+#include "UIRenderer.h"
 
 void TitleScene::Init()
 {
@@ -30,11 +31,11 @@ void TitleScene::Init()
 
 void TitleScene::Update(int dt)
 {
-	if (InputManager::IsKeyPressed('\r')) // Enter
+	if (InputManager::IsKeyPressed(' '))
 	{
 		SceneManager::SetScene(std::make_unique<IngameScene>());
 	}
-
+	m_blinkTime += dt * 0.001f;
 	m_camera.AddYaw(0.01f * dt);
 	m_camera.FollowTarget(glm::vec3(0.f));
 }
@@ -44,8 +45,12 @@ void TitleScene::Draw()
 	SetupCameraAndLight();
 	DrawWorld();
 
-	TextRenderer::Draw("MiniFarm", WINDOW_W / 2, WINDOW_H / 2 + 20, 5, { 1,1,0 });
-	TextRenderer::Draw("Press [Enter] to start", WINDOW_W / 2, WINDOW_H / 2 - 60, 2, { 1,1,1 });
+	UIRenderer::DrawCenter(TextureLoader::Load("Assets/ui_title.png"), { 0.5f,0.5f }, 1.0f, { 1,1,1,1 });
+
+	if (sin(m_blinkTime * 4.0f) > 0.0f)
+	{
+		TextRenderer::Draw("Press [SpaceBar] to start", WINDOW_W / 2, WINDOW_H / 2 - 50, 2, { 1,1,1 });
+	}
 }
 
 void TitleScene::DrawWorld()

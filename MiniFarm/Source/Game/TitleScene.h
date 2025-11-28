@@ -10,5 +10,6 @@ public:
 
     void DrawWorld();
     void SetupCameraAndLight();
-
+private:
+    float m_blinkTime = 0.f;
 };
