@@ -1,7 +1,7 @@
 {
   "objects": [
     {
-      "type": "Field",
+      "type": "Thick_Ground",
       "pos": [
         -8.0,
         4.0,
@@ -19,7 +19,7 @@
       ]
     },
     {
-      "type": "Field",
+      "type": "Thick_Ground",
       "pos": [
         -8.0,
         4.0,
@@ -37,7 +37,7 @@
       ]
     },
     {
-      "type": "Field",
+      "type": "Thick_Ground",
       "pos": [
         10.0,
         4.0,
@@ -55,7 +55,7 @@
       ]
     },
     {
-      "type": "Field",
+      "type": "Thick_Ground",
       "pos": [
         12.0,
         4.0,
@@ -73,7 +73,7 @@
       ]
     },
     {
-      "type": "Field",
+      "type": "Thick_Ground",
       "pos": [
         -4.0,
         4.0,
@@ -91,7 +91,7 @@
       ]
     },
     {
-      "type": "Field",
+      "type": "Thick_Ground",
       "pos": [
         10.0,
         4.0,
@@ -109,7 +109,7 @@
       ]
     },
     {
-      "type": "Field",
+      "type": "Thick_Ground",
       "pos": [
         -6.0,
         4.0,
@@ -127,7 +127,7 @@
       ]
     },
     {
-      "type": "Field",
+      "type": "Thick_Ground",
       "pos": [
         14.0,
         4.0,
@@ -145,7 +145,7 @@
       ]
     },
     {
-      "type": "Field",
+      "type": "Thick_Ground",
       "pos": [
         -6.0,
         4.0,
@@ -163,7 +163,7 @@
       ]
     },
     {
-      "type": "Field",
+      "type": "Thick_Ground",
       "pos": [
         -4.0,
         4.0,
@@ -181,7 +181,7 @@
       ]
     },
     {
-      "type": "Field",
+      "type": "Thick_Ground",
       "pos": [
         10.0,
         4.0,
@@ -199,7 +199,7 @@
       ]
     },
     {
-      "type": "Field",
+      "type": "Thick_Ground",
       "pos": [
         12.0,
         4.0,
@@ -217,7 +217,7 @@
       ]
     },
     {
-      "type": "Field",
+      "type": "Thick_Ground",
       "pos": [
         12.0,
         4.0,
@@ -235,7 +235,7 @@
       ]
     },
     {
-      "type": "Field",
+      "type": "Thick_Ground",
       "pos": [
         14.0,
         4.0,
@@ -253,7 +253,7 @@
       ]
     },
     {
-      "type": "Field",
+      "type": "Thick_Ground",
       "pos": [
         -6.0,
         4.0,
@@ -271,7 +271,7 @@
       ]
     },
     {
-      "type": "Field",
+      "type": "Thick_Ground",
       "pos": [
         -4.0,
         4.0,
@@ -289,7 +289,7 @@
       ]
     },
     {
-      "type": "Field",
+      "type": "Thick_Ground",
       "pos": [
         -8.0,
         4.0,
@@ -307,7 +307,7 @@
       ]
     },
     {
-      "type": "Field",
+      "type": "Thick_Ground",
       "pos": [
         14.0,
         4.0,

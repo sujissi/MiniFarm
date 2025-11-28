@@ -14,7 +14,7 @@ std::shared_ptr<GameObject> ObjectFactory::Create(
     const ObjectInfo* info
 )
 {
-    if (type == "Field")
+    if (type == "Thick_Ground")
     {
         return std::make_shared<Crop>(pos, rot, scale, info->modelPath, info->texturePath);
     }
