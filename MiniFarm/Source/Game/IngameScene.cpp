@@ -5,13 +5,11 @@
 #include "TextRenderer.h"
 #include "ObjectLoader.h"
 #include "Shader.h"
-#include "DebugDrawer.h"
 
 void IngameScene::Init()
 {
 	SetClearColor(glm::vec3(1, 1, 1));
 	m_shader.Init("Shaders/main.vert", "Shaders/main.frag");
-	DebugDrawer::Init(&m_shader);
 
 	m_objects.clear();
 	m_camera.Init();

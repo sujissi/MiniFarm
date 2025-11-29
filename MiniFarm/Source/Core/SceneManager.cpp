@@ -19,7 +19,9 @@ void SceneManager::Update(int)
 
 	if (dt < 0) dt = 0;
 
-	s_currentScene->Update(dt);
+	if (s_currentScene)
+		s_currentScene->Update(dt);
+
 	glutPostRedisplay();
 	glutTimerFunc(FRAME_TIME_MS, SceneManager::Update, 0);
 }
@@ -30,7 +32,8 @@ void SceneManager::Draw()
 	glClearColor(color.r, color.g, color.b, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	s_currentScene->Draw();
+	if (s_currentScene)
+		s_currentScene->Draw();
 
 	glutSwapBuffers();
 }

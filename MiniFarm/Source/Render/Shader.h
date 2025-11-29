@@ -7,11 +7,6 @@ public:
 	{
 		Init(vertexPath, fragmentPath);
 	}
-	~Shader()
-	{
-		if (m_programID != 0)
-			glDeleteProgram(m_programID);
-	}
 	Shader(const Shader&) = delete;
 	Shader& operator=(const Shader&) = delete;
 
