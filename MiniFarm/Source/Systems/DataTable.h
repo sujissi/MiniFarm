@@ -13,5 +13,5 @@ private:
 	static void LoadObjects(const std::string& path);
 
     static std::unordered_map<int, CropData> s_crops;
-    static std::unordered_map<std::string, ObjectInfo> s_objects;
+    static std::unordered_map<std::string, ObjectInfo> m_objects;
 };

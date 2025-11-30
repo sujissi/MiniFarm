@@ -36,7 +36,13 @@ void InputManager::KeyDown(unsigned char key, int x, int y)
 
 	switch (key)
 	{
-	case 't': SetUIMode(false); break; //temp UI 모드일 때 끄는 키
+	case 't':
+	{
+		//for test
+		static bool bShowCursor = false;
+		bShowCursor = !bShowCursor;
+		SetUIMode(bShowCursor); break;
+	}
 	case 'q': exit(0);
 	}
 }
@@ -60,8 +66,6 @@ void InputManager::MouseButton(int button, int state, int x, int y)
 {
 	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
 	{
-		s_uiMode = !s_uiMode;
-		SetUIMode(s_uiMode);
 		return;
 	}
 }

@@ -4,8 +4,12 @@
 class TitleScene : public Scene
 {
 public:
-    void Init() override {}
-    void Update(int dt) override {}
-    void Draw() override {}
-    void OnKey(unsigned char key) override {}
+    void Init() override;
+    void Update(int dt) override;
+    void Draw() override;
+
+    void DrawWorld();
+    void SetupCameraAndLight();
+private:
+    float m_blinkTime = 0.f;
 };
