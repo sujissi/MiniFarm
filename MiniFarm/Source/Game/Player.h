@@ -30,6 +30,7 @@ private:
     void HandleBoatDirectInput();
 
     void UpdateWalkAnimations();
+    void ApplyGravity();
 public:
     void BuySeed(EItemID seedID, int count = 1);
     void SellCrop(EItemID cropID, int count = 1);
@@ -64,4 +65,8 @@ private:
     std::vector<Limb> m_limbs;
     float m_walkAnimTime = 0.0f;
     bool m_isWalking = false;
+    float m_verticalVelocity = 0.0f;
+    float m_gravity = -0.035f;
+    float m_jumpForce = 0.4f;
+    bool m_isGrounded = true;
 };

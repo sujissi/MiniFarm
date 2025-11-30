@@ -16,7 +16,7 @@ Player::Player()
 	m_limbs.emplace_back("Models/player_right_arm.obj", "Models/player.png");
 	m_limbs.emplace_back("Models/player_left_leg.obj", "Models/player.png");
 	m_limbs.emplace_back("Models/player_right_leg.obj", "Models/player.png");
-	m_pos = { 0.f, 6.2f, 0.f };
+	m_pos = { 0.f, 8.f, 0.f };
 	m_rot = { 0.f, 0.f, 0.f };
 	m_scale = { 1.f, 1.f, 1.f };
 
@@ -41,6 +41,7 @@ void Player::Update(int time)
 	HandleMove();
 	UpdateWalkAnimations();
 	Draw();
+	ApplyGravity();
 
 	GameObject::Update(time);
 	InputManager::Update();
@@ -73,19 +74,28 @@ void Player::HandleMove()
 	glm::vec3 right = cam.GetRightFlat();
 
 	glm::vec3 move(0);
-	bool wasWalking = m_isWalking;
 
 	if (InputManager::IsKeyDown('w')) move += forward;
 	if (InputManager::IsKeyDown('s')) move -= forward;
 	if (InputManager::IsKeyDown('a')) move -= right;
 	if (InputManager::IsKeyDown('d')) move += right;
-		
+	if (InputManager::IsKeyPressed(' ') && m_isGrounded)
+	{
+		m_verticalVelocity = m_jumpForce;
+		m_isGrounded = false;
+	}
+	
 	m_isWalking = glm::length(move) > 0;
 
 	if (m_isWalking)
 	{
 		glm::vec3 desired = m_pos + glm::normalize(move) * m_speed;
-		m_pos = CollisionSystem::TryMove(this, desired);
+		desired.y = m_pos.y;
+		glm::vec3 newPos = CollisionSystem::TryMove(this, desired);
+		m_pos.x = newPos.x;
+		m_pos.z = newPos.z;
+		
+		m_collider->UpdatePos(m_pos);
 	}
 	cam.FollowTarget(m_pos);
 }
@@ -297,10 +307,10 @@ void Player::Draw()
 	auto& shader = SceneManager::GetMainShader();
 
 	glm::vec3 jointPositions[] = {
-		{ -0.3f, 1.5f, 0.0f }, // ¿ÞÂÊ ÆÈ
-		{ 0.3f, 1.5f, 0.0f }, // ¿À¸¥ÂÊ ÆÈ
-		{ -0.15f, 0.8f, 0.0f }, // ¿ÞÂÊ ´Ù¸®
-		{ 0.15f, 0.8f, 0.0f } // ¿À¸¥ÂÊ ´Ù¸®
+		{ -0.3f, 1.5f, 0.0f },
+		{ 0.3f, 1.5f, 0.0f },
+		{ -0.15f, 0.8f, 0.0f },
+		{ 0.15f, 0.8f, 0.0f }
 	};
 
 	for (size_t i = 0; i < m_limbs.size(); ++i) {
@@ -308,10 +318,10 @@ void Player::Draw()
 		if (limb.model) {
 			glm::mat4 limbTransform = playerTransform *
 				Translate(jointPositions[i]) *
-				Rotate(limb.currentRot.x, { 1,0,0 }) *
-				Rotate(limb.currentRot.y, { 0,1,0 }) *
-				Rotate(limb.currentRot.z, { 0,0,1 }) *
-				Translate(-jointPositions[i]);
+			Rotate(limb.currentRot.x, { 1,0,0 }) *
+			Rotate(limb.currentRot.y, { 0,1,0 }) *
+			Rotate(limb.currentRot.z, { 0,0,1 }) *
+			Translate(-jointPositions[i]);
 			shader.SetModel(limbTransform);
 			limb.model->Draw();
 		}
@@ -325,19 +335,19 @@ void Player::UpdateWalkAnimations()
 		
 		float armSwing = std::sin(m_walkAnimTime) * 20.f;
 		if (m_limbs.size() >= 2) {
-			m_limbs[0].currentRot.x = armSwing;   // ¿ÞÂÊ ÆÈ
-			m_limbs[1].currentRot.x = -armSwing;  // ¿À¸¥ÂÊ ÆÈ
+			m_limbs[0].currentRot.x = armSwing;
+			m_limbs[1].currentRot.x = -armSwing;
 		}
 		
 		float legSwing = std::sin(m_walkAnimTime + 3.14159f) * 20.0f;
 		if (m_limbs.size() >= 4) {
-			m_limbs[2].currentRot.x = legSwing;   // ¿ÞÂÊ ´Ù¸®
-			m_limbs[3].currentRot.x = -legSwing;  // ¿À¸¥ÂÊ ´Ù¸®
+			m_limbs[2].currentRot.x = legSwing;
+			m_limbs[3].currentRot.x = -legSwing;
 		}
 	}
 	else {
 		for (auto& limb : m_limbs) {
-			limb.currentRot *= 0.92f; // º¹±Í ¼Óµµ¸¦ Á¶±Ý ´õ ºü¸£°Ô
+			limb.currentRot *= 0.92f;
 		}
 		
 		m_walkAnimTime *= 0.85f;
@@ -345,4 +355,39 @@ void Player::UpdateWalkAnimations()
 			m_walkAnimTime = 0.0f;
 		}
 	}
+}
+
+void Player::ApplyGravity()
+{
+	if (!m_collider)
+		return;
+
+	if (!m_isGrounded)
+	{
+		m_verticalVelocity += m_gravity;
+	}
+
+	const float maxFallSpeed = -1.0f;
+	if (m_verticalVelocity < maxFallSpeed)
+		m_verticalVelocity = maxFallSpeed;
+
+	float newY = m_pos.y + m_verticalVelocity;
+
+	float supportY = 0.0f;
+	bool hasSupportBelow = CollisionSystem::CheckSupportBelow(this, glm::vec3(m_pos.x, newY, m_pos.z), supportY);
+
+	if (hasSupportBelow && m_verticalVelocity <= 0.0f)
+	{
+
+		m_pos.y = supportY;
+		m_isGrounded = true;
+		m_verticalVelocity = 0.0f;
+	}
+	else
+	{
+		m_pos.y = newY;
+		m_isGrounded = false;
+	}
+
+	m_collider->UpdatePos(m_pos);
 }
