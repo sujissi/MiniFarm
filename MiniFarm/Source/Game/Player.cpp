@@ -16,6 +16,9 @@ Player::Player()
 	m_limbs.emplace_back("Models/player_right_arm.obj", "Models/player.png");
 	m_limbs.emplace_back("Models/player_left_leg.obj", "Models/player.png");
 	m_limbs.emplace_back("Models/player_right_leg.obj", "Models/player.png");
+	m_limbs.emplace_back("Models/shovel.obj", "Models/farm_texture.png");
+	m_limbs.emplace_back("Models/water_pot.obj", "Models/farm_texture.png");
+	m_limbs.emplace_back("Models/sickle.obj", "Models/farm_texture.png");
 	m_pos = { 0.f, 8.f, 0.f };
 	m_rot = { 0.f, 0.f, 0.f };
 	m_scale = { 1.f, 1.f, 1.f };
@@ -310,18 +313,55 @@ void Player::Draw()
 		{ -0.3f, 1.5f, 0.0f },
 		{ 0.3f, 1.5f, 0.0f },
 		{ -0.15f, 0.8f, 0.0f },
-		{ 0.15f, 0.8f, 0.0f }
+		{ 0.15f, 0.8f, 0.0f },
+		{ -0.3f, 0.5f, 0.2f },
+		{ -0.3f, 0.5f, 0.2f },
+		{ -0.3f, 0.5f, 0.2f }
 	};
 
 	for (size_t i = 0; i < m_limbs.size(); ++i) {
 		auto& limb = m_limbs[i];
 		if (limb.model) {
-			glm::mat4 limbTransform = playerTransform *
-				Translate(jointPositions[i]) *
-			Rotate(limb.currentRot.x, { 1,0,0 }) *
-			Rotate(limb.currentRot.y, { 0,1,0 }) *
-			Rotate(limb.currentRot.z, { 0,0,1 }) *
-			Translate(-jointPositions[i]);
+			glm::mat4 limbTransform;
+			if (i == 4 && m_equippedTool == EItemID::Hoe) {
+				limbTransform = playerTransform *
+					Translate(jointPositions[i]) *
+					Rotate(270, { 1,0,0 }) *
+					Rotate(limb.currentRot.y, { 0,1,0 }) *
+					Rotate(limb.currentRot.z, { 0,0,1 });
+			}
+			else if (i == 4 && m_equippedTool != EItemID::Hoe) {
+				continue;
+			}
+			else if (i == 5 && m_equippedTool == EItemID::WateringCan) {
+				limbTransform = playerTransform *
+					Translate(jointPositions[i]) *
+					Rotate(limb.currentRot.x, { 1,0,0 }) *
+					Rotate(limb.currentRot.y, { 0,1,0 }) *
+					Rotate(limb.currentRot.z, { 0,0,1 });
+			}
+			else if (i == 5 && m_equippedTool != EItemID::WateringCan) {
+				continue;
+			}
+			else if (i == 6 && m_equippedTool == EItemID::Sickle) {
+				limbTransform = playerTransform *
+					Translate(jointPositions[i]) *
+					Rotate(90, { 1,0,0 }) *
+					Rotate(limb.currentRot.y, { 0,1,0 }) *
+					Rotate(limb.currentRot.z, { 0,0,1 });
+			}
+			else if (i == 6 && m_equippedTool != EItemID::Sickle) {
+				continue;
+			}
+			else {
+				limbTransform = playerTransform *
+					Translate(jointPositions[i]) *
+					Rotate(limb.currentRot.x, { 1,0,0 }) *
+					Rotate(limb.currentRot.y, { 0,1,0 }) *
+					Rotate(limb.currentRot.z, { 0,0,1 }) *
+					Translate(-jointPositions[i]);
+			}
+
 			shader.SetModel(limbTransform);
 			limb.model->Draw();
 		}
