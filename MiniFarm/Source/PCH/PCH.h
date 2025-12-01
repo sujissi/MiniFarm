@@ -1,4 +1,5 @@
 #pragma once
+#define GLM_ENABLE_EXPERIMENTAL
 #include <gl/glew.h>
 #include <gl/freeglut.h>
 #include <gl/freeglut_ext.h>
