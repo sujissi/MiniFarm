@@ -33,6 +33,9 @@ void IngameScene::Update(int dt)
 	{
 		obj->Update(dt);
 	}
+	m_timeSystem.Update(dt);
+	UpdateDayNightCycle();
+	SetClearColor(m_BackGroundColor);
 }
 
 void IngameScene::Draw()
@@ -72,9 +75,66 @@ void IngameScene::SetupCameraAndLight()
 	m_shader.SetView(m_camera.GetView());
 	m_shader.SetProj(m_camera.GetProj((float)WINDOW_W / WINDOW_H));
 
-	m_shader.SetLightPos(glm::vec3(10.f, 15.f, 10.f));
-	m_shader.SetLightColor(glm::vec3(1.0f, 1.0f, 1.0f));
+	m_shader.SetLightPos(m_lightPos);
+	m_shader.SetLightColor(m_lightColor);
 	m_shader.SetViewPos(m_camera.eye);
 
 	m_shader.SetModel(glm::mat4(1.0f));
+}
+
+void IngameScene::UpdateDayNightCycle()
+{
+	float dayTime = m_timeSystem.GetDayTime();
+	const float DAY_START = 6.f;
+	const float DAY_END = 18.f;
+
+	if (m_timeSystem.IsDaytime())
+	{
+		float dayProgress = m_timeSystem.GetDayProgress();
+		float angle = dayProgress * 3.14159265f;
+		
+		m_lightPos.x = -LIGHT_WIDTH / 2.f + dayProgress * LIGHT_WIDTH;
+		m_lightPos.y = sin(angle) * LIGHT_HEIGHT;
+		
+		if (dayProgress < 0.1f)
+		{
+			float t = dayProgress / 0.1f;
+			m_lightColor = glm::mix(glm::vec3(0.8f, 0.5f, 0.3f), glm::vec3(1.f, 1.f, 0.9f), t);
+			m_BackGroundColor = glm::mix(glm::vec3(0.2f, 0.2f, 0.4f), glm::vec3(0.5f, 0.7f, 1.f), t);
+		}
+		else if (dayProgress > 0.9f) 
+		{
+			float t = (dayProgress - 0.9f) / 0.1f;
+			m_lightColor = glm::mix(glm::vec3(1.f, 1.f, 0.9f), glm::vec3(1.f, 0.6f, 0.3f), t);
+			m_BackGroundColor = glm::mix(glm::vec3(0.5f, 0.7f, 1.f), glm::vec3(0.2f, 0.2f, 0.4f), t);
+		}
+		else
+		{
+			m_lightColor = glm::vec3(1.f, 1.f, 0.9f);
+			m_BackGroundColor = glm::vec3(0.5f, 0.8f, 1.f);
+		}
+	}
+	else
+	{
+		m_lightPos.x = 0.f;
+		m_lightPos.y = LIGHT_HEIGHT * 0.6f;
+		
+		if (dayTime >= DAY_END && dayTime < DAY_END + 1.f)
+		{
+			float t = (dayTime - DAY_END);
+			m_lightColor = glm::mix(glm::vec3(1.f, 0.6f, 0.3f), glm::vec3(0.2f, 0.2f, 0.4f), t);
+			m_BackGroundColor = glm::mix(glm::vec3(0.5f, 0.7f, 1.f), glm::vec3(0.1f, 0.1f, 0.2f), t);
+		}
+		else if (dayTime >= DAY_START - 1.f && dayTime < DAY_START)
+		{
+			float t = (dayTime - (DAY_START - 1.f));
+			m_lightColor = glm::mix(glm::vec3(0.2f, 0.2f, 0.4f), glm::vec3(0.8f, 0.5f, 0.3f), t);
+			m_BackGroundColor = glm::mix(glm::vec3(0.2f, 0.2f, 0.4f), glm::vec3(0.5f, 0.7f, 1.f), t);
+		}
+		else
+		{
+			m_lightColor = glm::vec3(0.2f, 0.2f, 0.4f);
+			m_BackGroundColor = glm::vec3(0.1f, 0.1f, 0.2f);
+		}
+	}
 }
