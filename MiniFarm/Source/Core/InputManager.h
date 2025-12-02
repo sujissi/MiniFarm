@@ -3,6 +3,7 @@
 class InputManager {
 public:
     static void Init();
+    static void Clear();
     static void Update();
 
     static void KeyDown(unsigned char key, int x, int y);

@@ -2,6 +2,7 @@
 #include "SceneManager.h"
 #include "IngameScene.h"
 #include "TitleScene.h"
+#include "InputManager.h"
 
 std::unique_ptr<Scene> SceneManager::s_currentScene = nullptr;
 int SceneManager::s_prevTime = 0;
@@ -45,6 +46,7 @@ void SceneManager::Reshape(int w, int h)
 
 void SceneManager::SetScene(std::unique_ptr<Scene> newScene)
 {
+	InputManager::Clear();
 	s_currentScene = std::move(newScene);
 
 	if (s_currentScene)

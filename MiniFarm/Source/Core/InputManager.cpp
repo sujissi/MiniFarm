@@ -17,12 +17,17 @@ void InputManager::Init()
 	LOG("Input Init");
 	glutSetCursor(GLUT_CURSOR_NONE);
 
-	s_keys.fill(false);
+	Clear();
 	s_centerX = WINDOW_W / 2;
 	s_centerY = WINDOW_H / 2;
 
 	s_warping = true;
 	glutWarpPointer(s_centerX, s_centerY);
+}
+
+void InputManager::Clear()
+{
+	s_keys.fill(false);
 }
 
 void InputManager::Update()

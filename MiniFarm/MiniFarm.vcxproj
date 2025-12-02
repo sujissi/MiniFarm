@@ -50,6 +50,7 @@
     <ClCompile Include="Source\Render\UIRenderer.cpp" />
     <ClCompile Include="Source\Render\TextureLoader.cpp" />
     <ClCompile Include="Source\Game\TitleScene.cpp" />
+    <ClCompile Include="Source\Systems\TimeSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Systems\ObjectLoader.h" />
@@ -62,6 +63,7 @@
     <ClInclude Include="Source\Game\IInteractable.h" />
     <ClInclude Include="Source\Game\InteractableObject.h" />
     <ClInclude Include="Source\Game\StaticProp.h" />
+    <ClInclude Include="Source\Systems\TimeSystem.h" />
     <ClInclude Include="Source\Utils\FileUtils.h" />
     <ClInclude Include="Source\Systems\CollisionSystem.h" />
     <ClInclude Include="Source\Systems\DebugDrawer.h" />
