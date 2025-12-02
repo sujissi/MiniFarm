@@ -11,7 +11,6 @@ void TitleScene::Init()
 {
 	SetClearColor(glm::vec3(1, 1, 1));
 
-	m_shader.Init("Shaders/main.vert", "Shaders/main.frag");
 	m_objects.clear();
 
 	m_camera.yaw = 30.0f;
@@ -42,6 +41,8 @@ void TitleScene::Update(int dt)
 
 void TitleScene::Draw()
 {
+	SetClearColor(glm::vec3(0.5, 0.8, 1.0));
+
 	SetupCameraAndLight();
 	DrawWorld();
 
@@ -64,13 +65,15 @@ void TitleScene::DrawWorld()
 
 void TitleScene::SetupCameraAndLight()
 {
-	m_shader.Use();
-	m_shader.SetView(m_camera.GetView());
-	m_shader.SetProj(m_camera.GetProj((float)WINDOW_W / WINDOW_H));
+	Shader* shader = &SceneManager::GetMainShader();
 
-	m_shader.SetLightPos(glm::vec3(10.f, 15.f, 10.f));
-	m_shader.SetLightColor(glm::vec3(1.0f, 1.0f, 1.0f));
-	m_shader.SetViewPos(m_camera.eye);
+	shader->Use();
+	shader->SetView(m_camera.GetView());
+	shader->SetProj(m_camera.GetProj((float)WINDOW_W / WINDOW_H));
 
-	m_shader.SetModel(glm::mat4(1.0f));
+	shader->SetLightPos(glm::vec3(10.f, 15.f, 10.f));
+	shader->SetLightColor(glm::vec3(1.0f, 1.0f, 1.0f));
+	shader->SetViewPos(m_camera.eye);
+
+	shader->SetModel(glm::mat4(1.0f));
 }

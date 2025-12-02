@@ -9,6 +9,8 @@ public:
 	}
 	Shader(const Shader&) = delete;
 	Shader& operator=(const Shader&) = delete;
+	Shader(Shader&&) = default;
+	Shader& operator=(Shader&&) = default;
 
 	void Init(const char* vertexPath, const char* fragmentPath);
 	void Use() { glUseProgram(m_programID); }

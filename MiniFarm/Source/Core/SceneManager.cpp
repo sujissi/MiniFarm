@@ -6,10 +6,12 @@
 
 std::unique_ptr<Scene> SceneManager::s_currentScene = nullptr;
 int SceneManager::s_prevTime = 0;
-
+Shader SceneManager::s_mainShader;
 void SceneManager::Init()
 {
 	SetScene(std::make_unique<TitleScene>());
+	s_mainShader.Init("Shaders/main.vert", "Shaders/main.frag");
+
 }
 
 void SceneManager::Update(int)
@@ -20,7 +22,7 @@ void SceneManager::Update(int)
 
 	if (dt < 0) dt = 0;
 
-	if (s_currentScene)
+	if (s_currentScene && s_currentScene->IsValid())
 		s_currentScene->Update(dt);
 
 	glutPostRedisplay();
@@ -33,7 +35,7 @@ void SceneManager::Draw()
 	glClearColor(color.r, color.g, color.b, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	if (s_currentScene)
+	if (s_currentScene && s_currentScene->IsValid())
 		s_currentScene->Draw();
 
 	glutSwapBuffers();
@@ -47,10 +49,17 @@ void SceneManager::Reshape(int w, int h)
 void SceneManager::SetScene(std::unique_ptr<Scene> newScene)
 {
 	InputManager::Clear();
+	if (s_currentScene && s_currentScene->IsValid())
+		s_currentScene->SetValid(false);
+	 
 	s_currentScene = std::move(newScene);
 
 	if (s_currentScene)
+	{
 		s_currentScene->Init();
+		s_currentScene->SetValid(true);
+	}
+	s_prevTime = glutGet(GLUT_ELAPSED_TIME);
 }
 
 Camera& SceneManager::GetCamera()
@@ -60,7 +69,7 @@ Camera& SceneManager::GetCamera()
 
 Shader& SceneManager::GetMainShader()
 {
-	return s_currentScene->GetMainShader();
+	return s_mainShader;
 }
 
 std::vector<std::shared_ptr<GameObject>>& SceneManager::GetObjects()

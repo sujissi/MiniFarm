@@ -9,7 +9,6 @@
 void IngameScene::Init()
 {
 	SetClearColor(glm::vec3(1, 1, 1));
-	m_shader.Init("Shaders/main.vert", "Shaders/main.frag");
 
 	m_objects.clear();
 	m_camera.Init();
@@ -67,19 +66,27 @@ void IngameScene::DrawUI()
 	}
 
 	m_player->GetInventory().DrawUI();
+
+	float timeValue = m_timeSystem.GetDayTime();
+	int hour = (int)timeValue;                          
+	int minute = (int)((timeValue - hour) * 60.f);      
+	int second = (int)((((timeValue - hour) * 60.f) - minute) * 60.f); 
+	UIRenderer::DrawCenter(TextureLoader::Load("Assets/ui_board_black_thin.png"), { 0.5f,0.9f }, 0.3f, { 1,1,1,0.6 });
+	TextRenderer::Draw(std::format("{:02d}:{:02d}:{:02d}", hour, minute, second), WINDOW_W / 2, WINDOW_H - 50, 2.0f, { 1,1,1 });
 }
 
 void IngameScene::SetupCameraAndLight()
 {
-	m_shader.Use();
-	m_shader.SetView(m_camera.GetView());
-	m_shader.SetProj(m_camera.GetProj((float)WINDOW_W / WINDOW_H));
-
-	m_shader.SetLightPos(m_lightPos);
-	m_shader.SetLightColor(m_lightColor);
-	m_shader.SetViewPos(m_camera.eye);
-
-	m_shader.SetModel(glm::mat4(1.0f));
+	Shader* shader = &SceneManager::GetMainShader();
+	shader->Use();
+	shader->SetView(m_camera.GetView());
+	shader->SetProj(m_camera.GetProj((float)WINDOW_W / WINDOW_H));
+	
+	shader->SetLightPos(m_lightPos);
+	shader->SetLightColor(m_lightColor);
+	shader->SetViewPos(m_camera.eye);
+	
+	shader->SetModel(glm::mat4(1.0f));
 }
 
 void IngameScene::UpdateDayNightCycle()

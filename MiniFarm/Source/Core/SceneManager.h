@@ -19,8 +19,8 @@ public:
     static Camera& GetCamera();
     static Shader& GetMainShader();
     static std::vector<std::shared_ptr<GameObject>>& GetObjects();
-
 private:
     static std::unique_ptr<Scene> s_currentScene;
+    static Shader s_mainShader;
     static int s_prevTime;
 };
