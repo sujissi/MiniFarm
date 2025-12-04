@@ -2,9 +2,9 @@
 #include "TimeSystem.h"
 
 TimeSystem::TimeSystem()
-	: m_dayTime(12.f)
-	, m_timeSpeed(DEFAULT_TIME_SPEED)
 {
+	m_dayTime = 12.f;
+	m_timeSpeed = DEFAULT_TIME_SPEED;
 }
 
 void TimeSystem::Update(int dt)

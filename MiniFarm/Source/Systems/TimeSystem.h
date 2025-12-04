@@ -22,5 +22,5 @@ private:
 	const float DAY_START = 6.f;
 	const float DAY_END = 18.f;
 	const float DAY_CYCLE = 24.f;
-	const float DEFAULT_TIME_SPEED = 0.00027f;
+	const float DEFAULT_TIME_SPEED = 0.00001667f;
 };
