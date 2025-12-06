@@ -318,6 +318,10 @@ void Player::Draw()
 		{ -0.3f, 0.5f, 0.2f },
 		{ -0.3f, 0.5f, 0.2f }
 	};
+	float armRotX = m_limbs[1].currentRot.x;
+	float radians = glm::radians(armRotX);
+	float armLength = 1.f;
+	glm::vec3 toolOffset = glm::vec3(0.f, -armLength * (1.0f - std::cos(radians)), -armLength * std::sin(radians));
 
 	for (size_t i = 0; i < m_limbs.size(); ++i) {
 		auto& limb = m_limbs[i];
@@ -325,7 +329,8 @@ void Player::Draw()
 			glm::mat4 limbTransform;
 			if (i == 4 && m_equippedTool == EItemID::Hoe) {
 				limbTransform = playerTransform *
-					Translate(jointPositions[i]) *
+					Translate(jointPositions[i] + toolOffset) *
+					Rotate(armRotX, { 1,0,0 }) *
 					Rotate(270, { 1,0,0 }) *
 					Rotate(limb.currentRot.y, { 0,1,0 }) *
 					Rotate(limb.currentRot.z, { 0,0,1 });
@@ -335,7 +340,8 @@ void Player::Draw()
 			}
 			else if (i == 5 && m_equippedTool == EItemID::WateringCan) {
 				limbTransform = playerTransform *
-					Translate(jointPositions[i]) *
+					Translate(jointPositions[i] + toolOffset) *
+					Rotate(armRotX, { 1,0,0 }) *
 					Rotate(limb.currentRot.x, { 1,0,0 }) *
 					Rotate(limb.currentRot.y, { 0,1,0 }) *
 					Rotate(limb.currentRot.z, { 0,0,1 });
@@ -345,7 +351,8 @@ void Player::Draw()
 			}
 			else if (i == 6 && m_equippedTool == EItemID::Sickle) {
 				limbTransform = playerTransform *
-					Translate(jointPositions[i]) *
+					Translate(jointPositions[i] + toolOffset) *
+					Rotate(armRotX, { 1,0,0 }) *
 					Rotate(90, { 1,0,0 }) *
 					Rotate(limb.currentRot.y, { 0,1,0 }) *
 					Rotate(limb.currentRot.z, { 0,0,1 });
