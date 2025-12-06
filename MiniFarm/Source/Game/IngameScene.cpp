@@ -23,7 +23,12 @@ void IngameScene::Init()
 		AddObject(obj);
 
 	for (auto& obj : interactObjs)
+	{
+		if (auto crop = std::dynamic_pointer_cast<Crop>(obj))
+			m_crops.push_back(crop);
+
 		AddObject(obj);
+	}
 }
 
 void IngameScene::Update(int dt)
@@ -55,6 +60,9 @@ void IngameScene::DrawWorld()
 
 void IngameScene::DrawUI()
 {
+	for (auto& crop : m_crops)
+		crop->DrawBar();
+
 	if (m_player->IsShopping() || m_player->IsEscaping())
 	{
 		UIRenderer::DrawMessage(m_player->GetSysMsg());

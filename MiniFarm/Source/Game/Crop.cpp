@@ -3,6 +3,9 @@
 #include "DataTable.h"
 #include "Model.h"
 #include "Player.h"
+#include "UIRenderer.h"
+#include "TextureLoader.h"
+#include "SceneManager.h"
 
 Crop::Crop(const glm::vec3& pos, const glm::vec3& rot, const glm::vec3& scale,
 	const std::string& model, const std::string& texture)
@@ -133,3 +136,48 @@ void Crop::OnInteract(Player* player)
 	}
 }
 
+float Crop::GetGrowProgress() const
+{
+	const CropData* data = DataTable::GetCrop(m_id);
+	if (!data) return 0.f;
+
+	if (m_level >= (int)data->stageTypes.size() - 1)
+		return 1.f;
+
+	float requiredWater = data->waterStages[m_level];
+
+	if (requiredWater <= 0) return 0.f;
+
+	return glm::clamp(m_water / requiredWater, 0.f, 1.f);
+}
+
+
+void Crop::DrawBar()
+{
+	if (m_id == EItemID::Empty || m_id == EItemID::Tilled)
+		return;
+
+	float progress = GetGrowProgress();
+
+	glm::vec3 worldPos = m_pos + glm::vec3(0, 3.0f, 0);
+
+	glm::mat4 view = SceneManager::GetCamera().GetView();
+	glm::mat4 proj = SceneManager::GetCamera().GetProj(WINDOW_W / (float)WINDOW_H);
+
+	glm::vec4 clip = proj * view * glm::vec4(worldPos, 1.0f);
+	glm::vec3 ndc = glm::vec3(clip) / clip.w;
+
+	glm::vec2 uiPos = {
+		ndc.x * 0.5f + 0.5f,
+		ndc.y * 0.5f + 0.5f
+	};
+	glm::vec2 fillPos = uiPos - glm::vec2(0.05f, 0.0f);
+
+	TextureInfo bg = TextureLoader::Load("Assets/ui_bar_bg.png");
+	UIRenderer::Draw(bg, fillPos, 0.1f, { 1,1,1,1 });
+
+	TextureInfo fill = (m_id == EItemID::Carrot)
+		? TextureLoader::Load("Assets/ui_bar_carrot.png")
+		: TextureLoader::Load("Assets/ui_bar_cabbage.png");
+	UIRenderer::DrawFill(fill, fillPos, 0.1f, progress, { 1,1,1,1 });
+}

@@ -8,7 +8,7 @@ private:
     EItemID m_id;
     int   m_level = 0;
     float m_water = 0.f;
-
+    float m_growTime = 0.f;
 public:
     Crop(const glm::vec3& pos, const glm::vec3& rot, const glm::vec3& scale,
         const std::string& model, const std::string& texture);
@@ -18,4 +18,7 @@ public:
     void Update(int dt) override;
     void AddWater(float amount);
     virtual void OnInteract(Player* player) override;
+
+    float GetGrowProgress() const;
+    void DrawBar();
 };
