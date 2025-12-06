@@ -39,7 +39,7 @@ void ExitScene::Update(int dt)
 
 	if (m_startFade)
 	{
-		m_fade += dt * 0.0001f;
+		m_fade += dt * 0.0002f;
 		if (m_fade >= 1.0f)
 		{
 			SceneManager::SetScene(std::make_unique<TitleScene>());

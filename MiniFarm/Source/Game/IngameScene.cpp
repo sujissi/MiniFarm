@@ -5,6 +5,7 @@
 #include "TextRenderer.h"
 #include "ObjectLoader.h"
 #include "Shader.h"
+#include "ExitScene.h"
 
 void IngameScene::Init()
 {
@@ -37,6 +38,11 @@ void IngameScene::Update(int dt)
 	{
 		if (!m_valid) return;
 		obj->Update(dt);
+	}
+	if(m_player->IsOnBoat())
+	{
+		SceneManager::SetScene(std::make_unique<ExitScene>());
+		return;
 	}
 	m_timeSystem.Update(dt);
 	UpdateDayNightCycle();

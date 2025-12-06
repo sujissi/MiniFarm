@@ -50,6 +50,7 @@ public:
     std::string GetSysMsg() const { return m_sysmsg; }
     void SetCanEscape(bool canescape) { m_canescape = canescape; }
     bool CanEscape() const { return m_canescape; }
+    bool IsOnBoat() const { return m_onBoat; }
 private:
     float m_speed = 0.2f;
     Inventory m_inventory;
@@ -59,6 +60,7 @@ private:
     bool m_shopping = false;
     bool m_escaping = false;
     bool m_canescape = false;
+    bool m_onBoat = false;
 
     std::string m_sysmsg = "";
 

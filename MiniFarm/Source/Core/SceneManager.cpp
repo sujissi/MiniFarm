@@ -60,6 +60,14 @@ void SceneManager::SetScene(std::unique_ptr<Scene> newScene)
 		s_currentScene->SetValid(true);
 	}
 	s_prevTime = glutGet(GLUT_ELAPSED_TIME);
+
+	glUseProgram(0);
+	glBindVertexArray(0);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	glDisable(GL_BLEND);
+	glEnable(GL_DEPTH_TEST);
 }
 
 Camera& SceneManager::GetCamera()

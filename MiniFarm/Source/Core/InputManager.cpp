@@ -27,6 +27,7 @@ void InputManager::Init()
 
 void InputManager::Clear()
 {
+	SetUIMode(false);
 	s_keys.fill(false);
 }
 

@@ -8,7 +8,6 @@
 #include "IInteractable.h"
 #include "Shop.h"
 #include "Shader.h"
-#include "ExitScene.h"
 
 Player::Player()
 {
@@ -43,8 +42,6 @@ void Player::Update(int time)
 
 	HandleRotate();
 	HandleMove();
-	UpdateWalkAnimations();
-	Draw();
 	ApplyGravity();
 
 	GameObject::Update(time);
@@ -102,6 +99,8 @@ void Player::HandleMove()
 		m_collider->UpdatePos(m_pos);
 	}
 	cam.FollowTarget(m_pos);
+
+	UpdateWalkAnimations();
 }
 
 void Player::HandleInteractInput()
@@ -180,9 +179,10 @@ void Player::HandleBoatDirectInput()
 		if (CanEscape())
 		{
 			LOG("Å»Ãâ ¼º°ø!");
-			SceneManager::SetScene(std::make_unique<ExitScene>());
+			m_onBoat = true;
 		}
 	}
+
 	if (InputManager::IsKeyPressed('n') || InputManager::IsKeyPressed(' '))
 	{
 		InputManager::SetUIMode(false);
