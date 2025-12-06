@@ -30,8 +30,8 @@ void IngameScene::Init()
 			m_crops.push_back(crop);
 
 		AddObject(obj);
-	WaterParticleSystem::Init();
 	}
+	WaterParticleSystem::Init();
 }
 
 void IngameScene::Update(int dt)
@@ -102,8 +102,10 @@ void IngameScene::SetupCameraAndLight()
 	shader->SetView(m_camera.GetView());
 	shader->SetProj(m_camera.GetProj((float)WINDOW_W / WINDOW_H));
 
-	shader->SetLightPos(m_lightPos);
-	shader->SetLightColor(m_lightColor);
+	shader->SetLightPos(m_sunPos);
+	shader->SetLightColor(m_sunColor);
+	shader->SetVec3(m_moonPos, "uMoonPos");
+	shader->SetVec3(m_moonColor, "uMoonColor");
 	shader->SetViewPos(m_camera.eye);
 
 	shader->SetModel(glm::mat4(1.0f));
@@ -112,56 +114,39 @@ void IngameScene::SetupCameraAndLight()
 void IngameScene::UpdateDayNightCycle()
 {
 	float dayTime = m_timeSystem.GetDayTime();
-	const float DAY_START = 6.f;
-	const float DAY_END = 18.f;
+	const float PI = 3.14159265f;
 
-	if (m_timeSystem.IsDaytime())
+	float rotationAngle = ((dayTime - 6.f) / 24.f) * 2.f * PI;
+
+	m_sunPos.x = cos(rotationAngle) * LIGHT_WIDTH;
+	m_sunPos.y = sin(rotationAngle) * LIGHT_HEIGHT;
+	m_sunPos.z = 0.f;
+
+	m_moonPos.x = cos(rotationAngle + PI) * LIGHT_WIDTH;
+	m_moonPos.y = sin(rotationAngle + PI) * LIGHT_HEIGHT;
+	m_moonPos.z = 0.f;
+
+	float sunHeight = m_sunPos.y / LIGHT_HEIGHT;
+
+	if (sunHeight > 0.1f)
 	{
-		float dayProgress = m_timeSystem.GetDayProgress();
-		float angle = dayProgress * 3.14159265f;
-
-		m_lightPos.x = -LIGHT_WIDTH / 2.f + dayProgress * LIGHT_WIDTH;
-		m_lightPos.y = sin(angle) * LIGHT_HEIGHT;
-
-		if (dayProgress < 0.1f)
-		{
-			float t = dayProgress / 0.1f;
-			m_lightColor = glm::mix(glm::vec3(0.8f, 0.5f, 0.3f), glm::vec3(1.f, 1.f, 0.9f), t);
-			m_BackGroundColor = glm::mix(glm::vec3(0.2f, 0.2f, 0.4f), glm::vec3(0.5f, 0.7f, 1.f), t);
-		}
-		else if (dayProgress > 0.9f)
-		{
-			float t = (dayProgress - 0.9f) / 0.1f;
-			m_lightColor = glm::mix(glm::vec3(1.f, 1.f, 0.9f), glm::vec3(1.f, 0.6f, 0.3f), t);
-			m_BackGroundColor = glm::mix(glm::vec3(0.5f, 0.7f, 1.f), glm::vec3(0.2f, 0.2f, 0.4f), t);
-		}
-		else
-		{
-			m_lightColor = glm::vec3(1.f, 1.f, 0.9f);
-			m_BackGroundColor = glm::vec3(0.5f, 0.8f, 1.f);
-		}
+		float t = glm::clamp((sunHeight - 0.1f) / 0.2f, 0.f, 1.f);
+		m_sunColor = glm::mix(glm::vec3(1.f, 0.6f, 0.3f), glm::vec3(1.f, 0.95f, 0.8f), t);
+		m_moonColor = glm::vec3(0.1f, 0.1f, 0.2f);
+		m_BackGroundColor = glm::mix(glm::vec3(0.4f, 0.4f, 0.6f), glm::vec3(0.5f, 0.8f, 1.f), t);
+	}
+	else if (sunHeight > -0.1f)
+	{
+		float t = (sunHeight + 0.1f) / 0.2f;
+		m_sunColor = glm::mix(glm::vec3(0.3f, 0.2f, 0.3f), glm::vec3(1.f, 0.6f, 0.3f), t);
+		m_moonColor = glm::mix(glm::vec3(0.4f, 0.5f, 0.7f), glm::vec3(0.1f, 0.1f, 0.2f), t);
+		m_BackGroundColor = glm::mix(glm::vec3(0.1f, 0.1f, 0.2f), glm::vec3(0.4f, 0.4f, 0.6f), t);
 	}
 	else
 	{
-		m_lightPos.x = 0.f;
-		m_lightPos.y = LIGHT_HEIGHT * 0.6f;
-
-		if (dayTime >= DAY_END && dayTime < DAY_END + 1.f)
-		{
-			float t = (dayTime - DAY_END);
-			m_lightColor = glm::mix(glm::vec3(1.f, 0.6f, 0.3f), glm::vec3(0.2f, 0.2f, 0.4f), t);
-			m_BackGroundColor = glm::mix(glm::vec3(0.5f, 0.7f, 1.f), glm::vec3(0.1f, 0.1f, 0.2f), t);
-		}
-		else if (dayTime >= DAY_START - 1.f && dayTime < DAY_START)
-		{
-			float t = (dayTime - (DAY_START - 1.f));
-			m_lightColor = glm::mix(glm::vec3(0.2f, 0.2f, 0.4f), glm::vec3(0.8f, 0.5f, 0.3f), t);
-			m_BackGroundColor = glm::mix(glm::vec3(0.2f, 0.2f, 0.4f), glm::vec3(0.5f, 0.7f, 1.f), t);
-		}
-		else
-		{
-			m_lightColor = glm::vec3(0.2f, 0.2f, 0.4f);
-			m_BackGroundColor = glm::vec3(0.1f, 0.1f, 0.2f);
-		}
+		float t = glm::clamp((-sunHeight - 0.1f) / 0.2f, 0.f, 1.f);
+		m_sunColor = glm::vec3(0.1f, 0.1f, 0.1f);
+		m_moonColor = glm::mix(glm::vec3(0.3f, 0.4f, 0.5f), glm::vec3(0.4f, 0.5f, 0.7f), t);
+		m_BackGroundColor = glm::mix(glm::vec3(0.1f, 0.1f, 0.2f), glm::vec3(0.05f, 0.05f, 0.15f), t);
 	}
 }
