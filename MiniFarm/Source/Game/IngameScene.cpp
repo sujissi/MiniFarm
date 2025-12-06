@@ -5,6 +5,7 @@
 #include "TextRenderer.h"
 #include "ObjectLoader.h"
 #include "Shader.h"
+#include "ExitScene.h"
 #include "WaterParticleSystem.h"
 
 void IngameScene::Init()
@@ -24,15 +25,26 @@ void IngameScene::Init()
 		AddObject(obj);
 
 	for (auto& obj : interactObjs)
+	{
+		if (auto crop = std::dynamic_pointer_cast<Crop>(obj))
+			m_crops.push_back(crop);
+
 		AddObject(obj);
 	WaterParticleSystem::Init();
+	}
 }
 
 void IngameScene::Update(int dt)
 {
 	for (auto& obj : m_objects)
 	{
+		if (!m_valid) return;
 		obj->Update(dt);
+	}
+	if(m_player->IsOnBoat())
+	{
+		SceneManager::SetScene(std::make_unique<ExitScene>());
+		return;
 	}
 	m_timeSystem.Update(dt);
 	UpdateDayNightCycle();
@@ -60,6 +72,9 @@ void IngameScene::DrawWorld()
 
 void IngameScene::DrawUI()
 {
+	for (auto& crop : m_crops)
+		crop->DrawBar();
+
 	if (m_player->IsShopping() || m_player->IsEscaping())
 	{
 		UIRenderer::DrawMessage(m_player->GetSysMsg());
@@ -73,11 +88,11 @@ void IngameScene::DrawUI()
 	m_player->GetInventory().DrawUI();
 
 	float timeValue = m_timeSystem.GetDayTime();
-	int hour = (int)timeValue;                          
-	int minute = (int)((timeValue - hour) * 60.f);      
-	int second = (int)((((timeValue - hour) * 60.f) - minute) * 60.f); 
-	UIRenderer::DrawCenter(TextureLoader::Load("Assets/ui_board_black_thin.png"), { 0.5f,0.9f }, 0.3f, { 1,1,1,0.6 });
-	TextRenderer::Draw(std::format("{:02d}:{:02d}:{:02d}", hour, minute, second), WINDOW_W / 2, WINDOW_H - 50, 2.0f, { 1,1,1 });
+	int hour = (int)timeValue;
+	int minute = (int)((timeValue - hour) * 60.f);
+	std::string ampm = (hour < 12) ? "AM" : "PM";
+	UIRenderer::DrawCenter(TextureLoader::Load("Assets/ui_timebar.png"), { 0.8f,0.92f }, 0.25f, { 1,1,1,1 });
+	TextRenderer::Draw(std::format("{:02d}:{:02d} {}", hour, minute, ampm), WINDOW_W - 85, WINDOW_H - 40, 1.3f, { 0,0,0 });
 }
 
 void IngameScene::SetupCameraAndLight()
@@ -86,11 +101,11 @@ void IngameScene::SetupCameraAndLight()
 	shader->Use();
 	shader->SetView(m_camera.GetView());
 	shader->SetProj(m_camera.GetProj((float)WINDOW_W / WINDOW_H));
-	
+
 	shader->SetLightPos(m_lightPos);
 	shader->SetLightColor(m_lightColor);
 	shader->SetViewPos(m_camera.eye);
-	
+
 	shader->SetModel(glm::mat4(1.0f));
 }
 
@@ -104,17 +119,17 @@ void IngameScene::UpdateDayNightCycle()
 	{
 		float dayProgress = m_timeSystem.GetDayProgress();
 		float angle = dayProgress * 3.14159265f;
-		
+
 		m_lightPos.x = -LIGHT_WIDTH / 2.f + dayProgress * LIGHT_WIDTH;
 		m_lightPos.y = sin(angle) * LIGHT_HEIGHT;
-		
+
 		if (dayProgress < 0.1f)
 		{
 			float t = dayProgress / 0.1f;
 			m_lightColor = glm::mix(glm::vec3(0.8f, 0.5f, 0.3f), glm::vec3(1.f, 1.f, 0.9f), t);
 			m_BackGroundColor = glm::mix(glm::vec3(0.2f, 0.2f, 0.4f), glm::vec3(0.5f, 0.7f, 1.f), t);
 		}
-		else if (dayProgress > 0.9f) 
+		else if (dayProgress > 0.9f)
 		{
 			float t = (dayProgress - 0.9f) / 0.1f;
 			m_lightColor = glm::mix(glm::vec3(1.f, 1.f, 0.9f), glm::vec3(1.f, 0.6f, 0.3f), t);
@@ -130,7 +145,7 @@ void IngameScene::UpdateDayNightCycle()
 	{
 		m_lightPos.x = 0.f;
 		m_lightPos.y = LIGHT_HEIGHT * 0.6f;
-		
+
 		if (dayTime >= DAY_END && dayTime < DAY_END + 1.f)
 		{
 			float t = (dayTime - DAY_END);

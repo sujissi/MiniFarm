@@ -92,3 +92,48 @@ std::vector<std::shared_ptr<GameObject>> ObjectLoader::LoadInteractableObjects(c
 
 	return results;
 }
+
+std::vector<std::shared_ptr<GameObject>> ObjectLoader::LoadEndingObjects()
+{
+	std::vector<std::shared_ptr<GameObject>> results;
+
+	const int N = 50;
+	const float SPACE = 2.0f;
+
+	for (int x = 0; x < N/2; x++)
+	{
+		for (int z = 0; z < N; z++)
+		{
+			std::string type = "Water";
+
+			glm::vec3 pos(x * SPACE, 0.0f, z * SPACE);
+			glm::vec3 rot(0.f);
+			glm::vec3 scale(1.f);
+
+			FlipCoord(pos, rot);
+
+			const ObjectInfo* info = DataTable::GetObjectInfo(type);
+			if (!info) continue;
+
+			auto inst = ObjectFactory::Create(type, pos, rot, scale, info);
+			inst->m_name = type;
+			inst->Init();
+
+			results.push_back(inst);
+		}
+	}
+
+	glm::vec3 boatPos(0.f, 0.f, 50.f);
+	glm::vec3 boatRot(0.f, 135.f, 0.f);
+	glm::vec3 boatScale(1.5f);
+
+	if (auto info = DataTable::GetObjectInfo("Boat"))
+	{
+		auto boat = ObjectFactory::Create("Boat", boatPos, boatRot, boatScale, info);
+		boat->m_name = "Boat";
+		boat->Init();
+		results.push_back(boat);
+	}
+
+	return results;
+}

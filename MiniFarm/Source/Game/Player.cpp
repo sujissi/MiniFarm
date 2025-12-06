@@ -88,7 +88,7 @@ void Player::HandleMove()
 		m_verticalVelocity = m_jumpForce;
 		m_isGrounded = false;
 	}
-	
+
 	m_isWalking = glm::length(move) > 0;
 
 	if (m_isWalking)
@@ -98,10 +98,12 @@ void Player::HandleMove()
 		glm::vec3 newPos = CollisionSystem::TryMove(this, desired);
 		m_pos.x = newPos.x;
 		m_pos.z = newPos.z;
-		
+
 		m_collider->UpdatePos(m_pos);
 	}
 	cam.FollowTarget(m_pos);
+
+	UpdateWalkAnimations();
 }
 
 void Player::HandleInteractInput()
@@ -179,10 +181,11 @@ void Player::HandleBoatDirectInput()
 		LOG("Å»Ãâ ½Ãµµ");
 		if (CanEscape())
 		{
-			//TODO: Å»Ãâ Ã³¸®
 			LOG("Å»Ãâ ¼º°ø!");
+			m_onBoat = true;
 		}
 	}
+
 	if (InputManager::IsKeyPressed('n') || InputManager::IsKeyPressed(' '))
 	{
 		InputManager::SetUIMode(false);
@@ -380,13 +383,13 @@ void Player::UpdateWalkAnimations()
 {
 	if (m_isWalking) {
 		m_walkAnimTime += 0.15f;
-		
+
 		float armSwing = std::sin(m_walkAnimTime) * 20.f;
 		if (m_limbs.size() >= 2) {
 			m_limbs[0].currentRot.x = armSwing;
 			m_limbs[1].currentRot.x = -armSwing;
 		}
-		
+
 		float legSwing = std::sin(m_walkAnimTime + 3.14159f) * 20.0f;
 		if (m_limbs.size() >= 4) {
 			m_limbs[2].currentRot.x = legSwing;
@@ -397,7 +400,7 @@ void Player::UpdateWalkAnimations()
 		for (auto& limb : m_limbs) {
 			limb.currentRot *= 0.92f;
 		}
-		
+
 		m_walkAnimTime *= 0.85f;
 		if (std::fabs(m_walkAnimTime) < 0.01f) {
 			m_walkAnimTime = 0.0f;

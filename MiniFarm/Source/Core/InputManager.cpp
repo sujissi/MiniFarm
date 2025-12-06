@@ -27,6 +27,7 @@ void InputManager::Init()
 
 void InputManager::Clear()
 {
+	SetUIMode(false);
 	s_keys.fill(false);
 }
 
@@ -48,7 +49,7 @@ void InputManager::KeyDown(unsigned char key, int x, int y)
 		bShowCursor = !bShowCursor;
 		SetUIMode(bShowCursor); break;
 	}
-	case 'q': exit(0);
+	case 27 : exit(0); //ESC
 	}
 }
 

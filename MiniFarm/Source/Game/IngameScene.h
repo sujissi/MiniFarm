@@ -5,6 +5,7 @@
 #include "Player.h"
 #include "Shader.h"
 #include "TimeSystem.h"
+#include "Crop.h"
 
 class IngameScene : public Scene
 {
@@ -21,7 +22,8 @@ public:
 private:
 	Player* m_player;
 	TimeSystem m_timeSystem;
-	
+	std::vector<std::shared_ptr<Crop>> m_crops;
+
 	const float LIGHT_WIDTH = 20.f;
 	const float LIGHT_HEIGHT = 20.f;
 	glm::vec3 m_BackGroundColor = glm::vec3(1.f,1.f,1.f);

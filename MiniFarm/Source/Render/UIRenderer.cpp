@@ -61,6 +61,7 @@ void UIRenderer::Draw(const TextureInfo& textureInfo, const glm::vec2& posNDC, f
 	s_shader->SetVec2(posNDC, "uPos");
 	s_shader->SetVec2(sizeNDC, "uSize");
 	s_shader->SetVec4(color, "uColor");
+	s_shader->SetFloat(1.0f, "uMax");
 
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, textureInfo.id);
@@ -100,3 +101,37 @@ void UIRenderer::DrawMessage(const std::string& msg)
 		TextRenderer::Draw(lines[lines.size() - 1 - i], WINDOW_W / 2, y, 2, glm::vec4(1.f));
 	}
 }
+
+void UIRenderer::DrawFill(const TextureInfo& textureInfo,
+	const glm::vec2& posNDC,
+	float size,
+	float progress,
+	const glm::vec4& color)
+{
+	if (!s_shader) return;
+
+	float aspect = (float)textureInfo.width / (float)textureInfo.height;
+	glm::vec2 sizeNDC(size, size / aspect);
+
+	glDisable(GL_DEPTH_TEST);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	s_shader->Use();
+	s_shader->SetVec2(posNDC, "uPos");
+	s_shader->SetVec2(sizeNDC, "uSize");
+	s_shader->SetVec4(color, "uColor");
+
+	s_shader->SetFloat(progress, "uMax");
+
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, textureInfo.id);
+
+	glBindVertexArray(s_VAO);
+	glDrawArrays(GL_TRIANGLES, 0, 6);
+	glBindVertexArray(0);
+
+	glDisable(GL_BLEND);
+	glEnable(GL_DEPTH_TEST);
+}
+
