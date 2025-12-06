@@ -35,6 +35,7 @@ void IngameScene::Update(int dt)
 {
 	for (auto& obj : m_objects)
 	{
+		if (!m_valid) return;
 		obj->Update(dt);
 	}
 	m_timeSystem.Update(dt);

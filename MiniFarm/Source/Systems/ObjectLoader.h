@@ -7,6 +7,7 @@ class ObjectLoader
 public:
 	static std::vector<std::shared_ptr<GameObject>> LoadStaticObjects(const std::string& path);
 	static std::vector<std::shared_ptr<GameObject>> LoadInteractableObjects(const std::string& path);
+	static std::vector<std::shared_ptr<GameObject>> LoadEndingObjects();
 private:
 	static  bool LoadJson(const std::string& path, rapidjson::Document& doc);
 

@@ -9,8 +9,6 @@
 
 void TitleScene::Init()
 {
-	SetClearColor(glm::vec3(1, 1, 1));
-
 	m_objects.clear();
 
 	m_camera.yaw = 30.0f;
