@@ -43,6 +43,7 @@ void Player::Update(int time)
 	HandleRotate();
 	HandleMove();
 	UpdateWalkAnimations();
+	UpdateToolAnimation();
 	Draw();
 	ApplyGravity();
 
@@ -437,4 +438,21 @@ void Player::ApplyGravity()
 	}
 
 	m_collider->UpdatePos(m_pos);
+}
+
+void Player::UpdateToolAnimation()
+{
+	static float time = 0.0f;
+	if (m_action)
+	{
+		time += 0.2f;
+		m_limbs[1].currentRot.x = -45.f;
+		
+		if (time >= 3.14159f)
+		{
+			m_action = false;
+			time = 0.0f;
+			m_limbs[1].currentRot.x = 0.0f;
+		}
+	}
 }

@@ -30,6 +30,7 @@ private:
     void HandleBoatDirectInput();
 
     void UpdateWalkAnimations();
+	void UpdateToolAnimation();
     void ApplyGravity();
 public:
     void BuySeed(EItemID seedID, int count = 1);
@@ -50,6 +51,8 @@ public:
     std::string GetSysMsg() const { return m_sysmsg; }
     void SetCanEscape(bool canescape) { m_canescape = canescape; }
     bool CanEscape() const { return m_canescape; }
+
+    bool m_action = false;
 private:
     float m_speed = 0.2f;
     Inventory m_inventory;

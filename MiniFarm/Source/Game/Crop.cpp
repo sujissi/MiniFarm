@@ -114,6 +114,7 @@ void Crop::OnInteract(Player* player)
 		{
 			AddWater(5.f);
 			WaterParticleSystem::Watering(m_pos);
+			player->m_action = true;
 			LOG_D("Crop watered. Current water: %.2f", m_water);
 		}
 		break;
