@@ -5,6 +5,8 @@
 #include "Shop.h"
 #include "Boat.h"
 #include "DataTable.h"
+#include "SceneManager.h"
+#include "IngameScene.h"
 
 std::shared_ptr<GameObject> ObjectFactory::Create(
     const std::string& type,
@@ -22,7 +24,9 @@ std::shared_ptr<GameObject> ObjectFactory::Create(
     {
         static int hcnt = 0;
         auto cropType = (hcnt == 0) ? EItemID::Carrot : EItemID::Cabbage;
-        hcnt++;
+        Scene* curScene = SceneManager::GetScene();
+        if(dynamic_cast<IngameScene*>(curScene))
+            hcnt++;
 
         auto shop = std::make_shared<Shop>(pos, rot, scale, info->modelPath, info->texturePath);
         shop->SetCropType(cropType);
