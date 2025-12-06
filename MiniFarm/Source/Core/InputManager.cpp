@@ -49,7 +49,7 @@ void InputManager::KeyDown(unsigned char key, int x, int y)
 		bShowCursor = !bShowCursor;
 		SetUIMode(bShowCursor); break;
 	}
-	case 'q': exit(0);
+	case 27 : exit(0); //ESC
 	}
 }
 
