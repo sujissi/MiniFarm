@@ -112,6 +112,9 @@
     <ClCompile Include="Source\Systems\TimeSystem.cpp">
       <Filter>소스 파일\Systems</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Render\WaterParticleSystem.cpp">
+      <Filter>소스 파일\Rendering</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Systems\CollisionSystem.h">
@@ -215,6 +218,9 @@
     </ClInclude>
     <ClInclude Include="Source\Systems\TimeSystem.h">
       <Filter>소스 파일\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Render\WaterParticleSystem.h">
+      <Filter>소스 파일\Rendering</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

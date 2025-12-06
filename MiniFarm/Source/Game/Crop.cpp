@@ -3,6 +3,7 @@
 #include "DataTable.h"
 #include "Model.h"
 #include "Player.h"
+#include "WaterParticleSystem.h"
 
 Crop::Crop(const glm::vec3& pos, const glm::vec3& rot, const glm::vec3& scale,
 	const std::string& model, const std::string& texture)
@@ -112,6 +113,7 @@ void Crop::OnInteract(Player* player)
 		if (m_id != EItemID::Empty && m_id != EItemID::Tilled)
 		{
 			AddWater(5.f);
+			WaterParticleSystem::Watering(m_pos);
 			LOG_D("Crop watered. Current water: %.2f", m_water);
 		}
 		break;

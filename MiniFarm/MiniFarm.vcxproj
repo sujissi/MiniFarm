@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Render\WaterParticleSystem.cpp" />
     <ClCompile Include="Source\Systems\ObjectLoader.cpp" />
     <ClCompile Include="Source\Systems\ObjectFactory.cpp" />
     <ClCompile Include="Source\Game\ExitScene.cpp" />
@@ -53,6 +54,7 @@
     <ClCompile Include="Source\Systems\TimeSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Render\WaterParticleSystem.h" />
     <ClInclude Include="Source\Systems\ObjectLoader.h" />
     <ClInclude Include="Source\Systems\ObjectFactory.h" />
     <ClInclude Include="Source\Game\ExitScene.h" />

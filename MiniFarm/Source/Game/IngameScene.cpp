@@ -5,6 +5,7 @@
 #include "TextRenderer.h"
 #include "ObjectLoader.h"
 #include "Shader.h"
+#include "WaterParticleSystem.h"
 
 void IngameScene::Init()
 {
@@ -24,6 +25,7 @@ void IngameScene::Init()
 
 	for (auto& obj : interactObjs)
 		AddObject(obj);
+	WaterParticleSystem::Init();
 }
 
 void IngameScene::Update(int dt)
@@ -35,12 +37,15 @@ void IngameScene::Update(int dt)
 	m_timeSystem.Update(dt);
 	UpdateDayNightCycle();
 	SetClearColor(m_BackGroundColor);
+	WaterParticleSystem::Update(static_cast<float>(dt));
 }
 
 void IngameScene::Draw()
 {
 	SetupCameraAndLight();
 	DrawWorld();
+	Shader& mainShader = SceneManager::GetMainShader();
+	WaterParticleSystem::Draw(&mainShader);
 	DrawUI();
 }
 
