@@ -70,9 +70,8 @@ void IngameScene::DrawUI()
 	float timeValue = m_timeSystem.GetDayTime();
 	int hour = (int)timeValue;                          
 	int minute = (int)((timeValue - hour) * 60.f);      
-	int second = (int)((((timeValue - hour) * 60.f) - minute) * 60.f); 
-	UIRenderer::DrawCenter(TextureLoader::Load("Assets/ui_board_black_thin.png"), { 0.5f,0.9f }, 0.3f, { 1,1,1,0.6 });
-	TextRenderer::Draw(std::format("{:02d}:{:02d}:{:02d}", hour, minute, second), WINDOW_W / 2, WINDOW_H - 50, 2.0f, { 1,1,1 });
+	UIRenderer::DrawCenter(TextureLoader::Load("Assets/ui_timebar.png"), { 0.8f,0.92f }, 0.2f, { 1,1,1,1 });
+	TextRenderer::Draw(std::format("{:02d}:{:02d}", hour, minute), WINDOW_W - 90, WINDOW_H - 40, 1.5f, {0,0,0 });
 }
 
 void IngameScene::SetupCameraAndLight()
