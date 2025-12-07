@@ -19,6 +19,7 @@ public:
 	void SetupCameraAndLight();
 	void UpdateDayNightCycle();
 
+	void TestAddMoney(int amount);
 private:
 	Player* m_player;
 	TimeSystem m_timeSystem;

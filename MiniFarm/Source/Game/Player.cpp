@@ -300,6 +300,10 @@ bool Player::UseItem(EItemID itemID, int count)
 	LOG_D("아이템 부족");
 	return false;
 }
+void Player::AddMoney(int amount)
+{
+	m_inventory.AddMoney(amount);
+}
 
 void Player::Draw()
 {

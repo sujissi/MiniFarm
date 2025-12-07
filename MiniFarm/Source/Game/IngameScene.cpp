@@ -150,3 +150,8 @@ void IngameScene::UpdateDayNightCycle()
 		m_BackGroundColor = glm::mix(glm::vec3(0.1f, 0.1f, 0.2f), glm::vec3(0.05f, 0.05f, 0.15f), t);
 	}
 }
+
+void IngameScene::TestAddMoney(int amount)
+{
+	m_player->AddMoney(amount);
+}

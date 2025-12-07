@@ -5,13 +5,11 @@
 
 void Boat::OnInteract(Player* player)
 {
-	static constexpr int escapeCost = 100;
-
 	int money = player->GetInventory().GetMoney();
-	bool canEscape = money >= escapeCost;
+	bool canEscape = money >= GOAL_MONEY;
 
 	auto msg = canEscape ? "Are you sure?\nYes[Y]\nNo[N]"
-		: std::format("Not enough money\nto escape!\n need {}G.\n\nOK[space]", escapeCost - money);
+		: std::format("Not enough money\nto escape!\n need {}G.\n\nOK[space]", GOAL_MONEY - money);
 	
 	InputManager::SetUIMode(true);
 	player->SetSysMsg(msg);

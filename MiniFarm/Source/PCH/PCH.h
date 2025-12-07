@@ -29,3 +29,5 @@ constexpr GLint WINDOW_H = 500;
 
 constexpr int FPS = 60;
 constexpr int FRAME_TIME_MS = 1000 / FPS;
+
+constexpr int GOAL_MONEY = 10000;

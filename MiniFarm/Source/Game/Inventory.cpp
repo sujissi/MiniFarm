@@ -6,11 +6,11 @@
 Inventory::Inventory()
 {
 	//for test
-	AddItem(EItemID::SeedCarrot, 5);
-	AddItem(EItemID::SeedCabbage, 5);
-	AddItem(EItemID::Carrot, 3);
-	AddItem(EItemID::Cabbage, 3);
-	m_money = 1000;
+	AddItem(EItemID::SeedCarrot, 1);
+	AddItem(EItemID::SeedCabbage, 1);
+	AddItem(EItemID::Carrot, 1);
+	AddItem(EItemID::Cabbage, 1);
+	m_money = 0;
 }
 
 void Inventory::AddItem(EItemID id, int count)

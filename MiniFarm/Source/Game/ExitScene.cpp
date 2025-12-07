@@ -2,7 +2,6 @@
 #include "ExitScene.h"
 #include "TextRenderer.h"
 #include "SceneManager.h"
-#include "TitleScene.h"
 #include "InputManager.h"
 #include "UIRenderer.h"
 #include "ObjectLoader.h"
@@ -39,11 +38,10 @@ void ExitScene::Update(int dt)
 
 	if (m_startFade)
 	{
-		m_fade += dt * 0.0002f;
+		m_fade += dt * 0.0001f;
 		if (m_fade >= 1.0f)
 		{
-			SceneManager::SetScene(std::make_unique<TitleScene>());
-			return;
+			exit(0);
 		}
 	}
 }

@@ -75,6 +75,30 @@ Camera& SceneManager::GetCamera()
 	return s_currentScene->GetCamera();
 }
 
+void SceneManager::InputTestKey(char key)
+{
+	switch (key)
+	{
+	case 't':
+	{
+		static bool bShowCursor = false;
+		bShowCursor = !bShowCursor;
+		InputManager::SetUIMode(bShowCursor);
+		break;
+	}
+	case 'c':
+	{
+		if (auto* s = dynamic_cast<IngameScene*>(s_currentScene.get()))
+		{
+			s->TestAddMoney(GOAL_MONEY);
+		}
+
+		break;
+	}
+	case 27: exit(0); //ESC
+	}
+}
+
 Shader& SceneManager::GetMainShader()
 {
 	return s_mainShader;

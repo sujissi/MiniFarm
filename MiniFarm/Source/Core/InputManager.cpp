@@ -40,17 +40,7 @@ void InputManager::KeyDown(unsigned char key, int x, int y)
 {
 	s_keys[key] = true;
 
-	switch (key)
-	{
-	case 't':
-	{
-		//for test
-		static bool bShowCursor = false;
-		bShowCursor = !bShowCursor;
-		SetUIMode(bShowCursor); break;
-	}
-	case 27 : exit(0); //ESC
-	}
+	SceneManager::InputTestKey(key);
 }
 
 void InputManager::KeyUp(unsigned char key, int x, int y)

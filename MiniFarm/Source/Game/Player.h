@@ -37,6 +37,7 @@ public:
     void SellCrop(EItemID cropID, int count = 1);
     void AddItem(EItemID itemID, int count = 1);
     bool UseItem(EItemID itemID, int count = 1);
+    void AddMoney(int amount);
 
     bool HasInteractTarget() { return m_FocusedInteractable != nullptr; }
     EItemID GetEquippedTool() const { return m_equippedTool; }
